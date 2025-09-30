@@ -3,14 +3,37 @@
         <h2>Login</h2>
         <form>
             <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
+                <label tuiLabel>
+                    Username
+                    <tui-textfield>
+                        <input
+                            placeholder="Enter your username"
+                            tuiTextfield
+                            type="text"
+                            [(ngModel)]="username"
+                            name="username"
+                            required
+                        />
+                    </tui-textfield>
+                </label>
             </div>
             <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+                <label tuiLabel>
+                Password
+                <tui-textfield>
+                    <input
+                        placeholder="Enter your password"
+                        tuiTextfield
+                        type="password"
+                        [(ngModel)]="password"
+                        name="password"
+                        required
+                    />
+                    <tui-icon tuiPassword />
+                </tui-textfield>
+                </label>
             </div>
-            <button type="submit">Login</button>
+            <button appearance="primary" tuiButton type="button">Login</button>
         </form>
     </div>
 </div>
