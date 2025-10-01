@@ -12,5 +12,11 @@ import {TuiPassword} from '@taiga-ui/kit';
 })
 export class LoginComponent {
   username = '';
+  email = '';
   password = '';
+  isRegistering = false;
+
+  changeForm() {
+    this.isRegistering = !this.isRegistering;
+  }
 }
