@@ -50,7 +50,7 @@
                         <input
                             placeholder="Enter your email"
                             tuiTextfield
-                            type="email"
+                            type="text"
                             [(ngModel)]="email"
                             name="email"
                             required
@@ -91,7 +91,7 @@
                 </tui-textfield>
                 </label>
             </div>
-            <button appearance="primary" tuiButton type="button">Register</button>
+            <button appearance="primary" tuiButton type="button" (click)="register()">Register</button>
             <p>{{ isRegistering ? 'Already have an account? ' : "Don't have an account? " }} <span class="p-text" (click)="changeForm()">{{ isRegistering ? 'Login' : 'Register' }}</span></p>
         </form>
         </div>

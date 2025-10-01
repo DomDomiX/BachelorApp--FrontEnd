@@ -10,4 +10,9 @@ export class AuthService {
     private apiUrl = 'http://localhost:3000/api/auth';    
 
     constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) { }
+
+    // Metoda pro registraci uživatele
+    register(data: {username: string, email: string, password: string }): Observable<any> {
+        return this.http.post(`${this.apiUrl}/register`, data);
+    }
 }
