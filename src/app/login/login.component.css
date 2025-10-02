@@ -11,14 +11,16 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 40vh;
-    width: 20%;
+    min-height: 400px;
+    width: 90%;
+    max-width: 400px;
     background-color: #f5f5f5;
     border: 2px solid #000000;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 100px;
+    margin-top: 50px;
     padding: 30px;
+    box-sizing: border-box;
 }
 
 .register-container {
@@ -26,19 +28,21 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 50vh;
-    width: 20%;
+    min-height: 500px;
+    width: 90%;
+    max-width: 400px;
     background-color: #f5f5f5;
     border: 2px solid #000000;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 100px;
+    margin-top: 50px;
     padding: 30px;
+    box-sizing: border-box;
 }
 
 tui-textfield {
     width: 100%;
-    min-width: 300px;
+    max-width: 100%;
 }
 
 form {
@@ -46,10 +50,6 @@ form {
     display: flex;
     flex-direction: column;
     gap: 20px;
-}
-
-form > div {
-    width: 100%;
 }
 
 button {
@@ -61,4 +61,42 @@ button {
     cursor: pointer;
     color: rgb(96, 96, 255);
     text-decoration: underline;
+}
+
+/* Media queries pro responzivní design */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .login-container,
+    .register-container {
+        width: 95%;
+        margin-top: 20px;
+        padding: 20px;
+        min-height: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-container,
+    .register-container {
+        width: 100%;
+        margin-top: 10px;
+        padding: 15px;
+        border-radius: 4px;
+    }
+    
+    form {
+        gap: 15px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .login-container,
+    .register-container {
+        width: 400px;
+    }
 }
