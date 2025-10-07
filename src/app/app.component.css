@@ -1,0 +1,17 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100%;
+    background-color: #262626;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.content {
+    margin-left: 250px;
+    padding: 20px;
+    box-sizing: border-box;
+}
