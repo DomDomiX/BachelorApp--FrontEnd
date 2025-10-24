@@ -24,19 +24,40 @@ export class LoginComponent {
 
   constructor(public router: Router, private route: ActivatedRoute, private authService: AuthService) { }
 
-  register() {
-    if (this.isRegistering) {
-      this.authService.register({
-        username: this.username,
+   register() {
+    this.authService.register({
+      username: this.username,
+      email: this.email,
+      password: this.password
+    }).subscribe({
+      next: (res) => {
+        console.log("Registrace úspěšná:", res);
+        this.changeForm();
+      },
+      error: (err) => {
+        console.error("Chyba při registraci:", err);
+      }
+    });
+  }
+
+  login() {
+    if (!this.isRegistering) {
+      this.authService.login({
         email: this.email,
         password: this.password
       }).subscribe({
         next: (res) => {
-          console.log('Registration successful', res);
-          this.changeForm(); 
+          const user = {
+          name: `${res.userName}`
+        };
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("accessToken", res.accessToken);
+        this.router.navigate(['/dashboard']).then(() => {
+          window.location.reload(); 
+        });
         },
         error: (err) => {
-          console.error('Registration failed', err);
+          console.error('Login failed', err);
         }
       })
     } 

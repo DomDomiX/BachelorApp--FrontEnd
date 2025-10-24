@@ -5,14 +5,14 @@
             <form>
             <div>
                 <label tuiLabel>
-                    Username
+                    Email
                     <tui-textfield>
                         <input
-                            placeholder="Enter your username"
+                            placeholder="Enter your email"
                             tuiTextfield
                             type="text"
-                            [(ngModel)]="username"
-                            name="username"
+                            [(ngModel)]="email"
+                            name="email"
                             required
                         />
                     </tui-textfield>
@@ -34,7 +34,7 @@
                 </tui-textfield>
                 </label>
             </div>
-            <button appearance="primary" tuiButton type="button">Login</button>
+            <button appearance="primary" tuiButton type="button" (click)="login()">Login</button>
             <p>{{ isRegistering ? 'Already have an account? ' : "Don't have an account? " }} <span class="p-text" (click)="changeForm()">{{ isRegistering ? 'Login' : 'Register' }}</span></p>
         </form>
         </div>
@@ -91,6 +91,7 @@
                 </tui-textfield>
                 </label>
             </div>
+            
             <button appearance="primary" tuiButton type="button" (click)="register()">Register</button>
             <p>{{ isRegistering ? 'Already have an account? ' : "Don't have an account? " }} <span class="p-text" (click)="changeForm()">{{ isRegistering ? 'Login' : 'Register' }}</span></p>
         </form>
