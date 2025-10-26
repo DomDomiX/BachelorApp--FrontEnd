@@ -1,1 +1,213 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <!-- Header with user info and quick actions -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <h1>Dashboard</h1>
+      <div class="user-actions">
+        <button tuiButton appearance="outline" size="s">
+          <tui-icon>tuiIconSettings</tui-icon>
+          Settings
+        </button>
+        <button tuiButton appearance="outline" size="s">
+          <tui-icon>tuiIconLogOut</tui-icon>
+          Logout
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Dashboard Grid -->
+  <main class="dashboard-grid">
+    
+    <!-- Calendar Section -->
+    <section class="calendar-section">
+      <div class="section-header">
+        <h2>Calendar & Deadlines</h2>
+        <button tuiButton appearance="secondary" size="s">View All</button>
+      </div>
+      <div class="calendar-placeholder">
+        <!-- TODO: Implementovat kalendář -->
+        <div class="calendar-mock">
+          <div class="calendar-month">October 2025</div>
+          <div class="calendar-grid">
+            <div class="calendar-day today">25</div>
+            <div class="calendar-day has-deadline">28</div>
+            <div class="calendar-day">29</div>
+            <div class="calendar-day has-deadline">31</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Overview Section -->
+    <section class="projects-section">
+      <div class="section-header">
+        <h2>Projects Overview</h2>
+        <button tuiButton appearance="secondary" size="s">
+          <tui-icon>tuiIconPlus</tui-icon>
+          New Project
+        </button>
+      </div>
+      <div class="projects-list">
+        <!-- Project Card 1 -->
+        <div class="project-card">
+          <div class="project-info">
+            <h3>Bachelor Thesis App</h3>
+            <p>Frontend development with Angular & Taiga UI</p>
+          </div>
+          <div class="project-progress">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 65%"></div>
+            </div>
+            <span class="progress-text">65% Complete</span>
+          </div>
+          <div class="project-deadline">
+            <tui-icon>tuiIconCalendar</tui-icon>
+            Due: Dec 15, 2025
+          </div>
+        </div>
+
+        <!-- Project Card 2 -->
+        <div class="project-card">
+          <div class="project-info">
+            <h3>Database Design</h3>
+            <p>PostgreSQL schema and API endpoints</p>
+          </div>
+          <div class="project-progress">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 80%"></div>
+            </div>
+            <span class="progress-text">80% Complete</span>
+          </div>
+          <div class="project-deadline">
+            <tui-icon>tuiIconCalendar</tui-icon>
+            Due: Nov 30, 2025
+          </div>
+        </div>
+
+        <!-- Project Card 3 -->
+        <div class="project-card">
+          <div class="project-info">
+            <h3>User Authentication</h3>
+            <p>Login, register, JWT tokens</p>
+          </div>
+          <div class="project-progress">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 95%"></div>
+            </div>
+            <span class="progress-text">95% Complete</span>
+          </div>
+          <div class="project-deadline completed">
+            <tui-icon>tuiIconCheck</tui-icon>
+            Completed!
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Upcoming Deadlines & Important Tasks -->
+    <section class="deadlines-section">
+      <div class="section-header">
+        <h2>Upcoming Deadlines</h2>
+        <button tuiButton appearance="secondary" size="s">
+          <tui-icon>tuiIconPlus</tui-icon>
+          Add Task
+        </button>
+      </div>
+      <div class="deadlines-list">
+        <div class="deadline-item urgent">
+          <div class="deadline-priority"></div>
+          <div class="deadline-content">
+            <h4>Submit Chapter 3 Draft</h4>
+            <p>Bachelor thesis - theoretical framework</p>
+          </div>
+          <div class="deadline-date">
+            <tui-icon>tuiIconClock</tui-icon>
+            <span>In 3 days</span>
+          </div>
+        </div>
+
+        <div class="deadline-item medium">
+          <div class="deadline-priority"></div>
+          <div class="deadline-content">
+            <h4>Implement User Profile</h4>
+            <p>Frontend component with edit functionality</p>
+          </div>
+          <div class="deadline-date">
+            <tui-icon>tuiIconClock</tui-icon>
+            <span>In 1 week</span>
+          </div>
+        </div>
+
+        <div class="deadline-item low">
+          <div class="deadline-priority"></div>
+          <div class="deadline-content">
+            <h4>Code Review Meeting</h4>
+            <p>Supervisor feedback session</p>
+          </div>
+          <div class="deadline-date">
+            <tui-icon>tuiIconClock</tui-icon>
+            <span>In 2 weeks</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Stats Section -->
+    <section class="stats-section">
+      <div class="section-header">
+        <h2>Quick Stats</h2>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">3</div>
+          <div class="stat-label">Active Projects</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">7</div>
+          <div class="stat-label">Tasks This Week</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">2</div>
+          <div class="stat-label">Overdue Items</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">73%</div>
+          <div class="stat-label">Overall Progress</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recent Activity Section -->
+    <section class="activity-section">
+      <div class="section-header">
+        <h2>Recent Activity</h2>
+        <button tuiButton appearance="secondary" size="s">View All</button>
+      </div>
+      <div class="activity-list">
+        <div class="activity-item">
+          <tui-icon class="activity-icon">tuiIconCheck</tui-icon>
+          <div class="activity-content">
+            <p><strong>User Authentication</strong> marked as completed</p>
+            <span class="activity-time">2 hours ago</span>
+          </div>
+        </div>
+        <div class="activity-item">
+          <tui-icon class="activity-icon">tuiIconEdit</tui-icon>
+          <div class="activity-content">
+            <p>Updated <strong>Database Design</strong> progress to 80%</p>
+            <span class="activity-time">1 day ago</span>
+          </div>
+        </div>
+        <div class="activity-item">
+          <tui-icon class="activity-icon">tuiIconPlus</tui-icon>
+          <div class="activity-content">
+            <p>Added new task: <strong>Implement User Profile</strong></p>
+            <span class="activity-time">2 days ago</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>

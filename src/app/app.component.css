@@ -44,9 +44,11 @@
 }
 
 .content {
-    margin-left: 250px;
+    margin-left: 200px;
     padding: 20px;
     box-sizing: border-box;
+    background-color: #f8f9fa;
+    min-height: 100vh;
 }
 
 .logo {

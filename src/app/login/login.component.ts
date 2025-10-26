@@ -47,14 +47,11 @@ export class LoginComponent {
         password: this.password
       }).subscribe({
         next: (res) => {
-          const user = {
-          name: `${res.userName}`
-        };
-        localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("accessToken", res.accessToken);
-        this.router.navigate(['/dashboard']).then(() => {
-          window.location.reload(); 
-        });
+          console.log('Login successful:', res);
+          localStorage.setItem("accessToken", res.accessToken);
+          this.router.navigate(['/dashboard']).then(() => {
+            window.location.reload(); 
+          });
         },
         error: (err) => {
           console.error('Login failed', err);
