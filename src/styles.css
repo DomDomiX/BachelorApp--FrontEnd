@@ -1,1 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* GLOBÁLNÍ POZADÍ PRO CELOU APLIKACI */
+html, body {
+  background-color: #f8f9fa !important;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Angular root komponenta */
+app-root {
+  display: block;
+  background-color: #f8f9fa !important;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Taiga UI root */
+tui-root {
+  display: block;
+  background-color: #f8f9fa !important;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Základní reset pro všechny elementy */
+* {
+  box-sizing: border-box;
+}

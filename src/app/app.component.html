@@ -1,17 +1,25 @@
 <tui-root>
-    <div class="navbar">
+    <nav class="navbar">
         <div class="logo">DOM<span class="strike">IXO</span></div>
 
         <div class="nav-items">
-            <li>Dashboard</li>
-            <li>My Projects</li>
-            <li>Current Project</li>
-
-            <div class="nav-profile">
-                <li>Profile</li>
+            <div class="nav-item active">
+                🏠 Dashboard
+            </div>
+            <div class="nav-item">
+                📁 My Projects
+            </div>
+            <div class="nav-item">
+                📋 Current Project
             </div>
         </div>
-    </div>
+
+        <div class="nav-profile">
+            <div class="nav-item">
+                👤 Profile
+            </div>
+        </div>
+    </nav>
 
     <div class="content">
         <router-outlet></router-outlet>

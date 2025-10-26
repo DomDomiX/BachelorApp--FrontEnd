@@ -1,50 +1,88 @@
+/* Globální pozadí pro celou aplikaci */
+body {
+    background-color: #f8f9fa !important;
+    margin: 0;
+    padding: 0;
+} 
+
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     width: 220px;
-    height: 100%;
-    background-color: #262626;
-    color: white;
-    padding: 15px;
+    height: 100vh;
+    background: white;
+    border-radius: 0 12px 12px 0;
+    padding: 24px 16px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ecf0f1;
+}
+
+/* Reset pro li elementy */
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
 }
 
 .navbar li {
     list-style: none;
-    padding: 12px;
-    text-align: center;
+    padding: 0;
+    margin: 0;
     width: 100%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.navbar li:hover {
-    background-color: #404040;
+/* Náhrada za li - použijeme div s třídou nav-item */
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    color: #2c3e50;
+    font-weight: 500;
+    margin-bottom: 4px;
+    background: none;
+    border: none;
+}
+
+.nav-item:hover {
+    background-color: #f8f9fa;
+    transform: translateX(4px);
+    color: #3498db;
 }
 
 .nav-items {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     flex: 1;
+    margin-top: 20px;
 }
 
 .nav-profile {
     margin-top: auto;
-    margin-bottom: 20px;
+    margin-bottom: 0;
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+    padding-top: 16px;
+    border-top: 2px solid #ecf0f1;
 }
 
 .content {
-    margin-left: 200px;
+    margin-left: 220px;
     padding: 20px;
     box-sizing: border-box;
     background-color: #f8f9fa;
@@ -53,13 +91,52 @@
 
 .logo {
     font-family: 'Segoe UI', sans-serif;
-    font-size: 25px;
+    font-size: 28px;
     font-weight: bold;
-    color: #ffffff;
-    margin-bottom: 50px;
+    color: #2c3e50;
+    margin-bottom: 16px;
+    text-align: center;
+    padding: 16px 0;
+    border-bottom: 2px solid #ecf0f1;
+    width: 100%;
 }
 
 .logo .strike {
     text-decoration: line-through;
-    color: #ffffff;
+    color: #3498db;
+}
+
+/* Aktivní stav pro navigaci */
+.nav-item.active {
+    background-color: #3498db;
+    color: white;
+    transform: translateX(4px);
+}
+
+.nav-item.active:hover {
+    background-color: #2980b9;
+    color: white;
+}
+
+/* Ikony v navigaci */
+/* .nav-item už je definovaný výše */
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .navbar {
+        width: 200px;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        padding: 16px 12px;
+        border-radius: 0 8px 8px 0;
+    }
+    
+    .content {
+        margin-left: 200px;
+    }
+    
+    .logo {
+        font-size: 24px;
+    }
 }

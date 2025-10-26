@@ -1,9 +1,12 @@
 .container {
     width: 100%;
-    height: 80vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #f8f9fa;
+    padding: 40px 20px;
+    box-sizing: border-box;
 }
 
 .login-container {
@@ -11,15 +14,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 400px;
-    width: 90%;
-    max-width: 400px;
-    background-color: #f5f5f5;
-    border: 2px solid #000000;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 50px;
-    padding: 30px;
+    min-height: 450px;
+    width: 100%;
+    max-width: 450px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ecf0f1;
+    padding: 40px;
     box-sizing: border-box;
 }
 
@@ -28,18 +30,27 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 500px;
-    width: 90%;
-    max-width: 400px;
-    background-color: #f5f5f5;
-    border: 2px solid #000000;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 50px;
-    padding: 30px;
+    min-height: 550px;
+    width: 100%;
+    max-width: 450px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ecf0f1;
+    padding: 40px;
     box-sizing: border-box;
 }
 
+/* Stylování nadpisů */
+h2 {
+    color: #2c3e50;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+/* Formulář */
 tui-textfield {
     width: 100%;
     max-width: 100%;
@@ -49,54 +60,113 @@ form {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
 }
 
+/* Labels */
+label {
+    color: #2c3e50;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+/* Tlačítka */
 button {
-    margin-top: 10px;
+    margin-top: 16px;
     width: 100%;
+    height: 48px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #3498db !important;
+    border: none;
+    color: white;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    background-color: #2980b9 !important;
+}
+
+/* Text s odkazem */
+p {
+    text-align: center;
+    color: #7f8c8d;
+    margin-top: 24px;
+    font-size: 0.95rem;
 }
 
 .p-text {
     cursor: pointer;
-    color: rgb(96, 96, 255);
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.p-text:hover {
+    color: #2980b9;
     text-decoration: underline;
 }
 
-/* Media queries pro responzivní design */
+/* Responsive design - moderní přístup */
 @media (max-width: 768px) {
     .container {
         padding: 20px;
-        height: auto;
         min-height: 100vh;
     }
     
     .login-container,
     .register-container {
-        width: 95%;
-        margin-top: 20px;
-        padding: 20px;
+        max-width: 100%;
+        padding: 32px 24px;
         min-height: auto;
+    }
+    
+    h2 {
+        font-size: 1.75rem;
+        margin-bottom: 24px;
     }
 }
 
 @media (max-width: 480px) {
+    .container {
+        padding: 16px;
+    }
+    
     .login-container,
     .register-container {
-        width: 100%;
-        margin-top: 10px;
-        padding: 15px;
-        border-radius: 4px;
+        padding: 24px 20px;
+        border-radius: 8px;
+        max-width: 100%;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
     }
     
     form {
-        gap: 15px;
+        gap: 20px;
+    }
+    
+    button {
+        height: 44px;
+        font-size: 0.95rem;
     }
 }
 
 @media (min-width: 1200px) {
     .login-container,
     .register-container {
-        width: 400px;
+        max-width: 500px;
+        padding: 48px;
+    }
+    
+    h2 {
+        font-size: 2.25rem;
+        margin-bottom: 36px;
     }
 }
