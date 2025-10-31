@@ -89,6 +89,14 @@ body {
     min-height: 100vh;
 }
 
+.contentLoggedOut {
+    margin-left: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+} 
+
 .logo {
     font-family: 'Segoe UI', sans-serif;
     font-size: 28px;

@@ -17,6 +17,7 @@ export class LoginComponent {
   email = '';
   password = '';
   isRegistering = false;
+  loggedIn: boolean = false;
 
   changeForm() {
     this.isRegistering = !this.isRegistering;
@@ -33,6 +34,7 @@ export class LoginComponent {
       next: (res) => {
         console.log("Registrace úspěšná:", res);
         this.changeForm();
+        this.loggedIn = true;
       },
       error: (err) => {
         console.error("Chyba při registraci:", err);
@@ -49,6 +51,7 @@ export class LoginComponent {
         next: (res) => {
           console.log('Login successful:', res);
           localStorage.setItem("accessToken", res.accessToken);
+          this.loggedIn = true;
           this.router.navigate(['/dashboard']).then(() => {
             window.location.reload(); 
           });

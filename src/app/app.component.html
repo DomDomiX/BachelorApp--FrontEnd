@@ -1,27 +1,36 @@
 <tui-root>
-    <nav class="navbar">
-        <div class="logo">DOM<span class="strike">IXO</span></div>
+    @if (loggedIn) {
+        <nav class="navbar">
+            <div class="logo">DOM<span class="strike">IXO</span></div>
 
-        <div class="nav-items">
-            <div class="nav-item active">
-                🏠 Dashboard
+            <div class="nav-items">
+                <div class="nav-item active">
+                    🏠 Dashboard
+                </div>
+                <div class="nav-item">
+                    📁 My Projects
+                </div>
+                <div class="nav-item">
+                    📋 Current Project
+                </div>
             </div>
-            <div class="nav-item">
-                📁 My Projects
+
+            <div class="nav-profile">
+                <div class="nav-item">
+                    👤 Profile
+                </div>
             </div>
-            <div class="nav-item">
-                📋 Current Project
-            </div>
+        </nav>
+
+        <div class="content">
+            <router-outlet></router-outlet>
         </div>
-
-        <div class="nav-profile">
-            <div class="nav-item">
-                👤 Profile
-            </div>
+    } @else {
+        <div class="contentLoggedOut">
+            <router-outlet></router-outlet>
         </div>
-    </nav>
+    }  
+    
 
-    <div class="content">
-        <router-outlet></router-outlet>
-    </div>
+    
 </tui-root>
