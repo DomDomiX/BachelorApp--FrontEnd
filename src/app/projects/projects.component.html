@@ -7,23 +7,43 @@
         <p class="header-subtitle">Manage and track all your projects</p>
       </div>
       <div class="header-actions">
-        <button tuiButton appearance="secondary" size="m">
-          📊 View Statistics
-        </button>
-        <button tuiButton appearance="primary" size="m">
+        <button (click)="toggleCreateForm()" tuiButton appearance="primary" size="m">
           ➕ New Project
         </button>
       </div>
     </div>
   </header>
 
+  @if (showCreateForm) {
+    <div class="modal-overlay" (click)="toggleCreateForm()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h2>Create New Project</h2>
+          <button class="close-button" (click)="toggleCreateForm()">✖</button>
+        </div>
+        <form class="project-form">
+          <!-- Formulář bude zde -->
+          <p>Formulář pro vytvoření projektu...</p>
+          
+          <div class="form-actions">
+            <button type="button" (click)="toggleCreateForm()" tuiButton appearance="secondary" size="m">
+              Cancel
+            </button>
+            <button type="submit" tuiButton appearance="primary" size="m">
+              Create Project
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+
+
+
+
   <!-- Filtry a vyhledávání -->
   <section class="filters-section">
     <div class="filters-content">
-      <div class="search-bar">
-        <input type="text" placeholder="Search projects..." class="search-input">
-        <span class="search-icon">🔍</span>
-      </div>
       <div class="filter-buttons">
         <button class="filter-btn active">All Projects</button>
         <button class="filter-btn">Active</button>

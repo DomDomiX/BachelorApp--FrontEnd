@@ -8,5 +8,10 @@ import { TuiButton } from '@taiga-ui/core';
   styleUrl: './projects.component.css'
 })
 export class ProjectsComponent {
+  showCreateForm: boolean = false;
 
+  toggleCreateForm() {
+    this.showCreateForm = !this.showCreateForm;
+    console.log('Create form visibility:', this.showCreateForm);
+  }
 }

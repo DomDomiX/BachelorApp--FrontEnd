@@ -8,7 +8,7 @@ import { Observable, tap } from 'rxjs';
 export class AuthService {
     private apiUrl = 'http://localhost:3000/api/auth';    
 
-    constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) { }
+    constructor(private http: HttpClient) { }
 
     // Metoda pro registraci uživatele
     register(data: {username: string, email: string, password: string }): Observable<any> {

@@ -393,3 +393,172 @@
     padding: 3px 8px;
   }
 }
+
+/* === CSS PRO FORMULÁŘ - OKNO === */
+
+/* Hlavní kontejner formuláře */
+/* === MODAL OVERLAY - FULLSCREEN FORMULÁŘ === */
+
+/* Pozadí modal overlay - přes celou obrazovku */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Modal obsah - bílé okno uprostřed */
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.3s ease-out;
+  position: relative;
+}
+
+/* Modal header s nadpisem a close tlačítkem */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 16px 24px;
+  border-bottom: 2px solid #f1f3f4;
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Close tlačítko */
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #7f8c8d;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.close-button:hover {
+  background-color: #f8f9fa;
+  color: #3498db;
+  transform: scale(1.1);
+}
+
+/* Formulář uvnitř modalu */
+.project-form {
+  padding: 24px;
+}
+
+/* Form actions - tlačítka dole */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #f1f3f4;
+}
+
+/* Animace pro zobrazení */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Responsive pro mobily */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    max-height: 95vh;
+    margin: 10px;
+  }
+  
+  .modal-header {
+    padding: 20px 20px 12px 20px;
+  }
+  
+  .project-form {
+    padding: 20px;
+  }
+  
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+  
+  .form-actions button {
+    width: 100%;
+  }
+}
+
+/* === CUSTOM TAIGA UI BUTTON STYLING === */
+
+/* Primary tlačítka - naše modrá barva */
+button[tuiButton][data-appearance="primary"] {
+  background-color: #3498db !important;
+  border-color: #3498db !important;
+  color: white !important;
+}
+
+button[tuiButton][data-appearance="primary"]:hover {
+  background-color: #2980b9 !important;
+  border-color: #2980b9 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3) !important;
+}
+
+button[tuiButton][data-appearance="primary"]:active {
+  background-color: #21618c !important;
+  border-color: #21618c !important;
+  transform: translateY(0);
+}
+
+/* Secondary tlačítka - lehce šedá s modrou při hoveru */
+button[tuiButton][data-appearance="secondary"] {
+  background-color: #f8f9fa !important;
+  border-color: #e9ecef !important;
+  color: #6c757d !important;
+}
+
+button[tuiButton][data-appearance="secondary"]:hover {
+  background-color: #e9ecef !important;
+  border-color: #3498db !important;
+  color: #3498db !important;
+}
