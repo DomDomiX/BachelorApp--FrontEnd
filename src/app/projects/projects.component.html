@@ -22,14 +22,65 @@
           <button class="close-button" (click)="toggleCreateForm()">✖</button>
         </div>
         <form class="project-form">
-          <!-- Formulář bude zde -->
-          <p>Formulář pro vytvoření projektu...</p>
+          
+          <!-- Název projektu -->
+          <div class="form-group">
+            <label class="form-label">Project Name *</label>
+            <input 
+              type="text" 
+              class="form-input" 
+              placeholder="Enter project name" 
+              [(ngModel)]="projectName"
+              name="projectName"
+            />
+          </div>
+
+          <!-- Popis projektu -->
+          <div class="form-group">
+            <label class="form-label">Description *</label>
+            <textarea 
+              class="form-textarea" 
+              rows="2" 
+              placeholder="Enter project description"
+              [(ngModel)]="projectDescription"
+              name="projectDescription"
+            ></textarea>
+          </div>
+
+          <!-- Technologie -->
+          <div class="form-group">
+            <label class="form-label">Technologies *</label>
+            <div class="tech-selection">
+              @for (tech of technologies; track tech.id) {
+                <div
+                  class="tech-chip"
+                  [class.selected]="isSelected(tech.id)"
+                  (click)="toggleSelection(tech.id)"
+                >
+                  {{ tech.name }}
+                </div>
+              } @empty {
+                <div>Loading technologies...</div>
+              }
+            </div>
+          </div>
+
+          <!-- Deadline -->
+          <div class="form-group">
+            <label class="form-label">Deadline *</label>
+            <input 
+              type="date" 
+              class="form-input"
+              [(ngModel)]="projectDeadline"
+              name="projectDeadline"
+            />
+          </div>
           
           <div class="form-actions">
             <button type="button" (click)="toggleCreateForm()" tuiButton appearance="secondary" size="m">
               Cancel
             </button>
-            <button type="submit" tuiButton appearance="primary" size="m">
+            <button type="submit" (click)="createProject()" tuiButton appearance="primary" size="m">
               Create Project
             </button>
           </div>
@@ -37,9 +88,6 @@
       </div>
     </div>
   }
-
-
-
 
   <!-- Filtry a vyhledávání -->
   <section class="filters-section">
@@ -56,246 +104,64 @@
   <!-- Projekt grid -->
   <main class="projects-grid">
     
-    <!-- Project Card 1 -->
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-status active">Active</div>
-        <div class="project-menu">⋮</div>
-      </div>
-      <div class="project-content">
-        <h3>Bachelor Thesis Application</h3>
-        <p class="project-description">Full-stack web application for thesis management with Angular frontend and Node.js backend</p>
-        <div class="project-tech">
-          <span class="tech-tag">Angular</span>
-          <span class="tech-tag">TypeScript</span>
-          <span class="tech-tag">Node.js</span>
-          <span class="tech-tag">PostgreSQL</span>
-        </div>
-      </div>
-      <div class="project-progress">
-        <div class="progress-info">
-          <span class="progress-label">Overall Progress</span>
-          <span class="progress-percentage">68%</span>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width: 68%"></div>
-        </div>
-      </div>
-      <div class="project-meta">
-        <div class="project-deadline">
-          <span class="deadline-icon">📅</span>
-          <span>Due: Dec 15, 2025</span>
-        </div>
-        <div class="project-team">
-          <span class="team-icon">👤</span>
-          <span>Solo Project</span>
-        </div>
-      </div>
-      <div class="project-actions">
-        <button tuiButton appearance="outline" size="s">View Details</button>
-        <button tuiButton appearance="primary" size="s">Continue Work</button>
-      </div>
-    </div>
+    @if (loading) {
+      <div class="loading-message">Načítám projekty...</div>
+    }
 
-    <!-- Project Card 2 -->
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-status completed">Completed</div>
-        <div class="project-menu">⋮</div>
-      </div>
-      <div class="project-content">
-        <h3>User Authentication System</h3>
-        <p class="project-description">Secure login and registration system with JWT tokens and password encryption</p>
-        <div class="project-tech">
-          <span class="tech-tag">JWT</span>
-          <span class="tech-tag">bcrypt</span>
-          <span class="tech-tag">Express</span>
-        </div>
-      </div>
-      <div class="project-progress">
-        <div class="progress-info">
-          <span class="progress-label">Overall Progress</span>
-          <span class="progress-percentage">100%</span>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill completed" style="width: 100%"></div>
-        </div>
-      </div>
-      <div class="project-meta">
-        <div class="project-deadline completed">
-          <span class="deadline-icon">✅</span>
-          <span>Completed: Oct 20, 2025</span>
-        </div>
-        <div class="project-team">
-          <span class="team-icon">👤</span>
-          <span>Solo Project</span>
-        </div>
-      </div>
-      <div class="project-actions">
-        <button tuiButton appearance="outline" size="s">View Details</button>
-        <button tuiButton appearance="secondary" size="s">Archive</button>
-      </div>
-    </div>
+    @if (error) {
+      <div class="error-message">{{ error }}</div>
+    }
 
-    <!-- Project Card 3 -->
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-status planning">Planning</div>
-        <div class="project-menu">⋮</div>
+    @if (!loading && !error && projects.length === 0) {
+      <div class="empty-message">
+        <p>Zatím nemáte žádné projekty.</p>
+        <p>Klikněte na "New Project" pro vytvoření prvního projektu.</p>
       </div>
-      <div class="project-content">
-        <h3>Mobile App Development</h3>
-        <p class="project-description">Cross-platform mobile application using React Native for project management</p>
-        <div class="project-tech">
-          <span class="tech-tag">React Native</span>
-          <span class="tech-tag">Expo</span>
-          <span class="tech-tag">TypeScript</span>
-        </div>
-      </div>
-      <div class="project-progress">
-        <div class="progress-info">
-          <span class="progress-label">Overall Progress</span>
-          <span class="progress-percentage">15%</span>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width: 15%"></div>
-        </div>
-      </div>
-      <div class="project-meta">
-        <div class="project-deadline">
-          <span class="deadline-icon">📅</span>
-          <span>Due: Mar 30, 2026</span>
-        </div>
-        <div class="project-team">
-          <span class="team-icon">👥</span>
-          <span>Team of 3</span>
-        </div>
-      </div>
-      <div class="project-actions">
-        <button tuiButton appearance="outline" size="s">View Details</button>
-        <button tuiButton appearance="primary" size="s">Start Planning</button>
-      </div>
-    </div>
+    }
 
-    <!-- Project Card 4 -->
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-status active">Active</div>
-        <div class="project-menu">⋮</div>
-      </div>
-      <div class="project-content">
-        <h3>Database Architecture</h3>
-        <p class="project-description">Design and implementation of scalable database schema with optimization</p>
-        <div class="project-tech">
-          <span class="tech-tag">PostgreSQL</span>
-          <span class="tech-tag">Prisma</span>
-          <span class="tech-tag">Redis</span>
+    @for (project of projects; track project.id) {
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-status active">{{ project.status }}</div>
+        </div>
+        <div class="project-content">
+          <h3>{{ project.name }}</h3>
+          <p class="project-description">{{ project.description }}</p>
+          <div class="project-tech">
+            @if (project.technologies && project.technologies.length > 0) {
+              @for (tech of project.technologies; track tech) {
+                <span class="tech-tag">{{ tech }}</span>
+              }
+            } @else {
+              <span class="tech-tag">No technologies</span>
+            }
+          </div>
+        </div>
+        <div class="project-progress">
+          <div class="progress-info">
+            <span class="progress-label">Overall Progress</span>
+            <span class="progress-percentage">{{ project.progress || 0 }}%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="project.progress || 0"></div>
+          </div>
+        </div>
+        <div class="project-meta">
+          <div class="project-deadline">
+            <span class="deadline-icon">📅</span>
+            <span>Due: {{ project.deadline | date:'MMM d, y' }}</span>
+          </div>
+          <div class="project-team">
+            <span class="team-icon">👤</span>
+            <span>Solo Project</span>
+          </div>
+        </div>
+        <div class="project-actions">
+          <button tuiButton appearance="outline" size="s">View Details</button>
+          <button tuiButton appearance="primary" size="s">Continue Work</button>
         </div>
       </div>
-      <div class="project-progress">
-        <div class="progress-info">
-          <span class="progress-label">Overall Progress</span>
-          <span class="progress-percentage">82%</span>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width: 82%"></div>
-        </div>
-      </div>
-      <div class="project-meta">
-        <div class="project-deadline">
-          <span class="deadline-icon">📅</span>
-          <span>Due: Nov 30, 2025</span>
-        </div>
-        <div class="project-team">
-          <span class="team-icon">👤</span>
-          <span>Solo Project</span>
-        </div>
-      </div>
-      <div class="project-actions">
-        <button tuiButton appearance="outline" size="s">View Details</button>
-        <button tuiButton appearance="primary" size="s">Continue Work</button>
-      </div>
-    </div>
-
-    <!-- Project Card 5 -->
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-status hold">On Hold</div>
-        <div class="project-menu">⋮</div>
-      </div>
-      <div class="project-content">
-        <h3>API Documentation</h3>
-        <p class="project-description">Comprehensive API documentation using Swagger and interactive examples</p>
-        <div class="project-tech">
-          <span class="tech-tag">Swagger</span>
-          <span class="tech-tag">OpenAPI</span>
-          <span class="tech-tag">Markdown</span>
-        </div>
-      </div>
-      <div class="project-progress">
-        <div class="progress-info">
-          <span class="progress-label">Overall Progress</span>
-          <span class="progress-percentage">45%</span>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width: 45%"></div>
-        </div>
-      </div>
-      <div class="project-meta">
-        <div class="project-deadline">
-          <span class="deadline-icon">⏸️</span>
-          <span>Paused until Q1 2026</span>
-        </div>
-        <div class="project-team">
-          <span class="team-icon">👤</span>
-          <span>Solo Project</span>
-        </div>
-      </div>
-      <div class="project-actions">
-        <button tuiButton appearance="outline" size="s">View Details</button>
-        <button tuiButton appearance="secondary" size="s">Resume</button>
-      </div>
-    </div>
-
-    <!-- Project Card 6 -->
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-status active">Active</div>
-        <div class="project-menu">⋮</div>
-      </div>
-      <div class="project-content">
-        <h3>UI/UX Design System</h3>
-        <p class="project-description">Comprehensive design system with components, guidelines and style guide</p>
-        <div class="project-tech">
-          <span class="tech-tag">Figma</span>
-          <span class="tech-tag">Design Tokens</span>
-          <span class="tech-tag">Storybook</span>
-        </div>
-      </div>
-      <div class="project-progress">
-        <div class="progress-info">
-          <span class="progress-label">Overall Progress</span>
-          <span class="progress-percentage">35%</span>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width: 35%"></div>
-        </div>
-      </div>
-      <div class="project-meta">
-        <div class="project-deadline">
-          <span class="deadline-icon">📅</span>
-          <span>Due: Jan 15, 2026</span>
-        </div>
-        <div class="project-team">
-          <span class="team-icon">👥</span>
-          <span>Team of 2</span>
-        </div>
-      </div>
-      <div class="project-actions">
-        <button tuiButton appearance="outline" size="s">View Details</button>
-        <button tuiButton appearance="primary" size="s">Continue Work</button>
-      </div>
-    </div>
-
+    }
+    
   </main>
 </div>

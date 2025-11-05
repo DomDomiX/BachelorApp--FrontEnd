@@ -8,6 +8,7 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class ProjectService {
     private apiUrl = 'http://localhost:3000/api';
+    private apiTech = 'http://localhost:3000/api/public';
 
     constructor(
         private http: HttpClient, 
@@ -31,7 +32,11 @@ export class ProjectService {
     }
 
     getTechnologies(): Observable<any> {
-        return this.http.get(`${this.apiUrl}/technology`);
+        return this.http.get(`${this.apiTech}/technology`);
+    }
+
+    getProjectTechnologies(projectId: number): Observable<any> { 
+        return this.http.get(`${this.apiTech}/projectTechnologies?projectId=${projectId}`);
     }
 
     createProject(data: {name: string, description: string, technologies: string[], status: string, progress: number}, deadline: Date): Observable<any> {
@@ -47,6 +52,6 @@ export class ProjectService {
         });
 
         console.log('Posílaná hlavička:', headers.get('Authorization'));
-        return this.http.post(`${this.apiUrl}/projects`, { data, deadline }, { headers });
+        return this.http.post(`${this.apiUrl}/create-project`, { data, deadline }, { headers });
     }
 }

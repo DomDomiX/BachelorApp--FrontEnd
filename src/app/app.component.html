@@ -10,14 +10,11 @@
                 <div class="nav-item" [class.active]="isActiveRoute('/projects')">
                     <a routerLink="/projects">📁 My Projects</a>
                 </div>
-                <div class="nav-item">
-                    <a href="#" (click)="$event.preventDefault()">📋 Current Project</a>
-                </div>
             </div>
 
             <div class="nav-profile">
                 <div class="nav-item">
-                    <a href="#" (click)="$event.preventDefault()">👤 Profile</a>
+                    <a href="#">👤 Profile</a>
                 </div>
                 <div class="nav-item logout-btn" (click)="logout()">
                     🚪 Logout

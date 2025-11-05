@@ -178,6 +178,7 @@
   gap: 8px;
   font-size: 0.9rem;
   color: #e67e22;
+  margin-left: -30px;
 }
 
 .project-deadline.completed {
