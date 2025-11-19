@@ -141,12 +141,35 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  position: relative;
 }
 
 .project-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   border-color: #3498db;
+}
+
+/* Delete button */
+.delete-project-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: #bdc3c7;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.delete-project-btn:hover {
+  background: #fdf2f2;
+  color: #e74c3c;
+  transform: scale(1.1);
 }
 
 /* Project Header */
@@ -161,26 +184,27 @@
   border-radius: 16px;
   font-size: 0.85rem;
   font-weight: 600;
-  text-transform: uppercase;
+  text-transform: capitalize;
   letter-spacing: 0.5px;
 }
 
-.project-status.active {
+.project-status[data-status="active"] {
   background: #e8f5e8;
   color: #27ae60;
 }
 
-.project-status.completed {
+.project-status[data-status="completed"] {
   background: #e3f2fd;
   color: #2196f3;
 }
 
-.project-status.planning {
+.project-status[data-status="planning"] {
   background: #fff3e0;
   color: #f57c00;
 }
 
-.project-status.hold {
+.project-status[data-status="on-hold"],
+.project-status[data-status="hold"] {
   background: #fce4ec;
   color: #e91e63;
 }

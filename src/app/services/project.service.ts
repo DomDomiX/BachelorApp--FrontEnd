@@ -68,4 +68,18 @@ export class ProjectService {
         
         return this.http.patch(`${this.apiUrl}/projects/${projectId}/status`, { status }, { headers });
     }
+
+    deleteProject(projectId: number): Observable<any> {
+        const token = localStorage.getItem('accessToken');
+        
+        if (!token) {
+            throw new Error('No token found');
+        }
+        
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${token}`,
+        });
+        
+        return this.http.delete(`${this.apiUrl}/projects/${projectId}`, { headers });
+    }
 }

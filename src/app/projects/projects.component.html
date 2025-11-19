@@ -121,8 +121,9 @@
 
     @for (project of projects; track project.id) {
       <div class="project-card">
+        <button class="delete-project-btn" (click)="deleteProject(project)" title="Delete project">✖</button>
         <div class="project-header">
-          <div class="project-status active">{{ project.status }}</div>
+          <div class="project-status" [attr.data-status]="project.status">{{ project.status }}</div>
         </div>
         <div class="project-content">
           <h3>{{ project.name }}</h3>
