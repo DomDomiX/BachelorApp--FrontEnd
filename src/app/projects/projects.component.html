@@ -151,17 +151,57 @@
             <span class="deadline-icon">📅</span>
             <span>Due: {{ project.deadline | date:'MMM d, y' }}</span>
           </div>
-          <div class="project-team">
-            <span class="team-icon">👤</span>
-            <span>Solo Project</span>
-          </div>
         </div>
         <div class="project-actions">
-          <button tuiButton appearance="outline" size="s">View Details</button>
+          <button (click)="openEditStatusModal(project)" tuiButton appearance="outline" size="s" class="edit-status-btn">Edit status</button>
           <button tuiButton appearance="primary" size="s">Continue Work</button>
         </div>
       </div>
     }
     
   </main>
+
+  <!-- Edit Status Modal -->
+  @if (showEditStatusModal) {
+    <div class="modal-overlay" (click)="closeEditStatusModal()">
+      <div class="modal-content status-modal" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h2>Edit Project Status</h2>
+          <button class="close-button" (click)="closeEditStatusModal()">✖</button>
+        </div>
+        
+        <div class="status-modal-body">
+          <p class="project-info">
+            <strong>Project:</strong> {{ editingProject?.name }}
+          </p>
+          
+          <div class="form-group">
+            <label class="form-label">Select New Status</label>
+            <div class="status-options">
+              @for (status of availableStatuses; track status) {
+                <div 
+                  class="status-option"
+                  [class.selected]="newStatus === status"
+                  (click)="newStatus = status"
+                >
+                  <div class="status-badge" [attr.data-status]="status">
+                    {{ status }}
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+          
+          <div class="modal-actions">
+            <button type="button" (click)="closeEditStatusModal()" tuiButton appearance="secondary" size="m">
+              Cancel
+            </button>
+            <button type="button" (click)="updateStatus()" tuiButton appearance="primary" size="m">
+              Update Status
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
 </div>

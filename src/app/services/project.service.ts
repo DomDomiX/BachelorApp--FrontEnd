@@ -54,4 +54,18 @@ export class ProjectService {
         console.log('Posílaná hlavička:', headers.get('Authorization'));
         return this.http.post(`${this.apiUrl}/create-project`, { data, deadline }, { headers });
     }
+
+    updateProjectStatus(projectId: number, status: string): Observable<any> {
+        const token = localStorage.getItem('accessToken');
+        
+        if (!token) {
+            throw new Error('No token found');
+        }
+        
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${token}`,
+        });
+        
+        return this.http.patch(`${this.apiUrl}/projects/${projectId}/status`, { status }, { headers });
+    }
 }

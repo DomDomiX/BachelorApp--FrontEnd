@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 })
 export class ProjectsComponent implements OnInit {
   showCreateForm: boolean = false;
+  showEditStatusModal: boolean = false;
   technologies: any[] = []; 
   selectedTechnologies: string[] = []; 
 
@@ -24,6 +25,11 @@ export class ProjectsComponent implements OnInit {
   loading: boolean = true;
   error: string | null = null;
 
+  // Edit status modal
+  editingProject: any = null;
+  newStatus: string = '';
+  availableStatuses: string[] = ['planning', 'active', 'completed', 'on-hold'];
+
   constructor(private projectService: ProjectService) { }
 
   ngOnInit() {
@@ -34,6 +40,39 @@ export class ProjectsComponent implements OnInit {
   toggleCreateForm() {
     this.showCreateForm = !this.showCreateForm;
     console.log('Create form visibility:', this.showCreateForm);
+  }
+
+  openEditStatusModal(project: any) {
+    this.editingProject = project;
+    this.newStatus = project.status || 'planning';
+    this.showEditStatusModal = true;
+  }
+
+  closeEditStatusModal() {
+    this.showEditStatusModal = false;
+    this.editingProject = null;
+    this.newStatus = '';
+  }
+
+  updateStatus() {
+    if (!this.editingProject || !this.newStatus) {
+      alert('Please select a status');
+      return;
+    }
+
+    this.projectService.updateProjectStatus(this.editingProject.id, this.newStatus).subscribe({
+      next: (res) => {
+        console.log('Status updated:', res);
+        // Update local project status
+        this.editingProject.status = this.newStatus;
+        this.closeEditStatusModal();
+        alert('Project status updated successfully!');
+      },
+      error: (error) => {
+        console.error('Error updating status:', error);
+        alert('Failed to update project status');
+      }
+    });
   }
 
   loadProjects() {

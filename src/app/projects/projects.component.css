@@ -313,6 +313,17 @@
   min-width: 120px;
 }
 
+/* Edit status button - red styling */
+.project-actions .edit-status-btn {
+  background: linear-gradient(135deg, #e53935 0%, #c62828 100%) !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+.project-actions .edit-status-btn:hover {
+  filter: brightness(0.95);
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .projects-grid {
@@ -749,5 +760,86 @@ button[tuiButton][data-appearance="secondary"]:hover {
   .form-select {
     font-size: 0.95rem;
   }
+}
+
+/* Status Edit Modal */
+.status-modal {
+  max-width: 500px;
+}
+
+.status-modal-body {
+  padding: 24px;
+}
+
+.project-info {
+  background: #f8f9fa;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border-left: 4px solid #3498db;
+  margin-bottom: 24px;
+  color: #2c3e50;
+}
+
+.status-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.status-option {
+  padding: 16px;
+  border: 2px solid #ecf0f1;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.status-option:hover {
+  border-color: #3498db;
+  background: #f8f9fa;
+}
+
+.status-option.selected {
+  border-color: #3498db;
+  background: #e3f2fd;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.status-badge {
+  padding: 8px 16px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  display: inline-block;
+}
+
+.status-badge[data-status="planning"] {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.status-badge[data-status="active"] {
+  background: #e8f5e8;
+  color: #27ae60;
+}
+
+.status-badge[data-status="completed"] {
+  background: #e3f2fd;
+  color: #2196f3;
+}
+
+.status-badge[data-status="on-hold"] {
+  background: #fce4ec;
+  color: #e91e63;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
 }
 
