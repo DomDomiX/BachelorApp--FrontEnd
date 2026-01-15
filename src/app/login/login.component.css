@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f8f9fa;
+    background-color: #0a0e27;
     padding: 40px 20px;
     box-sizing: border-box;
 }
@@ -17,10 +17,10 @@
     min-height: 450px;
     width: 100%;
     max-width: 450px;
-    background: white;
+    background: #161b33;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ecf0f1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    border: 1px solid #1e2541;
     padding: 40px;
     box-sizing: border-box;
 }
@@ -33,17 +33,17 @@
     min-height: 550px;
     width: 100%;
     max-width: 450px;
-    background: white;
+    background: #161b33;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ecf0f1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    border: 1px solid #1e2541;
     padding: 40px;
     box-sizing: border-box;
 }
 
 /* Stylování nadpisů */
 h2 {
-    color: #2c3e50;
+    color: #e4e6eb;
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 32px;
@@ -65,7 +65,7 @@ form {
 
 /* Labels */
 label {
-    color: #2c3e50;
+    color: #e4e6eb;
     font-weight: 500;
     margin-bottom: 8px;
 }
@@ -79,23 +79,33 @@ button {
     font-weight: 600;
     font-size: 1rem;
     transition: all 0.3s ease;
-    background-color: #3498db !important;
+    background-color: #4a9eff !important;
     border: none;
     color: white;
 }
 
 button:hover {
+    background-color: #3788e6 !important;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
-    background-color: #2980b9 !important;
+    box-shadow: 0 4px 12px rgba(74, 158, 255, 0.3);
 }
 
 /* Text s odkazem */
 p {
     text-align: center;
-    color: #7f8c8d;
+    color: #a0a3bd;
     margin-top: 24px;
     font-size: 0.95rem;
+}
+
+a {
+    color: #4a9eff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #6bb3ff;
+    text-decoration: underline;
 }
 
 .p-text {

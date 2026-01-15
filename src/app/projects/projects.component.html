@@ -4,7 +4,6 @@
     <div class="header-content">
       <div class="header-info">
         <h1>My Projects</h1>
-        <p class="header-subtitle">Manage and track all your projects</p>
       </div>
       <div class="header-actions">
         <button (click)="toggleCreateForm()" tuiButton appearance="primary" size="m">
@@ -12,6 +11,38 @@
         </button>
       </div>
     </div>
+
+    <!-- Filtry a vyhledávání -->
+  <section class="filters-section">
+    <div class="filters-content">
+      <div class="filter-buttons">
+        <button 
+          class="filter-btn" 
+          [class.active]="selectedFilter === 'all'"
+          (click)="setFilter('all')">
+          All Projects
+        </button>
+        <button 
+          class="filter-btn" 
+          [class.active]="selectedFilter === 'active'"
+          (click)="setFilter('active')">
+          Active
+        </button>
+        <button 
+          class="filter-btn" 
+          [class.active]="selectedFilter === 'completed'"
+          (click)="setFilter('completed')">
+          Completed
+        </button>
+        <button 
+          class="filter-btn" 
+          [class.active]="selectedFilter === 'on-hold'"
+          (click)="setFilter('on-hold')">
+          On Hold
+        </button>
+      </div>
+    </div>
+  </section>
   </header>
 
   @if (showCreateForm) {
@@ -89,18 +120,6 @@
     </div>
   }
 
-  <!-- Filtry a vyhledávání -->
-  <section class="filters-section">
-    <div class="filters-content">
-      <div class="filter-buttons">
-        <button class="filter-btn active">All Projects</button>
-        <button class="filter-btn">Active</button>
-        <button class="filter-btn">Completed</button>
-        <button class="filter-btn">On Hold</button>
-      </div>
-    </div>
-  </section>
-
   <!-- Projekt grid -->
   <main class="projects-grid">
     
@@ -112,14 +131,14 @@
       <div class="error-message">{{ error }}</div>
     }
 
-    @if (!loading && !error && projects.length === 0) {
+    @if (!loading && !error && filteredProjects.length === 0) {
       <div class="empty-message">
         <p>Zatím nemáte žádné projekty.</p>
         <p>Klikněte na "New Project" pro vytvoření prvního projektu.</p>
       </div>
     }
 
-    @for (project of projects; track project.id) {
+    @for (project of filteredProjects; track project.id) {
       <div class="project-card">
         <button class="delete-project-btn" (click)="deleteProject(project)" title="Delete project">✖</button>
         <div class="project-header">

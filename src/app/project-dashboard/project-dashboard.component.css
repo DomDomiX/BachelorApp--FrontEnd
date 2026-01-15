@@ -1,0 +1,87 @@
+/* Project Dashboard - Dark Mode Minimalist Design */
+
+.project-dashboard-container {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  background-color: #0a0e27;
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  background: #161b33;
+  border: 1px solid #1e2541;
+  border-left: 3px solid #4a9eff;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.dashboard-header h1 {
+  margin: 0 0 8px 0;
+  color: #e4e6eb;
+  font-size: 2rem;
+}
+
+.dashboard-header p {
+  margin: 0;
+  color: #a0a3bd;
+  font-size: 1rem;
+}
+
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.section {
+  background: #161b33;
+  border: 1px solid #1e2541;
+  padding: 20px;
+}
+
+.section-title {
+  color: #e4e6eb;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #1e2541;
+}
+
+.content-block {
+  background: #0a0e27;
+  border: 1px solid #1e2541;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.content-block h3 {
+  color: #e4e6eb;
+  font-size: 1rem;
+  margin: 0 0 8px 0;
+}
+
+.content-block p {
+  color: #a0a3bd;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-dashboard-container {
+    padding: 16px;
+  }
+  
+  .dashboard-header,
+  .section {
+    padding: 16px;
+  }
+}

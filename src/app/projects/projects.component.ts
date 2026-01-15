@@ -25,6 +25,9 @@ export class ProjectsComponent implements OnInit {
   loading: boolean = true;
   error: string | null = null;
 
+  // Filter
+  selectedFilter: string = 'all';
+
   // Edit status modal
   editingProject: any = null;
   newStatus: string = '';
@@ -34,7 +37,18 @@ export class ProjectsComponent implements OnInit {
 
   ngOnInit() {
     this.loadTechnologies();
-    this.loadProjects(); // Technologie pro projekty se načtou automaticky
+    this.loadProjects(); 
+  }
+
+  setFilter(filter: string) {
+    this.selectedFilter = filter;
+  }
+
+  get filteredProjects() {
+    if (this.selectedFilter === 'all') {
+      return this.projects;
+    }
+    return this.projects.filter(p => p.status === this.selectedFilter);
   }
 
   toggleCreateForm() {

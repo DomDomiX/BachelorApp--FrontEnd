@@ -1,21 +1,20 @@
-/* Projects Page - Moderní design konzistentní s dashboardem */
+/* Projects Page - Dark Mode Minimalist Design */
 
 .projects-container {
   padding: 20px;
   max-width: 1400px;
   margin: 0 auto;
-  background-color: #f8f9fa;
+  background-color: #0a0e27;
   min-height: 100vh;
 }
 
 /* Header sekce */
 .projects-header {
-  background: white;
-  border-radius: 12px;
+  background: #161b33;
+  border: 1px solid #1e2541;
+  border-left: 3px solid #4a9eff;
   padding: 24px;
   margin-bottom: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid #ecf0f1;
 }
 
 .header-content {
@@ -28,14 +27,14 @@
 
 .header-info h1 {
   margin: 0 0 8px 0;
-  color: #2c3e50;
+  color: #e4e6eb;
   font-size: 2.25rem;
   font-weight: bold;
 }
 
 .header-subtitle {
   margin: 0;
-  color: #7f8c8d;
+  color: #a0a3bd;
   font-size: 1.1rem;
 }
 
@@ -47,12 +46,10 @@
 
 /* Filtry a vyhledávání */
 .filters-section {
-  background: white;
-  border-radius: 12px;
+  background: #161b33;
+  border: 1px solid #1e2541;
   padding: 20px 24px;
   margin-bottom: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid #ecf0f1;
 }
 
 .filters-content {
@@ -72,18 +69,17 @@
 .search-input {
   width: 100%;
   padding: 12px 16px 12px 44px;
-  border: 2px solid #ecf0f1;
-  border-radius: 8px;
+  border: 1px solid #1e2541;
   font-size: 1rem;
   transition: all 0.3s ease;
-  background: #f8f9fa;
+  background: #0a0e27;
+  color: #e4e6eb;
 }
 
 .search-input:focus {
   outline: none;
-  border-color: #3498db;
-  background: white;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  border-color: #4a9eff;
+  background: #161b33;
 }
 
 .search-icon {
@@ -91,7 +87,7 @@
   left: 16px;
   top: 50%;
   transform: translateY(-50%);
-  color: #7f8c8d;
+  color: #a0a3bd;
   font-size: 1.1rem;
 }
 
@@ -103,24 +99,24 @@
 
 .filter-btn {
   padding: 8px 16px;
-  border: 2px solid #ecf0f1;
-  background: white;
-  border-radius: 20px;
+  border: 1px solid #1e2541;
+  background: #0a0e27;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 500;
-  color: #7f8c8d;
+  color: #a0a3bd;
 }
 
 .filter-btn:hover {
-  border-color: #3498db;
-  color: #3498db;
+  border-color: #4a9eff;
+  color: #4a9eff;
+  background: #161b33;
 }
 
 .filter-btn.active {
-  background: #3498db;
-  border-color: #3498db;
-  color: white;
+  background: #1e2541;
+  border-color: #4a9eff;
+  color: #4a9eff;
 }
 
 /* Projects Grid */
@@ -132,11 +128,10 @@
 
 /* Project Card */
 .project-card {
-  background: white;
-  border-radius: 12px;
+  background: #161b33;
+  border: 1px solid #1e2541;
+  border-left: 3px solid transparent;
   padding: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid #ecf0f1;
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
@@ -145,9 +140,8 @@
 }
 
 .project-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  border-color: #3498db;
+  border-left-color: #4a9eff;
+  background: #1a2039;
 }
 
 /* Delete button */
@@ -157,19 +151,17 @@
   right: 12px;
   background: transparent;
   border: none;
-  color: #bdc3c7;
+  color: #6c727f;
   font-size: 1.2rem;
   cursor: pointer;
   padding: 4px 8px;
-  border-radius: 50%;
   transition: all 0.3s ease;
   z-index: 10;
 }
 
 .delete-project-btn:hover {
-  background: #fdf2f2;
-  color: #e74c3c;
-  transform: scale(1.1);
+  background: #1e2541;
+  color: #ff6b6b;
 }
 
 /* Project Header */
@@ -181,59 +173,62 @@
 
 .project-status {
   padding: 4px 12px;
-  border-radius: 16px;
   font-size: 0.85rem;
   font-weight: 600;
   text-transform: capitalize;
   letter-spacing: 0.5px;
+  border: 1px solid;
 }
 
 .project-status[data-status="active"] {
-  background: #e8f5e8;
-  color: #27ae60;
+  background: rgba(46, 204, 113, 0.15);
+  color: #2ecc71;
+  border-color: #2ecc71;
 }
 
 .project-status[data-status="completed"] {
-  background: #e3f2fd;
-  color: #2196f3;
+  background: rgba(74, 158, 255, 0.15);
+  color: #4a9eff;
+  border-color: #4a9eff;
 }
 
 .project-status[data-status="planning"] {
-  background: #fff3e0;
-  color: #f57c00;
+  background: rgba(241, 196, 15, 0.15);
+  color: #f1c40f;
+  border-color: #f1c40f;
 }
 
 .project-status[data-status="on-hold"],
 .project-status[data-status="hold"] {
-  background: #fce4ec;
-  color: #e91e63;
+  background: rgba(255, 107, 107, 0.15);
+  color: #ff6b6b;
+  border-color: #ff6b6b;
 }
 
 .project-menu {
-  color: #bdc3c7;
+  color: #6c727f;
   cursor: pointer;
   font-size: 1.2rem;
   padding: 4px;
-  border-radius: 4px;
   transition: all 0.3s ease;
 }
 
 .project-menu:hover {
-  color: #7f8c8d;
-  background: #f8f9fa;
+  color: #a0a3bd;
+  background: #1e2541;
 }
 
 /* Project Content */
 .project-content h3 {
   margin: 0 0 12px 0;
-  color: #2c3e50;
+  color: #e4e6eb;
   font-size: 1.25rem;
   font-weight: 600;
 }
 
 .project-description {
   margin: 0 0 16px 0;
-  color: #7f8c8d;
+  color: #a0a3bd;
   line-height: 1.5;
   font-size: 0.95rem;
 }
@@ -246,11 +241,10 @@
 
 .tech-tag {
   padding: 4px 10px;
-  background: #f8f9fa;
-  border: 1px solid #ecf0f1;
-  border-radius: 12px;
+  background: #1e2541;
+  border: 1px solid #252c48;
   font-size: 0.8rem;
-  color: #5a6c7d;
+  color: #a0a3bd;
   font-weight: 500;
 }
 
@@ -268,13 +262,13 @@
 }
 
 .progress-label {
-  color: #7f8c8d;
+  color: #a0a3bd;
   font-size: 0.9rem;
   font-weight: 500;
 }
 
 .progress-percentage {
-  color: #2c3e50;
+  color: #e4e6eb;
   font-weight: 600;
   font-size: 0.95rem;
 }
@@ -282,16 +276,14 @@
 .progress-bar {
   width: 100%;
   height: 8px;
-  background-color: #ecf0f1;
-  border-radius: 4px;
+  background-color: #1e2541;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #3498db, #2ecc71);
+  background: linear-gradient(90deg, #4a9eff, #2ecc71);
   transition: width 0.3s ease;
-  border-radius: 4px;
 }
 
 .progress-fill.completed {
@@ -311,12 +303,12 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #7f8c8d;
+  color: #a0a3bd;
   font-size: 0.9rem;
 }
 
 .project-deadline.completed {
-  color: #27ae60;
+  color: #2ecc71;
 }
 
 .deadline-icon,
@@ -441,7 +433,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.85);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -450,15 +442,14 @@
   animation: fadeIn 0.3s ease-out;
 }
 
-/* Modal obsah - bílé okno uprostřed */
+/* Modal obsah - tmavé okno uprostřed */
 .modal-content {
-  background: white;
-  border-radius: 16px;
+  background: #161b33;
+  border: 1px solid #1e2541;
   width: 90%;
   max-width: 600px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   animation: slideIn 0.3s ease-out;
   position: relative;
 }
@@ -469,12 +460,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 24px 24px 16px 24px;
-  border-bottom: 2px solid #f1f3f4;
+  border-bottom: 1px solid #1e2541;
 }
 
 .modal-header h2 {
   margin: 0;
-  color: #2c3e50;
+  color: #e4e6eb;
   font-size: 1.5rem;
   font-weight: 600;
 }
@@ -484,10 +475,9 @@
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: #7f8c8d;
+  color: #a0a3bd;
   cursor: pointer;
   padding: 8px;
-  border-radius: 50%;
   width: 40px;
   height: 40px;
   display: flex;
@@ -497,9 +487,8 @@
 }
 
 .close-button:hover {
-  background-color: #f8f9fa;
-  color: #3498db;
-  transform: scale(1.1);
+  background-color: #1e2541;
+  color: #4a9eff;
 }
 
 /* Formulář uvnitř modalu */
@@ -514,7 +503,7 @@
   justify-content: flex-end;
   margin-top: 24px;
   padding-top: 20px;
-  border-top: 1px solid #f1f3f4;
+  border-top: 1px solid #1e2541;
 }
 
 /* Animace pro zobrazení */
@@ -565,37 +554,34 @@
 
 /* === CUSTOM TAIGA UI BUTTON STYLING === */
 
-/* Primary tlačítka - naše modrá barva */
+/* Primary tlačítka - modrá barva */
 button[tuiButton][data-appearance="primary"] {
-  background-color: #3498db !important;
-  border-color: #3498db !important;
+  background-color: #4a9eff !important;
+  border-color: #4a9eff !important;
   color: white !important;
 }
 
 button[tuiButton][data-appearance="primary"]:hover {
-  background-color: #2980b9 !important;
-  border-color: #2980b9 !important;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3) !important;
+  background-color: #3788e6 !important;
+  border-color: #3788e6 !important;
 }
 
 button[tuiButton][data-appearance="primary"]:active {
-  background-color: #21618c !important;
-  border-color: #21618c !important;
-  transform: translateY(0);
+  background-color: #2875d1 !important;
+  border-color: #2875d1 !important;
 }
 
-/* Secondary tlačítka - lehce šedá s modrou při hoveru */
+/* Secondary tlačítka - tmavé s modrou při hoveru */
 button[tuiButton][data-appearance="secondary"] {
-  background-color: #f8f9fa !important;
-  border-color: #e9ecef !important;
-  color: #6c757d !important;
+  background-color: #1e2541 !important;
+  border-color: #252c48 !important;
+  color: #a0a3bd !important;
 }
 
 button[tuiButton][data-appearance="secondary"]:hover {
-  background-color: #e9ecef !important;
-  border-color: #3498db !important;
-  color: #3498db !important;
+  background-color: #252c48 !important;
+  border-color: #4a9eff !important;
+  color: #4a9eff !important;
 }
 
 /* === FORMULÁŘOVÁ POLE - STYLING === */
@@ -611,74 +597,71 @@ button[tuiButton][data-appearance="secondary"]:hover {
 /* Label */
 .form-label {
   font-weight: 600;
-  color: #2c3e50;
+  color: #e4e6eb;
   font-size: 0.95rem;
 }
 
 /* Text input */
 .form-input {
   padding: 12px 16px;
-  border: 2px solid #e9ecef;
-  border-radius: 8px;
+  border: 1px solid #1e2541;
   font-size: 1rem;
-  color: #2c3e50;
+  color: #e4e6eb;
   transition: all 0.2s ease;
-  background-color: white;
+  background-color: #0a0e27;
 }
 
 .form-input:focus {
   outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  border-color: #4a9eff;
+  background: #161b33;
 }
 
 .form-input:hover {
-  border-color: #bdc3c7;
+  border-color: #252c48;
 }
 
 /* Textarea */
 .form-textarea {
   padding: 12px 16px;
-  border: 2px solid #e9ecef;
-  border-radius: 8px;
+  border: 1px solid #1e2541;
   font-size: 1rem;
-  color: #2c3e50;
+  color: #e4e6eb;
   transition: all 0.2s ease;
-  background-color: white;
+  background-color: #0a0e27;
   resize: vertical;
   font-family: inherit;
 }
 
 .form-textarea:focus {
   outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  border-color: #4a9eff;
+  background: #161b33;
 }
 
 .form-textarea:hover {
-  border-color: #bdc3c7;
+  border-color: #252c48;
 }
 
 /* Select dropdown */
 .form-select {
   padding: 12px 16px;
-  border: 2px solid #e9ecef;
-  border-radius: 8px;
+  border: 1px solid #1e2541;
   font-size: 1rem;
-  color: #2c3e50;
+  color: #e4e6eb;
   transition: all 0.2s ease;
-  background-color: white;
+  background-color: #0a0e27;
   cursor: pointer;
 }
 
 .form-select:focus {
   outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  border-color: #4a9eff;
+  background: #161b33;
 }
 
 .form-select:hover {
-  border-color: #bdc3c7;
+  border-color: #252c48;
 }
 
 /* Technology chips selector */
@@ -687,45 +670,42 @@ button[tuiButton][data-appearance="secondary"]:hover {
   flex-wrap: wrap;
   gap: 10px;
   padding: 12px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  border: 2px solid #e9ecef;
+  background-color: #0a0e27;
+  border: 1px solid #1e2541;
 }
 
 .tech-chip {
   padding: 8px 16px;
-  background-color: white;
-  border: 2px solid #e9ecef;
-  border-radius: 20px;
+  background-color: #161b33;
+  border: 1px solid #1e2541;
   cursor: pointer;
   transition: all 0.2s ease;
   font-size: 0.9rem;
-  color: #6c757d;
+  color: #a0a3bd;
   user-select: none;
 }
 
 .tech-chip:hover {
-  border-color: #3498db;
-  color: #3498db;
-  transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
+  border-color: #4a9eff;
+  color: #4a9eff;
+  background: #1a2039;
 }
 
 .tech-chip.selected {
-  background-color: #3498db;
-  border-color: #3498db;
-  color: white;
+  background-color: #1e2541;
+  border-color: #4a9eff;
+  color: #4a9eff;
   font-weight: 600;
 }
 
 .tech-chip.selected:hover {
-  background-color: #2980b9;
-  border-color: #2980b9;
+  background-color: #252c48;
+  border-color: #6bb3ff;
 }
 
 /* Form hint text */
 .form-hint {
-  color: #7f8c8d;
+  color: #6c727f;
   font-size: 0.85rem;
   font-style: italic;
   margin-top: 4px;
@@ -742,19 +722,18 @@ button[tuiButton][data-appearance="secondary"]:hover {
 }
 
 .loading-message {
-  color: #7f8c8d;
+  color: #a0a3bd;
 }
 
 .error-message {
-  color: #e74c3c;
-  background: #fff5f5;
-  border: 1px solid #e74c3c;
-  border-radius: 8px;
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid #ff6b6b;
   padding: 20px;
 }
 
 .empty-message {
-  color: #95a5a6;
+  color: #6c727f;
 }
 
 .empty-message p {
@@ -764,7 +743,7 @@ button[tuiButton][data-appearance="secondary"]:hover {
 .empty-message p:first-child {
   font-size: 1.3rem;
   font-weight: 600;
-  color: #7f8c8d;
+  color: #a0a3bd;
 }
 
 /* Responsive */
@@ -796,12 +775,12 @@ button[tuiButton][data-appearance="secondary"]:hover {
 }
 
 .project-info {
-  background: #f8f9fa;
+  background: #0a0e27;
   padding: 12px 16px;
-  border-radius: 8px;
-  border-left: 4px solid #3498db;
+  border-left: 3px solid #4a9eff;
   margin-bottom: 24px;
-  color: #2c3e50;
+  color: #e4e6eb;
+  border: 1px solid #1e2541;
 }
 
 .status-options {
@@ -813,51 +792,54 @@ button[tuiButton][data-appearance="secondary"]:hover {
 
 .status-option {
   padding: 16px;
-  border: 2px solid #ecf0f1;
-  border-radius: 8px;
+  border: 1px solid #1e2541;
   cursor: pointer;
   transition: all 0.3s ease;
   text-align: center;
+  background: #0a0e27;
 }
 
 .status-option:hover {
-  border-color: #3498db;
-  background: #f8f9fa;
+  border-color: #4a9eff;
+  background: #161b33;
 }
 
 .status-option.selected {
-  border-color: #3498db;
-  background: #e3f2fd;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  border-color: #4a9eff;
+  background: #1e2541;
 }
 
 .status-badge {
   padding: 8px 16px;
-  border-radius: 16px;
   font-size: 0.9rem;
   font-weight: 600;
   text-transform: capitalize;
   display: inline-block;
+  border: 1px solid;
 }
 
 .status-badge[data-status="planning"] {
-  background: #fff3e0;
-  color: #f57c00;
+  background: rgba(241, 196, 15, 0.15);
+  color: #f1c40f;
+  border-color: #f1c40f;
 }
 
 .status-badge[data-status="active"] {
-  background: #e8f5e8;
-  color: #27ae60;
+  background: rgba(46, 204, 113, 0.15);
+  color: #2ecc71;
+  border-color: #2ecc71;
 }
 
 .status-badge[data-status="completed"] {
-  background: #e3f2fd;
-  color: #2196f3;
+  background: rgba(74, 158, 255, 0.15);
+  color: #4a9eff;
+  border-color: #4a9eff;
 }
 
 .status-badge[data-status="on-hold"] {
-  background: #fce4ec;
-  color: #e91e63;
+  background: rgba(255, 107, 107, 0.15);
+  color: #ff6b6b;
+  border-color: #ff6b6b;
 }
 
 .modal-actions {

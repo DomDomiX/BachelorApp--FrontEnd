@@ -1,6 +1,6 @@
-/* Globální pozadí pro celou aplikaci */
+/* Globální pozadí pro celou aplikaci - DARK MODE */
 body {
-    background-color: #f8f9fa !important;
+    background-color: #0a0e27 !important;
     margin: 0;
     padding: 0;
 } 
@@ -11,15 +11,13 @@ body {
     left: 0;
     width: 220px;
     height: 100vh;
-    background: white;
-    border-radius: 0 12px 12px 0;
+    background: #161b33;
+    border-right: 1px solid #1e2541;
     padding: 24px 16px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ecf0f1;
 }
 
 /* Reset pro li elementy */
@@ -56,39 +54,36 @@ body {
     gap: 12px;
     padding: 12px 16px;
     width: 100%;
-    color: #2c3e50;
+    color: #a0a3bd;
     text-decoration: none;
     font-weight: 500;
-    border-radius: 12px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-left: 3px solid transparent;
+    transition: all 0.3s ease;
     cursor: pointer;
 }
 
 .nav-item a:hover {
-    background-color: #f8f9fa;
-    transform: translateX(6px);
-    color: #3498db;
-    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.1);
+    background-color: #1e2541;
+    border-left-color: #4a9eff;
+    color: #e4e6eb;
 }
 
 .nav-item.active a {
-    background-color: #3498db;
-    color: white;
-    transform: translateX(6px);
-    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    background-color: #1e2541;
+    color: #4a9eff;
+    border-left-color: #4a9eff;
 }
 
 .nav-item.active a:hover {
-    background-color: #2980b9;
-    color: white;
-    transform: translateX(8px);
-    box-shadow: 0 6px 16px rgba(52, 152, 219, 0.4);
+    background-color: #252c48;
+    color: #6bb3ff;
+    border-left-color: #6bb3ff;
 }
 
 /* Logout tlačítko speciální styling */
 .logout-btn {
-    color: #e74c3c !important;
-    border-top: 1px solid #ecf0f1;
+    color: #ff6b6b !important;
+    border-top: 1px solid #1e2541;
     margin-top: 8px;
     padding-top: 12px;
     cursor: pointer;
@@ -96,8 +91,8 @@ body {
 }
 
 .logout-btn:hover {
-    background-color: #fdf2f2 !important;
-    color: #c0392b !important;
+    background-color: #1e2541 !important;
+    color: #ff5252 !important;
 }
 
 .nav-items {
@@ -117,14 +112,14 @@ body {
     flex-direction: column;
     align-items: stretch;
     padding-top: 16px;
-    border-top: 2px solid #ecf0f1;
+    border-top: 1px solid #1e2541;
 }
 
 .content {
     margin-left: 220px;
     padding: 20px;
     box-sizing: border-box;
-    background-color: #f8f9fa;
+    background-color: #0a0e27;
     min-height: 100vh;
 }
 
@@ -132,7 +127,7 @@ body {
     margin-left: 0px;
     padding: 0px;
     box-sizing: border-box;
-    background-color: #f8f9fa;
+    background-color: #0a0e27;
     min-height: 100vh;
 } 
 
@@ -140,17 +135,17 @@ body {
     font-family: 'Segoe UI', sans-serif;
     font-size: 28px;
     font-weight: bold;
-    color: #2c3e50;
+    color: #e4e6eb;
     margin-bottom: 16px;
     text-align: center;
     padding: 16px 0;
-    border-bottom: 2px solid #ecf0f1;
+    border-bottom: 1px solid #1e2541;
     width: 100%;
 }
 
 .logo .strike {
     text-decoration: line-through;
-    color: #3498db;
+    color: #4a9eff;
 }
 
 /* Ikony v navigaci */
@@ -164,7 +159,6 @@ body {
         left: 0;
         height: 100vh;
         padding: 16px 12px;
-        border-radius: 0 8px 8px 0;
     }
     
     .content {
