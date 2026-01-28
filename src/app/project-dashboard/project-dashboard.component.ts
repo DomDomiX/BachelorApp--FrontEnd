@@ -7,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrl: './project-dashboard.component.css'
 })
 export class ProjectDashboardComponent {
+  activeTab: string = 'MainPage';
 
+  setActiveTab(tab: string) {
+    this.activeTab = tab;
+  }
 }

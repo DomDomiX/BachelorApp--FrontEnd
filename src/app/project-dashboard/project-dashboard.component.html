@@ -1,1 +1,380 @@
-<p>project-dashboard works!</p>
+<div class="project-dashboard-container">
+  <!-- Header with project name and navigation -->
+  <div class="dashboard-header">
+    <div class="header-content">
+      <h1>ProjectName</h1>
+      <div class="nav-tabs">
+        <button class="tab" [class.active]="activeTab === 'MainPage'" (click)="setActiveTab('MainPage')">MainPage</button>
+        <button class="tab" [class.active]="activeTab === 'ToDo'" (click)="setActiveTab('ToDo')">ToDo</button>
+        <button class="tab" [class.active]="activeTab === 'RoadMap'" (click)="setActiveTab('RoadMap')">RoadMap</button>
+        <button class="tab" [class.active]="activeTab === 'Settings'" (click)="setActiveTab('Settings')">Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MainPage View -->
+  @if (activeTab === 'MainPage') {
+  <div class="dashboard-content">
+    <!-- Project Overview -->
+    <div class="section overview-section">
+      <div class="section-header">
+        <h2>Project Overview</h2>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value">15</div>
+          <div class="stat-label">Total Tasks</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">8</div>
+          <div class="stat-label">Completed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">5</div>
+          <div class="stat-label">In Progress</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">2</div>
+          <div class="stat-label">Pending</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project Progress -->
+    <div class="section progress-section">
+      <div class="section-header">
+        <h2>Project Progress</h2>
+      </div>
+      <div class="progress-content">
+        <div class="progress-circle">
+          <svg viewBox="0 0 120 120">
+            <defs>
+              <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#4a9eff;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#2ecc71;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <circle class="progress-bg" cx="60" cy="60" r="50"></circle>
+            <circle class="progress-bar" cx="60" cy="60" r="50" style="stroke-dashoffset: 62.8"></circle>
+          </svg>
+          <div class="progress-text">
+            <div class="progress-value">53%</div>
+            <div class="progress-label">Complete</div>
+          </div>
+        </div>
+        <div class="progress-stats">
+          <div class="progress-stat-item">
+            <span class="progress-stat-label">Tasks Completed:</span>
+            <span class="progress-stat-value">8 / 15</span>
+          </div>
+          <div class="progress-stat-item">
+            <span class="progress-stat-label">Days Remaining:</span>
+            <span class="progress-stat-value">12</span>
+          </div>
+          <div class="progress-stat-item">
+            <span class="progress-stat-label">On Track:</span>
+            <span class="progress-stat-value status-good">Yes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tasks Section -->
+    <div class="section tasks-section">
+      <div class="section-header">
+        <h2>Active Tasks</h2>
+        <button class="add-btn">+ Add Task</button>
+      </div>
+      <div class="tasks-list">
+        <div class="task-item">
+          <div class="task-status in-progress"></div>
+          <div class="task-details">
+            <div class="task-title">Implement authentication</div>
+            <div class="task-meta">Due: Tomorrow</div>
+          </div>
+        </div>
+        <div class="task-item">
+          <div class="task-status in-progress"></div>
+          <div class="task-details">
+            <div class="task-title">Design database schema</div>
+            <div class="task-meta">Due: This week</div>
+          </div>
+        </div>
+        <div class="task-item">
+          <div class="task-status pending"></div>
+          <div class="task-details">
+            <div class="task-title">Write documentation</div>
+            <div class="task-meta">Due: Next week</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="section activity-section">
+      <div class="section-header">
+        <h2>Recent Activity</h2>
+      </div>
+      <div class="activity-list">
+        <div class="activity-item">
+          <div class="activity-icon">✓</div>
+          <div class="activity-content">
+            <div class="activity-title">Task completed</div>
+            <div class="activity-time">2 hours ago</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon">+</div>
+          <div class="activity-content">
+            <div class="activity-title">New task added</div>
+            <div class="activity-time">5 hours ago</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon">↑</div>
+          <div class="activity-content">
+            <div class="activity-title">Priority updated</div>
+            <div class="activity-time">1 day ago</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Section -->
+    <div class="section team-section">
+      <div class="section-header">
+        <h2>Team Members</h2>
+      </div>
+      <div class="team-list">
+        <div class="team-member">
+          <div class="member-avatar">JD</div>
+          <div class="member-info">
+            <div class="member-name">John Doe</div>
+            <div class="member-role">Project Manager</div>
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="member-avatar">JS</div>
+          <div class="member-info">
+            <div class="member-name">Jane Smith</div>
+            <div class="member-role">Developer</div>
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="member-avatar">MB</div>
+          <div class="member-info">
+            <div class="member-name">Mike Brown</div>
+            <div class="member-role">Designer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+
+  <!-- ToDo View -->
+  @if (activeTab === 'ToDo') {
+    <div class="todo-content">
+      <!-- ToDo Stats -->
+      <div class="todo-stats">
+        <div class="stat-item">
+          <span class="stat-number">24</span>
+          <span class="stat-label">Total Tasks</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">8</span>
+          <span class="stat-label">Completed</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">12</span>
+          <span class="stat-label">In Progress</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">4</span>
+          <span class="stat-label">Pending</span>
+        </div>
+      </div>
+
+      <!-- Task Categories -->
+      <div class="categories-container">
+        
+        <!-- Frontend Category -->
+        <div class="category-section">
+          <div class="category-header frontend">
+            <h2>💻 Frontend Development</h2>
+            <span class="task-count">8 tasks</span>
+          </div>
+          <div class="tasks-list-todo">
+            <div class="todo-task-card">
+              <div class="task-status completed"></div>
+              <div class="task-content">
+                <h3>Create login page</h3>
+                <p>Implement authentication UI with form validation</p>
+                <div class="task-meta">
+                  <span class="priority high">High Priority</span>
+                  <span class="due-date">Due: Jan 25</span>
+                </div>
+              </div>
+              <div class="task-actions">
+                <button class="btn-edit">✎</button>
+                <button class="btn-delete">×</button>
+              </div>
+            </div>
+
+            <div class="todo-task-card">
+              <div class="task-status in-progress"></div>
+              <div class="task-content">
+                <h3>Build dashboard components</h3>
+                <p>Design and implement main dashboard with statistics</p>
+                <div class="task-meta">
+                  <span class="priority medium">Medium Priority</span>
+                  <span class="due-date">Due: Jan 30</span>
+                </div>
+              </div>
+              <div class="task-actions">
+                <button class="btn-edit">✎</button>
+                <button class="btn-delete">×</button>
+              </div>
+            </div>
+
+            <div class="todo-task-card">
+              <div class="task-status pending"></div>
+              <div class="task-content">
+                <h3>Responsive design implementation</h3>
+                <p>Make all pages mobile-friendly</p>
+                <div class="task-meta">
+                  <span class="priority low">Low Priority</span>
+                  <span class="due-date">Due: Feb 5</span>
+                </div>
+              </div>
+              <div class="task-actions">
+                <button class="btn-edit">✎</button>
+                <button class="btn-delete">×</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Backend Category -->
+        <div class="category-section">
+          <div class="category-header backend">
+            <h2>⚙️ Backend Development</h2>
+            <span class="task-count">6 tasks</span>
+          </div>
+          <div class="tasks-list-todo">
+            <div class="todo-task-card">
+              <div class="task-status in-progress"></div>
+              <div class="task-content">
+                <h3>Setup API endpoints</h3>
+                <p>Create RESTful API for user management</p>
+                <div class="task-meta">
+                  <span class="priority high">High Priority</span>
+                  <span class="due-date">Due: Jan 28</span>
+                </div>
+              </div>
+              <div class="task-actions">
+                <button class="btn-edit">✎</button>
+                <button class="btn-delete">×</button>
+              </div>
+            </div>
+
+            <div class="todo-task-card">
+              <div class="task-status pending"></div>
+              <div class="task-content">
+                <h3>Database schema design</h3>
+                <p>Design normalized database structure</p>
+                <div class="task-meta">
+                  <span class="priority medium">Medium Priority</span>
+                  <span class="due-date">Due: Feb 2</span>
+                </div>
+              </div>
+              <div class="task-actions">
+                <button class="btn-edit">✎</button>
+                <button class="btn-delete">×</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testing Category -->
+        <div class="category-section">
+          <div class="category-header testing">
+            <h2>🧪 Testing & QA</h2>
+            <span class="task-count">5 tasks</span>
+          </div>
+          <div class="tasks-list-todo">
+            <div class="todo-task-card">
+              <div class="task-status pending"></div>
+              <div class="task-content">
+                <h3>Write unit tests</h3>
+                <p>Create test cases for core components</p>
+                <div class="task-meta">
+                  <span class="priority medium">Medium Priority</span>
+                  <span class="due-date">Due: Feb 10</span>
+                </div>
+              </div>
+              <div class="task-actions">
+                <button class="btn-edit">✎</button>
+                <button class="btn-delete">×</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Documentation Category -->
+        <div class="category-section">
+          <div class="category-header documentation">
+            <h2>📝 Documentation</h2>
+            <span class="task-count">5 tasks</span>
+          </div>
+          <div class="tasks-list-todo">
+            <div class="todo-task-card">
+              <div class="task-status in-progress"></div>
+              <div class="task-content">
+                <h3>API documentation</h3>
+                <p>Document all API endpoints and responses</p>
+                <div class="task-meta">
+                  <span class="priority high">High Priority</span>
+                  <span class="due-date">Due: Jan 31</span>
+                </div>
+              </div>
+              <div class="task-actions">
+                <button class="btn-edit">✎</button>
+                <button class="btn-delete">×</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  }
+
+  <!-- RoadMap View -->
+  @if (activeTab === 'RoadMap') {
+    <div class="roadmap-content">
+      <div class="section">
+        <div class="section-header">
+          <h2>Project Roadmap</h2>
+        </div>
+        <div class="roadmap-placeholder">
+          <p style="color: #a0a3bd; text-align: center; padding: 40px;">Roadmap view - Coming soon</p>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Settings View -->
+  @if (activeTab === 'Settings') {
+    <div class="settings-content">
+      <div class="section">
+        <div class="section-header">
+          <h2>Project Settings</h2>
+        </div>
+        <div class="settings-placeholder">
+          <p style="color: #a0a3bd; text-align: center; padding: 40px;">Settings view - Coming soon</p>
+        </div>
+      </div>
+    </div>
+  }
+</div>
