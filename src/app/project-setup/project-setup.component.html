@@ -1,0 +1,202 @@
+<div class="setup-container">
+  <!-- Header -->
+  <div class="setup-header">
+    <div class="header-content">
+      <h1>Příprava projektu</h1>
+      <p class="header-subtitle">Vytvoř sekce projektu (Frontend, Backend...) a pro každou milestones</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-outline" (click)="skipSetup()">Přeskočit</button>
+      <button class="btn-primary" (click)="finishSetup()">Dokončit nastavení</button>
+    </div>
+  </div>
+
+  <div class="setup-content">
+    <!-- Add Section Button -->
+    <div class="add-section-header">
+      <button class="btn-add-section" (click)="toggleAddSection()">
+        {{ showAddSection ? '✕ Zrušit' : '+ Přidat Sekci' }}
+      </button>
+    </div>
+
+    <!-- Add Section Form -->
+    @if (showAddSection) {
+    <div class="section-form-card">
+      <h3>Nová Sekce</h3>
+      <div class="section-form-grid">
+        <input type="text" [(ngModel)]="newSection.name" placeholder="Název sekce (např. Frontend, Backend, Databáze...)" class="input-block" />
+        
+        <div class="icon-color-row">
+          <div class="form-group">
+            <label>Ikona</label>
+            <select [(ngModel)]="newSection.icon" class="select-block">
+              @for (icon of availableIcons; track icon) {
+              <option [value]="icon">{{ icon }}</option>
+              }
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Barva</label>
+            <select [(ngModel)]="newSection.color" class="select-block">
+              @for (color of availableColors; track color) {
+              <option [value]="color" [style.color]="color">⬤ {{ color }}</option>
+              }
+            </select>
+          </div>
+          
+          <button class="btn-primary" (click)="addSection()">Vytvořit</button>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- Empty State -->
+    @if (sections.length === 0 && !showAddSection) {
+    <div class="empty-state-large">
+      <div class="empty-icon">📦</div>
+      <p>Zatím nemáš žádné sekce projektu</p>
+      <p class="empty-hint">Klikni na "Přidat Sekci" a vytvoř první sekci</p>
+    </div>
+    }
+
+    <!-- Sections Grid -->
+    <div class="sections-grid">
+      @for (section of sections; track section.id) {
+      <div class="section-card" [class.expanded]="selectedSection === section.id">
+        <!-- Section Header -->
+        <div class="section-header-main" (click)="selectSection(section.id)">
+          <div class="section-info">
+            <span class="section-icon">{{ section.icon }}</span>
+            <h3 [style.color]="section.color">{{ section.name }}</h3>
+          </div>
+          <div class="section-stats">
+            <span class="stat-badge">{{ getSectionMilestones(section.id).length }} milestones</span>
+            <button class="btn-delete-section" (click)="deleteSection(section.id); $event.stopPropagation()" title="Smazat sekci">🗑️</button>
+            <span class="expand-icon">{{ selectedSection === section.id ? '▼' : '▶' }}</span>
+          </div>
+        </div>
+
+        <!-- Section Content (expanded) -->
+        @if (selectedSection === section.id) {
+        <div class="section-content">
+          
+          <!-- Milestones Section -->
+          <div class="subsection">
+            <div class="subsection-header">
+              <h4>📍 Milestones</h4>
+              <button class="add-btn-small" (click)="toggleAddMilestone(section.id)">
+                {{ showAddMilestone && newMilestone.sectionId === section.id ? 'Zrušit' : '+ Milestone' }}
+              </button>
+            </div>
+
+            <!-- Add Milestone Form -->
+            @if (showAddMilestone && newMilestone.sectionId === section.id) {
+            <div class="add-form-inline">
+              <input type="text" [(ngModel)]="newMilestone.name" placeholder="Název milestone (např. MVP, Beta...)" class="input-inline" />
+              <select [(ngModel)]="newMilestone.phase" class="select-inline">
+                @for (phase of phases; track phase) {
+                <option [value]="phase">{{ phaseLabels[phase] }}</option>
+                }
+              </select>
+              <input type="text" [(ngModel)]="newMilestone.description" placeholder="Popis (volitelné)" class="input-inline" />
+              <button class="btn-add-inline" (click)="addMilestone()">Přidat</button>
+            </div>
+            }
+
+            <!-- Milestones List -->
+            @if (getSectionMilestones(section.id).length === 0) {
+            <div class="empty-mini">Zatím žádné milestones</div>
+            } @else {
+            <div class="milestones-list">
+              @for (milestone of getSectionMilestones(section.id); track milestone.id) {
+              <div class="milestone-item">
+                <div class="milestone-info">
+                  <span class="milestone-name">{{ milestone.name }}</span>
+                  <span class="milestone-phase">{{ phaseLabels[milestone.phase] }}</span>
+                  @if (milestone.description) {
+                  <span class="milestone-description">{{ milestone.description }}</span>
+                  }
+                </div>
+                <button class="delete-btn-mini" (click)="deleteMilestone(milestone.id)">×</button>
+              </div>
+              }
+            </div>
+            }
+          </div>
+
+        </div>
+        }
+      </div>
+      }
+    </div>
+
+    <!-- Roadmap Visualization -->
+    @if (sections.length > 0) {
+    <div class="roadmap-section">
+      <div class="roadmap-section-header">
+        <h2>📍 RoadMap Preview</h2>
+        <p class="roadmap-hint">Dvojklik na buňku pro přidání milestone</p>
+      </div>
+
+      <div class="roadmap-grid">
+        <!-- Header Row -->
+        <div class="grid-header">
+          <div class="grid-cell section-header-cell"></div>
+          @for (phase of phases; track phase) {
+            <div class="grid-cell phase-header">{{ phaseLabels[phase] }}</div>
+          }
+        </div>
+
+        <!-- Section Rows -->
+        @for (section of sections; track section.id) {
+          <div class="grid-row">
+            <!-- Section Label -->
+            <div class="grid-cell section-label" [style.border-left-color]="section.color">
+              <span class="section-icon-small">{{ section.icon }}</span>
+              <span class="section-name-small">{{ section.name }}</span>
+            </div>
+            
+            <!-- Phase Cells -->
+            @for (phase of phases; track phase) {
+              <div class="grid-cell phase-cell" 
+                   (dblclick)="onCellDoubleClick(section.id, phase)">
+                
+                <!-- Milestones in this cell -->
+                @for (milestone of getMilestonesBySectionAndPhase(section.id, phase); track milestone.id) {
+                  <div class="milestone-card" [style.border-left-color]="section.color">
+                    <div class="milestone-card-content">
+                      <div class="milestone-card-name">{{ milestone.name }}</div>
+                      @if (milestone.description) {
+                      <div class="milestone-card-info">
+                        <span class="milestone-description-small">{{ milestone.description }}</span>
+                      </div>
+                      }
+                    </div>
+                    <button class="milestone-card-delete" (click)="deleteMilestone(milestone.id)" title="Smazat">×</button>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Add Milestone Form (Floating) -->
+      @if (showAddMilestone) {
+      <div class="floating-milestone-form">
+        <div class="floating-form-header">
+          <h3>Nový Milestone</h3>
+          <button class="close-btn" (click)="showAddMilestone = false; resetMilestoneForm()">×</button>
+        </div>
+        <div class="floating-form-body">
+          <input type="text" [(ngModel)]="newMilestone.name" placeholder="Název milestone (např. MVP, Beta, Launch)" class="input-block" />
+          <textarea [(ngModel)]="newMilestone.description" placeholder="Popis mílníku (volitelné)" class="textarea-block" rows="3"></textarea>
+          <button class="btn-primary" (click)="addMilestone()">Přidat Milestone</button>
+        </div>
+      </div>
+      }
+    </div>
+    }
+  </div>
+</div>
