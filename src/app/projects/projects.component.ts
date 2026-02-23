@@ -3,6 +3,7 @@ import { TuiButton } from '@taiga-ui/core';
 import { ProjectService } from '../services/project.service';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-projects',
@@ -33,7 +34,10 @@ export class ProjectsComponent implements OnInit {
   newStatus: string = '';
   availableStatuses: string[] = ['planning', 'active', 'completed', 'on-hold'];
 
-  constructor(private projectService: ProjectService) { }
+  constructor(
+    private projectService: ProjectService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.loadTechnologies();
@@ -191,7 +195,13 @@ export class ProjectsComponent implements OnInit {
         console.log('Project created successfully:', response);
         alert('Project created successfully!');
         this.toggleCreateForm();
-        // TODO: Refresh project list
+        // Reset form fields
+        this.projectName = '';
+        this.projectDescription = '';
+        this.projectDeadline = new Date();
+        this.selectedTechnologies = [];
+        // Navigate to project setup
+        this.router.navigate(['/projectSetup']);
       },
       error: (error) => {
         console.error('Error creating project:', error);
