@@ -3,11 +3,11 @@ import { TuiButton } from '@taiga-ui/core';
 import { ProjectService } from '../services/project.service';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-projects',
-  imports: [TuiButton, FormsModule, DatePipe],
+  imports: [TuiButton, FormsModule, DatePipe, RouterLink],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.css'
 })

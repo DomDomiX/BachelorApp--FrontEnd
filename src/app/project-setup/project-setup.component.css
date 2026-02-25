@@ -821,6 +821,123 @@
   gap: 12px;
 }
 
+/* Project Info Card */
+.project-info-card {
+  background: #161b33;
+  border: 1px solid #1e2541;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.project-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #1e2541;
+}
+
+.project-info-header h2 {
+  margin: 0;
+  color: #e4e6eb;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.project-status {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.status-planning {
+  background: rgba(244, 143, 177, 0.15);
+  color: #f48fb1;
+  border: 1px solid rgba(244, 143, 177, 0.3);
+}
+
+.status-active {
+  background: rgba(46, 204, 113, 0.15);
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.status-completed {
+  background: rgba(52, 152, 219, 0.15);
+  color: #3498db;
+  border: 1px solid rgba(52, 152, 219, 0.3);
+}
+
+.status-on-hold {
+  background: rgba(243, 156, 18, 0.15);
+  color: #f39c12;
+  border: 1px solid rgba(243, 156, 18, 0.3);
+}
+
+.project-info-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.info-column-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-column-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.info-label {
+  color: #a0a3bd;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.info-value {
+  color: #e4e6eb;
+  font-size: 1rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.tech-tag {
+  background: rgba(74, 158, 255, 0.15);
+  color: #4a9eff;
+  border: 1px solid rgba(74, 158, 255, 0.3);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
 /* Responsive adjustments for roadmap */
 @media (max-width: 1200px) {
   .section-label {

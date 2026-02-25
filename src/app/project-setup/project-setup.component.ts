@@ -22,6 +22,15 @@ export class ProjectSetupComponent {
     'phase4': 'Phase 4'
   };
 
+  // Project Info - TODO: Načítat z DB podle projectId
+  projectInfo = {
+    name: 'Můj Projekt', // TODO: Z databáze
+    description: 'Popis projektu...', // TODO: Z databáze
+    deadline: new Date(), // TODO: Z databáze
+    technologies: ['React', 'Node.js'], // TODO: Z databáze
+    status: 'planning' // TODO: Z databáze
+  };
+
   // Data structure
   sections: any[] = []; // User-created sections
   milestones: any[] = [];
@@ -35,6 +44,8 @@ export class ProjectSetupComponent {
 
   constructor(private router: Router) {}
 
+  // TODO: ngOnInit - načíst projectInfo, sections a milestones z DB podle projectId
+
   // Section management
   toggleAddSection() {
     this.showAddSection = !this.showAddSection;
@@ -42,6 +53,7 @@ export class ProjectSetupComponent {
   }
 
   addSection() {
+    // TODO: Service metoda - createSection() pro uložení do DB
     if (!this.newSection.name.trim()) return;
     this.sections.push({
       id: Date.now().toString(),
@@ -51,6 +63,7 @@ export class ProjectSetupComponent {
   }
 
   deleteSection(sectionId: string) {
+    // TODO: Service metoda - deleteSection() pro smazání z DB
     if (confirm('Smazat sekci i všechny milestones v ní?')) {
       this.sections = this.sections.filter(s => s.id !== sectionId);
       this.milestones = this.milestones.filter(m => m.sectionId !== sectionId);
@@ -87,6 +100,7 @@ export class ProjectSetupComponent {
   }
 
   addMilestone() {
+    // TODO: Service metoda - createMilestone() pro uložení do DB
     if (!this.newMilestone.name.trim()) return;
     this.milestones.push({
       id: Date.now(),
@@ -98,6 +112,7 @@ export class ProjectSetupComponent {
   }
 
   deleteMilestone(id: number) {
+    // TODO: Service metoda - deleteMilestone() pro smazání z DB
     this.milestones = this.milestones.filter(m => m.id !== id);
   }
 
@@ -107,6 +122,7 @@ export class ProjectSetupComponent {
 
   // Actions
   finishSetup() {
+    // TODO: Service metoda - (volitelně) updateProjectStatus() pro update statusu projektu
     if (this.sections.length === 0) {
       alert('Vytvoř alespoň jednu sekci projektu!');
       return;

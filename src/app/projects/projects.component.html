@@ -141,12 +141,15 @@
     @for (project of filteredProjects; track project.id) {
       <div class="project-card">
         <button class="delete-project-btn" (click)="deleteProject(project)" title="Delete project">✖</button>
+
         <div class="project-header">
           <div class="project-status" [attr.data-status]="project.status">{{ project.status }}</div>
         </div>
+
         <div class="project-content">
           <h3>{{ project.name }}</h3>
           <p class="project-description">{{ project.description }}</p>
+
           <div class="project-tech">
             @if (project.technologies && project.technologies.length > 0) {
               @for (tech of project.technologies; track tech) {
@@ -157,24 +160,28 @@
             }
           </div>
         </div>
+
         <div class="project-progress">
           <div class="progress-info">
             <span class="progress-label">Overall Progress</span>
             <span class="progress-percentage">{{ project.progress || 0 }}%</span>
           </div>
+          
           <div class="progress-bar">
             <div class="progress-fill" [style.width.%]="project.progress || 0"></div>
           </div>
         </div>
+
         <div class="project-meta">
           <div class="project-deadline">
             <span class="deadline-icon">📅</span>
             <span>Due: {{ project.deadline | date:'MMM d, y' }}</span>
           </div>
         </div>
+
         <div class="project-actions">
           <button (click)="openEditStatusModal(project)" tuiButton appearance="outline" size="s" class="edit-status-btn">Edit status</button>
-          <button tuiButton appearance="primary" size="s">Continue Work</button>
+          <button tuiButton appearance="primary" size="s" routerLink="/projectSetup">Continue Work</button>
         </div>
       </div>
     }
