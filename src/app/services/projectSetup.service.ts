@@ -10,9 +10,86 @@ export class ProjectSetupService {
     private apiUrl = 'http://localhost:3000/api';
     private apiTech = 'http://localhost:3000/api/public';
 
+    constructor(
+        private http: HttpClient, 
+        @Inject(PLATFORM_ID) private platformId: Object
+    ) { }
+
     // TODO: addSection(Name, Icon, Color)
+    addSection(data: {name: string, description: string, icon: string, color: string}): Observable<any> {
+      const token = localStorage.getItem('accessToken');
+      console.log('Načtený token pro vytvoření sekce:', token);
+
+      if (!token) {
+        throw new Error('No token found');
+      }
+
+      const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`,
+      });
+
+      console.log('Posílaná hlavička pro vytvoření sekce:', headers.get('Authorization'));
+      return this.http.post(`${this.apiUrl}/create-section`, { data }, { headers });
+    }
+
     // TODO: deleteSection()
+    deleteSection(sectionId: number): Observable<any> {
+      const token = localStorage.getItem('accessToken');
+      console.log('Načtený token pro smazání sekce:', token);
+
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+      });
+
+      return this.http.delete(`${this.apiUrl}/delete-section/${sectionId}`, { headers });
+    }
+
     // TODO: addMilestone(Name, Description)
+    addMilestone(data: {name: string, description: string}, projectId: number): Observable<any> {
+      const token = localStorage.getItem('accessToken');
+      console.log('Načtený token pro vytvoření milníku:', token);
+        
+      if (!token) {
+        throw new Error('No token found');
+      }
+
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+      });
+
+      console.log('Posílaná hlavička pro vytvoření milníku:', headers.get('Authorization'));
+      return this.http.post(`${this.apiUrl}/create-milestone/${projectId}`, { data }, { headers });
+    }
+
     // TODO: deleteMilestone()
+    deleteMilestone(milestoneId: number): Observable<any> {
+      const token = localStorage.getItem('accessToken');
+      console.log('Načtený token pro smazání milníku:', token);
+
+      if (!token) {
+        throw new Error('No token found');
+      }
+
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+      });
+
+      return this.http.delete(`${this.apiUrl}/delete-milestone/${milestoneId}`, { headers });
+    }
+
     // TODO: Nacteni RoadMapy
+    getRoadmap(projectId: number): Observable<any> {
+      const token = localStorage.getItem('accessToken');
+      console.log('Načtený token pro načtení roadmapy:', token);
+
+      if (!token) {
+        throw new Error('No token found');
+      }
+
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+      });
+
+      return this.http.get(`${this.apiUrl}/roadmap/${projectId}`, { headers });
+    }
 }

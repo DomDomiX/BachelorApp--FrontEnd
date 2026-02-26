@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ProjectService } from '../services/project.service';
 
 @Component({
   selector: 'app-project-setup',
@@ -42,7 +43,7 @@ export class ProjectSetupComponent {
   newSection = { name: '', icon: '💻', color: '#4a9eff' };
   newMilestone = { name: '', sectionId: '', phase: 'phase1', description: '' };
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private projectService: ProjectService) {}
 
   // TODO: ngOnInit - načíst projectInfo, sections a milestones z DB podle projectId
 
