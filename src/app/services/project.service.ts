@@ -31,6 +31,20 @@ export class ProjectService {
         return this.http.get(`${this.apiUrl}/projects`, { headers });
     }
 
+    getProjectById(projectId: number): Observable<any> {
+        const token = localStorage.getItem('accessToken');
+        
+        if (!token) {
+            throw new Error('No token found');
+        }
+        
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${token}`,
+        });
+        
+        return this.http.get(`${this.apiUrl}/projects/${projectId}`, { headers });
+    }
+
     getTechnologies(): Observable<any> {
         return this.http.get(`${this.apiTech}/technology`);
     }

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../services/project.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { ProjectService } from '../services/project.service';
   templateUrl: './project-setup.component.html',
   styleUrl: './project-setup.component.css'
 })
-export class ProjectSetupComponent {
+export class ProjectSetupComponent implements OnInit {
   // Available icons for sections
   availableIcons = ['💻', '⚙️', '🎨', '🧪', '📝', '🗄️', '🔧', '🌐', '📊', '🔐', '📱', '☁️'];
   availableColors = ['#4a9eff', '#2ecc71', '#9b59b6', '#f39c12', '#e67e22', '#e74c3c', '#1abc9c', '#3498db'];
@@ -23,12 +23,15 @@ export class ProjectSetupComponent {
     'phase4': 'Phase 4'
   };
 
+  projectId: number | null = null;
+  loading: boolean = true;
+
   // Project Info - TODO: Načítat z DB podle projectId
   projectInfo = {
-    name: 'Můj Projekt', // TODO: Z databáze
-    description: 'Popis projektu...', // TODO: Z databáze
+    name: '', // TODO: Z databáze
+    description: '', // TODO: Z databáze
     deadline: new Date(), // TODO: Z databáze
-    technologies: ['React', 'Node.js'], // TODO: Z databáze
+    technologies: [], // TODO: Z databáze
     status: 'planning' // TODO: Z databáze
   };
 
@@ -43,9 +46,46 @@ export class ProjectSetupComponent {
   newSection = { name: '', icon: '💻', color: '#4a9eff' };
   newMilestone = { name: '', sectionId: '', phase: 'phase1', description: '' };
 
-  constructor(private router: Router, private projectService: ProjectService) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private projectService: ProjectService
+  ) {}
 
-  // TODO: ngOnInit - načíst projectInfo, sections a milestones z DB podle projectId
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.projectId = +params['id'];
+      
+      if (this.projectId) {
+        this.loadProject();
+      }
+    })
+  }
+
+  loadProject() {
+    if (!this.projectId) return;
+
+    this.projectService.getProjectById(this.projectId).subscribe({
+      next: (res) => {
+        const project = res.project;
+        this.projectInfo = {
+          name: project.name,
+          description: project.description,
+          deadline: new Date(project.deadline),
+          technologies: project.technologies || [],
+          status: project.status
+        };
+        this.loading = false;
+        console.log('Loaded project: ', this.projectInfo);
+      },
+      error: (err) => {
+        console.error('Error loading project: ', err)
+        this.loading = false;
+        alert('Failed to load project');
+      }
+    })
+  }
+
 
   // Section management
   toggleAddSection() {

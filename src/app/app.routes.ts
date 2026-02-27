@@ -12,5 +12,5 @@ export const routes: Routes = [
     { path: 'dashboard', component: DashboardComponent},
     { path: 'projects', component: ProjectsComponent},
     { path: 'projectDashboard', component: ProjectDashboardComponent},
-    { path: 'projectSetup', component: ProjectSetupComponent}
+    { path: 'projectSetup/:id', component: ProjectSetupComponent}
 ];
