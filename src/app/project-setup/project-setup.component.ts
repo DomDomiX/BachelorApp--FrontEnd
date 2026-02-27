@@ -26,13 +26,13 @@ export class ProjectSetupComponent implements OnInit {
   projectId: number | null = null;
   loading: boolean = true;
 
-  // Project Info - TODO: Načítat z DB podle projectId
+  // Project Info
   projectInfo = {
-    name: '', // TODO: Z databáze
-    description: '', // TODO: Z databáze
-    deadline: new Date(), // TODO: Z databáze
-    technologies: [], // TODO: Z databáze
-    status: 'planning' // TODO: Z databáze
+    name: '',
+    description: '', 
+    deadline: new Date(), 
+    technologies: [], 
+    status: 'planning' 
   };
 
   // Data structure
@@ -72,7 +72,7 @@ export class ProjectSetupComponent implements OnInit {
           name: project.name,
           description: project.description,
           deadline: new Date(project.deadline),
-          technologies: project.technologies || [],
+          technologies: (project.technologies || []).map((tech: any) => tech.name),
           status: project.status
         };
         this.loading = false;
