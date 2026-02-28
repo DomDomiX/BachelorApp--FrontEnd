@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../services/project.service';
+import { ProjectSetupService } from '../services/projectSetup.service';
 
 @Component({
   selector: 'app-project-setup',
@@ -49,7 +50,8 @@ export class ProjectSetupComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private projectSetupService: ProjectSetupService
   ) {}
 
   ngOnInit() {
@@ -101,6 +103,19 @@ export class ProjectSetupComponent implements OnInit {
       ...this.newSection
     });
     this.toggleAddSection();
+  }
+
+  createSection() {
+    if (!this.newSection.name.trim()) return;
+
+    const sectionData = {
+      projectId: this.projectId,
+      name: this.newSection.name,
+      icon: this.availableIcons.indexOf(this.newSection.icon),
+      color: this.newSection.color
+    };
+
+    // TODO: Dodelat pridani service metody addSection() pro uložení do DB
   }
 
   deleteSection(sectionId: string) {
