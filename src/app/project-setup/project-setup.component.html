@@ -65,12 +65,12 @@
       <div class="section-form-card">
         <h3>Nová Sekce</h3>
         <div class="section-form-grid">
-          <input type="text" [(ngModel)]="newSection.name" placeholder="Název sekce (např. Frontend, Backend, Databáze...)" class="input-block" />
+          <input type="text" [(ngModel)]="sectionName" placeholder="Název sekce (např. Frontend, Backend, Databáze...)" class="input-block" />
           
           <div class="icon-color-row">
             <div class="form-group">
               <label>Ikona</label>
-              <select [(ngModel)]="newSection.icon" class="select-block">
+              <select [(ngModel)]="sectionIcon" class="select-block">
                 @for (icon of availableIcons; track icon) {
                 <option [value]="icon">{{ icon }}</option>
                 }
@@ -79,14 +79,14 @@
             
             <div class="form-group">
               <label>Barva</label>
-              <select [(ngModel)]="newSection.color" class="select-block">
+              <select [(ngModel)]="sectionColor" class="select-block">
                 @for (color of availableColors; track color) {
                 <option [value]="color" [style.color]="color">⬤ {{ color }}</option>
                 }
               </select>
             </div>
             
-            <button class="btn-primary" (click)="addSection()">Vytvořit</button>
+            <button class="btn-primary" (click)="createSection()">Vytvořit</button>
           </div>
         </div>
       </div>

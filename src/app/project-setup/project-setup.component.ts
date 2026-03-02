@@ -40,12 +40,19 @@ export class ProjectSetupComponent implements OnInit {
   sections: any[] = []; // User-created sections
   milestones: any[] = [];
 
-  // UI State
+  // Sections
   selectedSection: string | null = null;
   showAddSection = false;
   showAddMilestone = false;
-  newSection = { name: '', icon: '💻', color: '#4a9eff' };
+  sectionName: string = '';
+  sectionIcon: string = '💻';
+  sectionColor: string = '#4a9eff';
+
+  // Milestones
   newMilestone = { name: '', sectionId: '', phase: 'phase1', description: '' };
+  milestoneName: string = '';
+  milestoneDescription: string = '';
+  milestonePhase: string = 'phase1';
 
   constructor(
     private router: Router,
@@ -88,34 +95,49 @@ export class ProjectSetupComponent implements OnInit {
     })
   }
 
-
   // Section management
   toggleAddSection() {
     this.showAddSection = !this.showAddSection;
-    if (!this.showAddSection) this.newSection = { name: '', icon: '💻', color: '#4a9eff' };
-  }
-
-  addSection() {
-    // TODO: Service metoda - createSection() pro uložení do DB
-    if (!this.newSection.name.trim()) return;
-    this.sections.push({
-      id: Date.now().toString(),
-      ...this.newSection
-    });
-    this.toggleAddSection();
+    if (!this.showAddSection) {
+      this.sectionName = '';
+      this.sectionIcon = '💻';
+      this.sectionColor = '#4a9eff';
+    }
   }
 
   createSection() {
-    if (!this.newSection.name.trim()) return;
+    if (!this.sectionName.trim()) return;
+
+    if (this.projectId === null) {
+      alert('Project ID is missing');
+      return;
+    }
 
     const sectionData = {
       projectId: this.projectId,
-      name: this.newSection.name,
-      icon: this.availableIcons.indexOf(this.newSection.icon),
-      color: this.newSection.color
+      name: this.sectionName,
+      icon: this.availableIcons.indexOf(this.sectionIcon),
+      color: this.sectionColor
     };
 
+    console.log('Creating section with data:', sectionData);
+
     // TODO: Dodelat pridani service metody addSection() pro uložení do DB
+    this.projectSetupService.addSection(sectionData).subscribe({
+      next: (res) => {
+        console.log('Section created successfully:', res);
+        alert('Section created successfully!');
+
+        this.sectionColor = '#4a9eff';
+        this.sectionIcon = '💻';
+        this.sectionName = '';
+        this.showAddSection = false;
+      },
+      error: (err) => {
+        console.error('Error creating section:', err);
+        alert('Failed to create section');
+      } 
+    });
   }
 
   deleteSection(sectionId: string) {

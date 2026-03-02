@@ -16,7 +16,7 @@ export class ProjectSetupService {
     ) { }
 
     // TODO: addSection(Name, Icon, Color)
-    addSection(data: {name: string, description: string, icon: string, color: string}): Observable<any> {
+    addSection(data: {projectId: number, name: string, icon: number, color: string}): Observable<any> {
       const token = localStorage.getItem('accessToken');
       console.log('Načtený token pro vytvoření sekce:', token);
 
@@ -29,7 +29,7 @@ export class ProjectSetupService {
       });
 
       console.log('Posílaná hlavička pro vytvoření sekce:', headers.get('Authorization'));
-      return this.http.post(`${this.apiUrl}/create-section`, { data }, { headers });
+      return this.http.post(`${this.apiUrl}/create-section`, data, { headers });
     }
 
     // TODO: deleteSection()

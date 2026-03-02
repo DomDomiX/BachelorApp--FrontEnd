@@ -194,6 +194,17 @@ export class ProjectsComponent implements OnInit {
       next: (response) => {
         console.log('Project created successfully:', response);
         alert('Project created successfully!');
+
+        const newProjectId = response.projectId;
+
+        if (newProjectId) {
+          console.log('Navigating to project setup for project ID:', newProjectId);
+          this.router.navigate(['/projectSetup', newProjectId]);
+        } else {
+          console.error('No project ID returned from createProject response:', response);
+          this.loadProjects();
+        }
+
         this.toggleCreateForm();
         // Reset form fields
         this.projectName = '';
