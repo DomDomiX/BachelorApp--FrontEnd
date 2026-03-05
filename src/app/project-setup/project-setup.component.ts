@@ -16,13 +16,8 @@ export class ProjectSetupComponent implements OnInit {
   availableIcons = ['💻', '⚙️', '🎨', '🧪', '📝', '🗄️', '🔧', '🌐', '📊', '🔐', '📱', '☁️'];
   availableColors = ['#4a9eff', '#2ecc71', '#9b59b6', '#f39c12', '#e67e22', '#e74c3c', '#1abc9c', '#3498db'];
 
-  phases = ['phase1', 'phase2', 'phase3', 'phase4'];
-  phaseLabels: any = {
-    'phase1': 'Phase 1',
-    'phase2': 'Phase 2', 
-    'phase3': 'Phase 3',
-    'phase4': 'Phase 4'
-  };
+  phases = [0, 1, 2, 3];
+  phaseLabels: string[] = ['Phase 1', 'Phase 2', 'Phase 3', 'Phase 4'];
 
   projectId: number | null = null;
   loading: boolean = true;
@@ -49,10 +44,10 @@ export class ProjectSetupComponent implements OnInit {
   sectionColor: string = '#4a9eff';
 
   // Milestones
-  newMilestone = { name: '', sectionId: '', phase: 'phase1', description: '' };
   milestoneName: string = '';
   milestoneDescription: string = '';
-  milestonePhase: string = 'phase1';
+  milestonePhase: number = this.phases[0];
+  milestoneSectionId: string = '';
 
   constructor(
     private router: Router,
@@ -68,6 +63,7 @@ export class ProjectSetupComponent implements OnInit {
       if (this.projectId) {
         this.loadProject();
         this.loadSections();
+        this.loadMilestones();
       }
     })
   }
@@ -123,7 +119,6 @@ export class ProjectSetupComponent implements OnInit {
 
     console.log('Creating section with data:', sectionData);
 
-    // TODO: Dodelat pridani service metody addSection() pro uložení do DB
     this.projectSetupService.addSection(sectionData).subscribe({
       next: (res) => {
         console.log('Section created successfully:', res);
@@ -162,61 +157,85 @@ export class ProjectSetupComponent implements OnInit {
   }
 
   deleteSection(sectionId: string) {
-    // TODO: Service metoda - deleteSection() pro smazání z DB
-    if (confirm('Smazat sekci i všechny milestones v ní?')) {
-      this.sections = this.sections.filter(s => s.id !== sectionId);
-      this.milestones = this.milestones.filter(m => m.sectionId !== sectionId);
-    }
-  }
-
-  selectSection(sectionId: string) {
-    this.selectedSection = this.selectedSection === sectionId ? null : sectionId;
-  }
-
-  getSectionMilestones(sectionId: string) {
-    return this.milestones.filter(m => m.sectionId === sectionId);
-  }
-
-  getMilestonesBySectionAndPhase(sectionId: string, phase: string) {
-    return this.milestones.filter(m => m.sectionId === sectionId && m.phase === phase);
-  }
-
-  onCellDoubleClick(sectionId: string, phase: string) {
-    this.newMilestone.sectionId = sectionId;
-    this.newMilestone.phase = phase;
-    this.showAddMilestone = true;
+    
   }
 
   // Milestones
-  toggleAddMilestone(sectionId: string) {
-    if (this.showAddMilestone && this.newMilestone.sectionId === sectionId) {
-      this.showAddMilestone = false;
-      this.resetMilestoneForm();
-    } else {
-      this.showAddMilestone = true;
-      this.newMilestone.sectionId = sectionId;
+  createMilestone() {
+    if (!this.milestoneName.trim()) return;
+
+    if (this.projectId === null) {
+      alert('Project ID is missing');
+      return;
     }
+
+    if (!this.milestoneSectionId) {
+      alert('Nejprve vyber sekci pro milestone');
+      return;
+    }
+
+    const milestoneData = {
+      projectId: this.projectId,
+      sectionId: this.milestoneSectionId,
+      name: this.milestoneName,
+      description: this.milestoneDescription,
+      phase: this.milestonePhase
+    };
+
+    console.log('Creating milestone with data:', milestoneData);
+
+    this.projectSetupService.addMilestone(milestoneData).subscribe({
+      next: (res) => {
+        console.log('Milestone created successfully:', res);
+        alert('Milestone created successfully!');
+        this.showAddMilestone = false;
+        this.resetMilestoneForm();
+        this.loadMilestones();
+      },
+      error: (err) => {
+        console.error('Error creating milestone:', err);
+        alert('Failed to create milestone');
+      } 
+    });
   }
 
-  addMilestone() {
-    // TODO: Service metoda - createMilestone() pro uložení do DB
-    if (!this.newMilestone.name.trim()) return;
-    this.milestones.push({
-      id: Date.now(),
-      ...this.newMilestone,
-      status: 'pending'
+  loadMilestones() {
+    if (this.projectId === null) {
+      alert('Project ID is missing');
+      return;
+    }
+
+    this.projectSetupService.loadMilestones(this.projectId).subscribe({
+      next: (res) => {
+        this.milestones = res.milestones || [];
+        this.loading = false;
+        console.log('Loaded milestones:', this.milestones);
+      },
+      error: (err) => {
+        console.error('Error loading milestones:', err);
+        this.milestones = [];
+        this.loading = false;
+      }
     });
-    this.showAddMilestone = false;
-    this.resetMilestoneForm();
   }
 
   deleteMilestone(id: number) {
-    // TODO: Service metoda - deleteMilestone() pro smazání z DB
-    this.milestones = this.milestones.filter(m => m.id !== id);
+    this.projectSetupService.deleteMilestone(id).subscribe({
+      next: () => {
+        this.loadMilestones();
+      },
+      error: (err) => {
+        console.error('Error deleting milestone:', err);
+        alert('Failed to delete milestone');
+      }
+    });
   }
 
   resetMilestoneForm() {
-    this.newMilestone = { name: '', sectionId: '', phase: 'phase1', description: '' };
+    this.milestoneDescription = '';
+    this.milestoneName = '';
+    this.milestonePhase = this.phases[0];
+    this.milestoneSectionId = '';
   }
 
   // Actions
@@ -235,4 +254,40 @@ export class ProjectSetupComponent implements OnInit {
   skipSetup() {
     if (confirm('Přeskočit nastavení?')) this.router.navigate(['/projectDashboard']);
   }
+
+  // UI helper methods (used by template)
+  selectSection(sectionId: string) {
+    this.selectedSection = this.selectedSection === sectionId ? null : sectionId;
+  }
+
+  getSectionMilestones(sectionId: string) {
+    return this.milestones.filter(m => {
+      const milestoneSectionId = m.sectionId ?? m.sectionid;
+      return String(milestoneSectionId) === String(sectionId);
+    });
+  }
+
+  getMilestonesBySectionAndPhase(sectionId: string, phase: number) {
+    return this.milestones.filter(m => {
+      const milestoneSectionId = m.sectionId ?? m.sectionid;
+      return String(milestoneSectionId) === String(sectionId) && Number(m.phase) === phase;
+    });
+  }
+
+  onCellDoubleClick(sectionId: string, phase: number) {
+    this.milestoneSectionId = sectionId;
+    this.milestonePhase = phase;
+    this.showAddMilestone = true;
+  }
+
+  toggleAddMilestone(sectionId: string) {
+    if (this.showAddMilestone && this.milestoneSectionId === sectionId) {
+      this.showAddMilestone = false;
+      this.resetMilestoneForm();
+    } else {
+      this.showAddMilestone = true;
+      this.milestoneSectionId = sectionId;
+    }
+  }
+
 }

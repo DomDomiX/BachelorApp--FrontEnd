@@ -127,21 +127,21 @@
               <div class="subsection-header">
                 <h4>📍 Milestones</h4>
                 <button class="add-btn-small" (click)="toggleAddMilestone(section.id)">
-                  {{ showAddMilestone && newMilestone.sectionId === section.id ? 'Zrušit' : '+ Milestone' }}
+                  {{ showAddMilestone && milestoneSectionId === section.id ? 'Zrušit' : '+ Milestone' }}
                 </button>
               </div>
 
               <!-- Add Milestone Form -->
-              @if (showAddMilestone && newMilestone.sectionId === section.id) {
+              @if (showAddMilestone && milestoneSectionId === section.id) {
               <div class="add-form-inline">
-                <input type="text" [(ngModel)]="newMilestone.name" placeholder="Název milestone (např. MVP, Beta...)" class="input-inline" />
-                <select [(ngModel)]="newMilestone.phase" class="select-inline">
+                <input type="text" [(ngModel)]="milestoneName" placeholder="Název milestone (např. MVP, Beta...)" class="input-inline" />
+                <select [(ngModel)]="milestonePhase" class="select-inline">
                   @for (phase of phases; track phase) {
-                  <option [value]="phase">{{ phaseLabels[phase] }}</option>
+                  <option [ngValue]="phase">{{ phaseLabels[phase] }}</option>
                   }
                 </select>
-                <input type="text" [(ngModel)]="newMilestone.description" placeholder="Popis (volitelné)" class="input-inline" />
-                <button class="btn-add-inline" (click)="addMilestone()">Přidat</button>
+                <input type="text" [(ngModel)]="milestoneDescription" placeholder="Popis (volitelné)" class="input-inline" />
+                <button class="btn-add-inline" (click)="createMilestone()">Přidat</button>
               </div>
               }
 
@@ -230,9 +230,14 @@
             <button class="close-btn" (click)="showAddMilestone = false; resetMilestoneForm()">×</button>
           </div>
           <div class="floating-form-body">
-            <input type="text" [(ngModel)]="newMilestone.name" placeholder="Název milestone (např. MVP, Beta, Launch)" class="input-block" />
-            <textarea [(ngModel)]="newMilestone.description" placeholder="Popis mílníku (volitelné)" class="textarea-block" rows="3"></textarea>
-            <button class="btn-primary" (click)="addMilestone()">Přidat Milestone</button>
+            <input type="text" [(ngModel)]="milestoneName" placeholder="Název milestone (např. MVP, Beta, Launch)" class="input-block" />
+            <select [(ngModel)]="milestonePhase" class="select-block">
+              @for (phase of phases; track phase) {
+              <option [ngValue]="phase">{{ phaseLabels[phase] }}</option>
+              }
+            </select>
+            <textarea [(ngModel)]="milestoneDescription" placeholder="Popis mílníku (volitelné)" class="textarea-block" rows="3"></textarea>
+            <button class="btn-primary" (click)="createMilestone()">Přidat Milestone</button>
           </div>
         </div>
         }

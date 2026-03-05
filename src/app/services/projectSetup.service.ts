@@ -1,19 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable } from '@angular/core';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectSetupService {
     private apiUrl = 'http://localhost:3000/api';
-    private apiTech = 'http://localhost:3000/api/public';
 
-    constructor(
-        private http: HttpClient, 
-        @Inject(PLATFORM_ID) private platformId: Object
-    ) { }
+  constructor(private http: HttpClient) { }
 
     // TODO: addSection(Name, Icon, Color)
     addSection(data: {projectId: number, name: string, icon: number, color: string}): Observable<any> {
@@ -59,8 +54,7 @@ export class ProjectSetupService {
       return this.http.delete(`${this.apiUrl}/delete-section/${sectionId}`, { headers });
     }
 
-    // TODO: addMilestone(Name, Description)
-    addMilestone(data: {name: string, description: string}, projectId: number): Observable<any> {
+    addMilestone(data: {projectId: number, sectionId: string, name: string, description: string, phase: number}): Observable<any> {
       const token = localStorage.getItem('accessToken');
       console.log('Načtený token pro vytvoření milníku:', token);
         
@@ -73,7 +67,22 @@ export class ProjectSetupService {
       });
 
       console.log('Posílaná hlavička pro vytvoření milníku:', headers.get('Authorization'));
-      return this.http.post(`${this.apiUrl}/create-milestone/${projectId}`, { data }, { headers });
+      return this.http.post(`${this.apiUrl}/create-milestone`, data, { headers });
+    }
+
+    loadMilestones(projectId: number): Observable<any> {
+      const token = localStorage.getItem('accessToken');
+      console.log('Načtený token pro načtení milníků:', token);
+
+      if (!token) {
+        throw new Error('No token found');
+      }
+
+      const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+      });
+
+      return this.http.get(`${this.apiUrl}/milestones/${projectId}`, { headers });
     }
 
     // TODO: deleteMilestone()
