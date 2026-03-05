@@ -108,7 +108,7 @@
           <!-- Section Header -->
           <div class="section-header-main" (click)="selectSection(section.id)">
             <div class="section-info">
-              <span class="section-icon">{{ section.icon }}</span>
+              <span class="section-icon">{{ availableIcons[section.icon] }}</span>
               <h3 [style.color]="section.color">{{ section.name }}</h3>
             </div>
             <div class="section-stats">

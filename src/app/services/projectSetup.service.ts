@@ -32,6 +32,21 @@ export class ProjectSetupService {
       return this.http.post(`${this.apiUrl}/create-section`, data, { headers });
     }
 
+    loadSections(projectId: number): Observable<any> {
+      const token = localStorage.getItem('accessToken');
+      console.log('Načtený token pro načtení sekcí:', token);
+
+      if (!token) {
+        throw new Error('No token found');
+      }
+
+      const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+      });
+
+      return this.http.get(`${this.apiUrl}/sections/${projectId}`, { headers });
+    }
+
     // TODO: deleteSection()
     deleteSection(sectionId: number): Observable<any> {
       const token = localStorage.getItem('accessToken');

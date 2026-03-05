@@ -67,6 +67,7 @@ export class ProjectSetupComponent implements OnInit {
       
       if (this.projectId) {
         this.loadProject();
+        this.loadSections();
       }
     })
   }
@@ -137,6 +138,26 @@ export class ProjectSetupComponent implements OnInit {
         console.error('Error creating section:', err);
         alert('Failed to create section');
       } 
+    });
+  }
+
+  loadSections() {
+    if (this.projectId === null) {
+      alert('Project ID is missing');
+      return;
+    }
+
+    this.projectSetupService.loadSections(this.projectId).subscribe({
+      next: (res) => {
+        this.sections = res.sections || [];
+        this.loading = false;
+        console.log('Loaded sections:', this.sections);
+      },
+      error: (err) => {
+        console.error('Error loading sections:', err);
+        this.sections = [];
+        this.loading = false;
+      }
     });
   }
 
