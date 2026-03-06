@@ -156,8 +156,16 @@ export class ProjectSetupComponent implements OnInit {
     });
   }
 
-  deleteSection(sectionId: string) {
-    
+  deleteSection(id: number) {
+    this.projectSetupService.deleteSection(id).subscribe({
+      next: () => {
+        this.loadSections();
+      },
+      error: (err) => {
+        console.error('Error deleting section:', err);
+        alert('Failed to delete section');
+      }
+    });
   }
 
   // Milestones

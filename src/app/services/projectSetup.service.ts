@@ -42,7 +42,6 @@ export class ProjectSetupService {
       return this.http.get(`${this.apiUrl}/sections/${projectId}`, { headers });
     }
 
-    // TODO: deleteSection()
     deleteSection(sectionId: number): Observable<any> {
       const token = localStorage.getItem('accessToken');
       console.log('Načtený token pro smazání sekce:', token);
@@ -85,7 +84,6 @@ export class ProjectSetupService {
       return this.http.get(`${this.apiUrl}/milestones/${projectId}`, { headers });
     }
 
-    // TODO: deleteMilestone()
     deleteMilestone(milestoneId: number): Observable<any> {
       const token = localStorage.getItem('accessToken');
       console.log('Načtený token pro smazání milníku:', token);
