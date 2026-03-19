@@ -96,4 +96,50 @@ export class ProjectService {
         
         return this.http.delete(`${this.apiUrl}/projects/${projectId}`, { headers });
     }
+
+    // Tasks
+
+    getTasksByProject(projectId: number): Observable<any> {
+        const token = localStorage.getItem('accessToken');
+        
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        const headers = new HttpHeaders({});
+
+        if (isPlatformBrowser(this.platformId)) {
+            headers.set('Authorization', `Bearer ${token}`);
+        }
+
+        return this.http.get(`${this.apiUrl}/projects/${projectId}/tasks`, { headers });
+    }
+
+    addTask(taskData: { projectId: number, name: string, description: string, status: string, milestoneId: number }): Observable<any> {
+        const token = localStorage.getItem('accessToken');
+
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${token}`,
+        });
+
+        return this.http.post(`${this.apiUrl}/create-task`, taskData, { headers });
+    }
+
+    deleteTask(taskId: number, projectId: number): Observable<any> {
+        const token = localStorage.getItem('accessToken');
+
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${token}`,
+        });
+        
+        return this.http.delete(`${this.apiUrl}/delete-task/${taskId}?projectId=${projectId}`, { headers });
+    }
 }

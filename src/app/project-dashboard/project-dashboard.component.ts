@@ -57,7 +57,7 @@ export class ProjectDashboardComponent implements OnInit {
   milestoneSectionId: string = '';
 
   // Roadmap logic (stejné jako project-setup)
-  selectedCategory: string | null = null;
+  selectedCategory: number | null = null;
   selectedMilestoneFilter: string | null = null;
   
   draggedTask: any = null;
@@ -66,6 +66,9 @@ export class ProjectDashboardComponent implements OnInit {
   tooltipPosition = { x: 0, y: 0 };
   hoveredTask: any = null;
   selectedTask: any = null;
+
+  // Tasks
+  tasks: any[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private projectService: ProjectService, private projectSetupService: ProjectSetupService) {}
 
@@ -77,6 +80,7 @@ export class ProjectDashboardComponent implements OnInit {
         this.loadProject();
         this.loadSections();
         this.loadMilestones();
+        this.loadTasks();
       }
    
     })
@@ -257,10 +261,10 @@ export class ProjectDashboardComponent implements OnInit {
     this.selectedSection = this.selectedSection === sectionId ? null : sectionId;
   }
 
-  getSectionMilestones(sectionId: string) {
+  getSectionMilestones(sectionId: number | null) {
     return this.milestones.filter(m => {
       const milestoneSectionId = m.sectionId ?? m.sectionid;
-      return String(milestoneSectionId) === String(sectionId);
+      return milestoneSectionId === sectionId;
     });
   }
 
@@ -292,9 +296,51 @@ export class ProjectDashboardComponent implements OnInit {
     this.showAddMilestone = true;
   }
 
+  getSectionById(id: number | null) {
+    return this.sections.find(s => s.id === id);
+  }
+
+  getIconByIndex(index: number) {
+    return this.availableIcons[index] || '❓';
+  }
+
+   selectCategory(id: number | null) { 
+    this.selectedCategory = id; 
+  }
+
+  // Tasks
+  loadTasks() {
+    if (this.projectId == null) return;
+    this.projectService.getTasksByProject(this.projectId).subscribe({
+      next: (res) => {
+        // assign response directly
+        this.tasks = res;
+        console.log('Loaded tasks:', this.tasks);
+      },
+      error: (err) => {
+        console.error('Error loading tasks:', err);
+        this.tasks = [];
+      }
+    });
+  }
+
+  getTasksBySection(sectionId: number, milestoneId: string | null = null): any[] {
+    return this.tasks.filter(task => {
+      const matchesSection = task.sectionid === sectionId;
+      const matchesMilestone = milestoneId ? String(task.milestoneid) === String(milestoneId) : true;
+      return matchesSection && matchesMilestone;
+    });
+  }
+
+  // Spočítá úkoly podle statusu v dané sekci
+  countTasksByStatus(sectionId: number, status: string): number {
+    return this.tasks.filter(task => 
+      task.sectionid === sectionId && task.status === status
+    ).length;
+  }
+
   
   // Stub methods - TODO: implement
-  selectCategory(cat: string | null) { this.selectedCategory = cat; }
   clearMilestoneFilter() { this.selectedMilestoneFilter = null; }
   getMilestonesByGoal(goal: string): any[] { return []; }
   setMilestoneFilter(id: string) { this.selectedMilestoneFilter = id; }

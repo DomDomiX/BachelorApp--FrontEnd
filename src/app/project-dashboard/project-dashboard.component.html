@@ -194,65 +194,37 @@
       <!-- Category Cards Grid -->
       <div class="category-cards-grid">
         
-        <!-- Frontend Card -->
-        <div class="category-card frontend" (click)="selectCategory('frontend')" [class.expanded]="selectedCategory === 'frontend'">
+      @for (section of sections; track section.id) {
+        <div class="category-card" [class.selected]="selectedCategory === section.id" [style.borderLeftColor]="section.color" [style.--section-color]="section.color"
+        style="border-left-width: 3px; border-left-style: solid;" (click)="selectCategory(section.id)">
           <div class="category-card-header">
-            <div class="category-icon">💻</div>
-            <h2>Frontend Development</h2>
+            <div class="category-icon">{{ availableIcons[section.icon] }}</div>
+            <h2>{{section.name}}</h2>
             <span class="task-count-badge">3 tasks</span>
           </div>
-          <div class="category-stats">
-            <span class="stat-mini completed">1 completed</span>
-            <span class="stat-mini in-progress">1 in progress</span>
-            <span class="stat-mini pending">1 pending</span>
-          </div>
-        </div>
 
-        <!-- Backend Card -->
-        <div class="category-card backend" (click)="selectCategory('backend')" [class.expanded]="selectedCategory === 'backend'">
-          <div class="category-card-header">
-            <div class="category-icon">⚙️</div>
-            <h2>Backend Development</h2>
-            <span class="task-count-badge">2 tasks</span>
-          </div>
+          <!-- TODO: Add category-specific stats -->
           <div class="category-stats">
-            <span class="stat-mini in-progress">1 in progress</span>
-            <span class="stat-mini pending">1 pending</span>
-          </div>
+        <span class="stat-mini completed">
+          {{ countTasksByStatus(section.id, 'completed') }} completed
+        </span>
+        <span class="stat-mini in-progress">
+          {{ countTasksByStatus(section.id, 'in-progress') }} in progress
+        </span>
+        <span class="stat-mini pending">
+          {{ countTasksByStatus(section.id, 'pending') }} pending
+        </span>
+      </div>
         </div>
-
-        <!-- Testing Card -->
-        <div class="category-card testing" (click)="selectCategory('testing')" [class.expanded]="selectedCategory === 'testing'">
-          <div class="category-card-header">
-            <div class="category-icon">🧪</div>
-            <h2>Testing & QA</h2>
-            <span class="task-count-badge">2 tasks</span>
-          </div>
-          <div class="category-stats">
-            <span class="stat-mini pending">2 pending</span>
-          </div>
-        </div>
-
-        <!-- Documentation Card -->
-        <div class="category-card documentation" (click)="selectCategory('documentation')" [class.expanded]="selectedCategory === 'documentation'">
-          <div class="category-card-header">
-            <div class="category-icon">📝</div>
-            <h2>Documentation</h2>
-            <span class="task-count-badge">2 tasks</span>
-          </div>
-          <div class="category-stats">
-            <span class="stat-mini in-progress">1 in progress</span>
-            <span class="stat-mini pending">1 pending</span>
-          </div>
-        </div>
-
+      }
       </div>
 
       <!-- Tasks Detail View -->
-      @if (selectedCategory === 'frontend') {
+      @if (selectedCategory) {
+        @let currentSection = getSectionById(selectedCategory);
         <div class="tasks-detail-section">
           <div class="detail-header">
-            <h2>💻 Frontend Development Tasks</h2>
+            <h2>{{ getIconByIndex(currentSection.icon)}} {{currentSection.name}} Tasks</h2>
             <button class="close-btn" (click)="selectCategory(null)">×</button>
           </div>
           
@@ -263,7 +235,8 @@
               <button class="filter-btn" 
                       [class.active]="selectedMilestoneFilter === null"
                       (click)="clearMilestoneFilter()">All Tasks</button>
-              @for (milestone of getMilestonesByGoal('frontend'); track milestone.id) {
+
+              @for (milestone of getSectionMilestones(selectedCategory); track milestone.id) {
                 <button class="filter-btn" 
                         [class.active]="selectedMilestoneFilter === milestone.id"
                         (click)="setMilestoneFilter(milestone.id)">{{milestone.name}}</button>
@@ -272,7 +245,7 @@
           </div>
           
           <div class="tasks-list-todo">
-            @for (task of getTasksByGoal('frontend'); track task.id) {
+            @for (task of getTasksBySection(selectedCategory, selectedMilestoneFilter); track task.id) {
               <div class="todo-task-card">
                 <div class="task-status" [class.completed]="task.status === 'completed'" 
                      [class.in-progress]="task.status === 'in-progress'"
@@ -284,177 +257,6 @@
                     <div class="task-milestone">
                       <span class="milestone-icon">🎯</span>
                       <span class="milestone-name">{{getMilestoneName(task.milestoneId)}}</span>
-                    </div>
-                  }
-                  <div class="task-meta">
-                    <span class="priority" [class.high]="task.priority === 'high'"
-                          [class.medium]="task.priority === 'medium'"
-                          [class.low]="task.priority === 'low'">{{task.priority}} Priority</span>
-                    <span class="due-date">Due: {{task.dueDate}}</span>
-                  </div>
-                </div>
-                <div class="task-actions">
-                  <button class="btn-edit">✎</button>
-                  <button class="btn-delete">×</button>
-                </div>
-              </div>
-            }
-          </div>
-        </div>
-      }
-
-      @if (selectedCategory === 'backend') {
-        <div class="tasks-detail-section">
-          <div class="detail-header">
-            <h2>⚙️ Backend Development Tasks</h2>
-            <button class="close-btn" (click)="selectCategory(null)">×</button>
-          </div>
-          
-          <!-- Milestone Filter -->
-          <div class="milestone-filter">
-            <span class="filter-label">Filter by milestone:</span>
-            <div class="filter-buttons">
-              <button class="filter-btn" 
-                      [class.active]="selectedMilestoneFilter === null"
-                      (click)="clearMilestoneFilter()">All Tasks</button>
-              @for (milestone of getMilestonesByGoal('backend'); track milestone.id) {
-                <button class="filter-btn" 
-                        [class.active]="selectedMilestoneFilter === milestone.id"
-                        (click)="setMilestoneFilter(milestone.id)">{{milestone.name}}</button>
-              }
-            </div>
-          </div>
-          
-          <div class="tasks-list-todo">
-            @for (task of getTasksByGoal('backend'); track task.id) {
-              <div class="todo-task-card">
-                <div class="task-status" [class.completed]="task.status === 'completed'" 
-                     [class.in-progress]="task.status === 'in-progress'"
-                     [class.pending]="task.status === 'pending'"></div>
-                <div class="task-content">
-                  <h3>{{task.title}}</h3>
-                  <p>{{task.description}}</p>
-                  @if (task.milestoneId) {
-                    <div class="task-milestone">
-                      <span class="milestone-icon">🎯</span>
-                      <span class="milestone-name">{{getMilestoneName(task.milestoneId)}}</span>
-                    </div>
-                  }
-                  <div class="task-meta">
-                    <span class="priority" [class.high]="task.priority === 'high'"
-                          [class.medium]="task.priority === 'medium'"
-                          [class.low]="task.priority === 'low'">{{task.priority}} Priority</span>
-                    <span class="due-date">Due: {{task.dueDate}}</span>
-                  </div>
-                </div>
-                <div class="task-actions">
-                  <button class="btn-edit">✎</button>
-                  <button class="btn-delete">×</button>
-                </div>
-              </div>
-            }
-          </div>
-        </div>
-      }
-
-      @if (selectedCategory === 'testing') {
-        <div class="tasks-detail-section">
-          <div class="detail-header">
-            <h2>🧪 Testing & QA Tasks</h2>
-            <button class="close-btn" (click)="selectCategory(null)">×</button>
-          </div>
-          
-          <!-- Milestone Filter -->
-          <div class="milestone-filter">
-            <span class="filter-label">Filter by milestone:</span>
-            <div class="filter-buttons">
-              <button class="filter-btn" 
-                      [class.active]="selectedMilestoneFilter === null"
-                      (click)="clearMilestoneFilter()">All Tasks</button>
-              @for (milestone of getMilestonesByGoal('testing'); track milestone.id) {
-                <button class="filter-btn" 
-                        [class.active]="selectedMilestoneFilter === milestone.id"
-                        (click)="setMilestoneFilter(milestone.id)">{{milestone.name}}</button>
-              }
-            </div>
-          </div>
-          
-          <div class="tasks-list-todo">
-            @for (task of getTasksByGoal('testing'); track task.id) {
-              <div class="todo-task-card">
-                <div class="task-status" [class.completed]="task.status === 'completed'" 
-                     [class.in-progress]="task.status === 'in-progress'"
-                     [class.pending]="task.status === 'pending'"></div>
-                <div class="task-content">
-                  <h3>{{task.title}}</h3>
-                  <p>{{task.description}}</p>
-                  @if (task.milestoneId) {
-                    <div class="task-milestone">
-                      <span class="milestone-icon">🎯</span>
-                      <span class="milestone-name">{{getMilestoneName(task.milestoneId)}}</span>
-                    </div>
-                  }
-                  <div class="task-meta">
-                    <span class="priority" [class.high]="task.priority === 'high'"
-                          [class.medium]="task.priority === 'medium'"
-                          [class.low]="task.priority === 'low'">{{task.priority}} Priority</span>
-                    <span class="due-date">Due: {{task.dueDate}}</span>
-                  </div>
-                </div>
-                <div class="task-actions">
-                  <button class="btn-edit">✎</button>
-                  <button class="btn-delete">×</button>
-                </div>
-              </div>
-            }
-          </div>
-        </div>
-      }
-
-      @if (selectedCategory === 'documentation') {
-        <div class="tasks-detail-section">
-          <div class="detail-header">
-            <h2>📝 Documentation Tasks</h2>
-            <button class="close-btn" (click)="selectCategory(null)">×</button>
-          </div>
-          
-          <!-- Milestone Filter -->
-          <div class="milestone-filter">
-            <span class="filter-label">Filter by milestone:</span>
-            @if (getMilestonesByGoal('documentation').length > 0) {
-              <div class="filter-buttons">
-                <button class="filter-btn" 
-                        [class.active]="selectedMilestoneFilter === null"
-                        (click)="clearMilestoneFilter()">All Tasks</button>
-                @for (milestone of getMilestonesByGoal('documentation'); track milestone.id) {
-                  <button class="filter-btn" 
-                          [class.active]="selectedMilestoneFilter === milestone.id"
-                          (click)="setMilestoneFilter(milestone.id)">{{milestone.name}}</button>
-                }
-              </div>
-            } @else {
-              <span class="no-milestones-info">No milestones assigned to these tasks</span>
-            }
-          </div>
-          
-          <div class="tasks-list-todo">
-            @for (task of getTasksByGoal('documentation'); track task.id) {
-              <div class="todo-task-card">
-                <div class="task-status" [class.completed]="task.status === 'completed'" 
-                     [class.in-progress]="task.status === 'in-progress'"
-                     [class.pending]="task.status === 'pending'"></div>
-                <div class="task-content">
-                  <h3>{{task.title}}</h3>
-                  <p>{{task.description}}</p>
-                  @if (task.milestoneId) {
-                    <div class="task-milestone">
-                      <span class="milestone-icon">🎯</span>
-                      <span class="milestone-name">{{getMilestoneName(task.milestoneId)}}</span>
-                    </div>
-                  } @else {
-                    <div class="task-milestone no-milestone">
-                      <span class="milestone-icon">⚪</span>
-                      <span class="milestone-name">No milestone assigned</span>
                     </div>
                   }
                   <div class="task-meta">
