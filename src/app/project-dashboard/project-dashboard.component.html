@@ -14,158 +14,158 @@
 
   <!-- MainPage View -->
   @if (activeTab === 'MainPage') {
-  <div class="dashboard-content">
-    <!-- Project Overview -->
-    <div class="section overview-section">
-      <div class="section-header">
-        <h2>Project Task Overview</h2>
+    <div class="dashboard-content">
+      <!-- Project Overview -->
+      <div class="section overview-section">
+        <div class="section-header">
+          <h2>Project Task Overview</h2>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value">15</div>
+            <div class="stat-label">Total Tasks</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">8</div>
+            <div class="stat-label">Completed</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">5</div>
+            <div class="stat-label">In Progress</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">2</div>
+            <div class="stat-label">Pending</div>
+          </div>
+        </div>
       </div>
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-value">15</div>
-          <div class="stat-label">Total Tasks</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">8</div>
-          <div class="stat-label">Completed</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">5</div>
-          <div class="stat-label">In Progress</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">2</div>
-          <div class="stat-label">Pending</div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Project Progress -->
-    <div class="section progress-section">
-      <div class="section-header">
-        <h2>Project Progress</h2>
-      </div>
-      <div class="progress-content">
-        <div class="progress-circle">
-          <svg viewBox="0 0 120 120">
-            <defs>
-              <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:#4a9eff;stop-opacity:1" />
-                <stop offset="100%" style="stop-color:#2ecc71;stop-opacity:1" />
-              </linearGradient>
-            </defs>
-            <circle class="progress-bg" cx="60" cy="60" r="50"></circle>
-            <circle class="progress-bar" cx="60" cy="60" r="50" style="stroke-dashoffset: 62.8"></circle>
-          </svg>
-          <div class="progress-text">
-            <div class="progress-value">53%</div>
-            <div class="progress-label">Complete</div>
+      <!-- Project Progress -->
+      <div class="section progress-section">
+        <div class="section-header">
+          <h2>Project Progress</h2>
+        </div>
+        <div class="progress-content">
+          <div class="progress-circle">
+            <svg viewBox="0 0 120 120">
+              <defs>
+                <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style="stop-color:#4a9eff;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#2ecc71;stop-opacity:1" />
+                </linearGradient>
+              </defs>
+              <circle class="progress-bg" cx="60" cy="60" r="50"></circle>
+              <circle class="progress-bar" cx="60" cy="60" r="50" style="stroke-dashoffset: 62.8"></circle>
+            </svg>
+            <div class="progress-text">
+              <div class="progress-value">53%</div>
+              <div class="progress-label">Complete</div>
+            </div>
+          </div>
+          <div class="progress-stats">
+            <div class="progress-stat-item">
+              <span class="progress-stat-label">Tasks Completed:</span>
+              <span class="progress-stat-value">8 / 15</span>
+            </div>
+            <div class="progress-stat-item">
+              <span class="progress-stat-label">Days Remaining:</span>
+              <span class="progress-stat-value">12</span>
+            </div>
           </div>
         </div>
-        <div class="progress-stats">
-          <div class="progress-stat-item">
-            <span class="progress-stat-label">Tasks Completed:</span>
-            <span class="progress-stat-value">8 / 15</span>
-          </div>
-          <div class="progress-stat-item">
-            <span class="progress-stat-label">Days Remaining:</span>
-            <span class="progress-stat-value">12</span>
-          </div>
-        </div>
       </div>
-    </div>
 
-    <!-- Tasks Section -->
-    <div class="section tasks-section">
-      <div class="section-header">
-        <h2>Active Tasks</h2>
-        <button class="add-btn">+ Add Task</button>
+      <!-- Tasks Section -->
+      <div class="section tasks-section">
+        <div class="section-header">
+          <h2>Active Tasks</h2>
+          <button class="add-btn">+ Add Task</button>
+        </div>
+        <div class="tasks-list">
+          <div class="task-item">
+            <div class="task-status in-progress"></div>
+            <div class="task-details">
+              <div class="task-title">Implement authentication</div>
+              <div class="task-meta">Due: Tomorrow</div>
+            </div>
+          </div>
+          <div class="task-item">
+            <div class="task-status in-progress"></div>
+            <div class="task-details">
+              <div class="task-title">Design database schema</div>
+              <div class="task-meta">Due: This week</div>
+            </div>
+          </div>
+          <div class="task-item">
+            <div class="task-status pending"></div>
+            <div class="task-details">
+              <div class="task-title">Write documentation</div>
+              <div class="task-meta">Due: Next week</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="tasks-list">
-        <div class="task-item">
-          <div class="task-status in-progress"></div>
-          <div class="task-details">
-            <div class="task-title">Implement authentication</div>
-            <div class="task-meta">Due: Tomorrow</div>
-          </div>
-        </div>
-        <div class="task-item">
-          <div class="task-status in-progress"></div>
-          <div class="task-details">
-            <div class="task-title">Design database schema</div>
-            <div class="task-meta">Due: This week</div>
-          </div>
-        </div>
-        <div class="task-item">
-          <div class="task-status pending"></div>
-          <div class="task-details">
-            <div class="task-title">Write documentation</div>
-            <div class="task-meta">Due: Next week</div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Recent Activity -->
-    <div class="section activity-section">
-      <div class="section-header">
-        <h2>Recent Activity</h2>
+      <!-- Recent Activity -->
+      <div class="section activity-section">
+        <div class="section-header">
+          <h2>Recent Activity</h2>
+        </div>
+        <div class="activity-list">
+          <div class="activity-item">
+            <div class="activity-icon">✓</div>
+            <div class="activity-content">
+              <div class="activity-title">Task completed</div>
+              <div class="activity-time">2 hours ago</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon">+</div>
+            <div class="activity-content">
+              <div class="activity-title">New task added</div>
+              <div class="activity-time">5 hours ago</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon">↑</div>
+            <div class="activity-content">
+              <div class="activity-title">Priority updated</div>
+              <div class="activity-time">1 day ago</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="activity-list">
-        <div class="activity-item">
-          <div class="activity-icon">✓</div>
-          <div class="activity-content">
-            <div class="activity-title">Task completed</div>
-            <div class="activity-time">2 hours ago</div>
-          </div>
-        </div>
-        <div class="activity-item">
-          <div class="activity-icon">+</div>
-          <div class="activity-content">
-            <div class="activity-title">New task added</div>
-            <div class="activity-time">5 hours ago</div>
-          </div>
-        </div>
-        <div class="activity-item">
-          <div class="activity-icon">↑</div>
-          <div class="activity-content">
-            <div class="activity-title">Priority updated</div>
-            <div class="activity-time">1 day ago</div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Team Section -->
-    <div class="section team-section">
-      <div class="section-header">
-        <h2>Team Members</h2>
-      </div>
-      <div class="team-list">
-        <div class="team-member">
-          <div class="member-avatar">JD</div>
-          <div class="member-info">
-            <div class="member-name">John Doe</div>
-            <div class="member-role">Project Manager</div>
-          </div>
+      <!-- Team Section -->
+      <div class="section team-section">
+        <div class="section-header">
+          <h2>Team Members</h2>
         </div>
-        <div class="team-member">
-          <div class="member-avatar">JS</div>
-          <div class="member-info">
-            <div class="member-name">Jane Smith</div>
-            <div class="member-role">Developer</div>
+        <div class="team-list">
+          <div class="team-member">
+            <div class="member-avatar">JD</div>
+            <div class="member-info">
+              <div class="member-name">John Doe</div>
+              <div class="member-role">Project Manager</div>
+            </div>
           </div>
-        </div>
-        <div class="team-member">
-          <div class="member-avatar">MB</div>
-          <div class="member-info">
-            <div class="member-name">Mike Brown</div>
-            <div class="member-role">Designer</div>
+          <div class="team-member">
+            <div class="member-avatar">JS</div>
+            <div class="member-info">
+              <div class="member-name">Jane Smith</div>
+              <div class="member-role">Developer</div>
+            </div>
+          </div>
+          <div class="team-member">
+            <div class="member-avatar">MB</div>
+            <div class="member-info">
+              <div class="member-name">Mike Brown</div>
+              <div class="member-role">Designer</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   }
 
   <!-- ToDo View -->
@@ -477,154 +477,172 @@
     </div>
   }
 
-  <!-- RoadMap View -->
   @if (activeTab === 'RoadMap') {
     <div class="roadmap-content">
       <div class="roadmap-header">
-        <h2>Project Roadmap</h2>
-        <button class="add-milestone-btn">+ Add Milestone</button>
+        <h2>Roadmap</h2>
       </div>
 
-      <!-- Grid Container -->
-      <div class="roadmap-grid" (click)="closeContextMenu()">
-        
-        <!-- Header Row -->
-        <div class="grid-header">
-          <div class="grid-cell category-header"></div>
-          @for (phase of phases; track phase) {
-            <div class="grid-cell phase-header">{{phaseLabels[phase]}}</div>
-          }
-        </div>
+      <!-- Add Section Button -->
+      <div class="add-section-header">
+        <button class="btn-add-section" (click)="toggleAddSection()">
+          {{ showAddSection ? '× Zrušit' : '+ Přidat Sekci' }}
+        </button>
+      </div>
 
-        <!-- Goal Rows -->
-        @for (goal of goals; track goal.id) {
-          <div class="grid-row">
-            <!-- Goal Label -->
-            <div class="grid-cell goal-label" [style.border-left-color]="goal.color">
-              <span class="goal-name">{{goal.name | uppercase}}</span>
+      <!-- Add Section Form -->
+      @if (showAddSection) {
+      <div class="section-form-card">
+        <h3>Nová Sekce</h3>
+        <div class="section-form-grid">
+          <input type="text" [(ngModel)]="sectionName" placeholder="Název sekce (např. Frontend, Backend, Databáze...)" class="input-block" />
+          <div class="icon-color-row">
+            <div class="form-group">
+              <label>Ikona</label>
+              <select [(ngModel)]="sectionIcon" class="select-block">
+                @for (icon of availableIcons; track icon) {
+                <option [value]="icon">{{ icon }}</option>
+                }
+              </select>
             </div>
-            
-            <!-- Phase Cells -->
-            @for (phase of phases; track phase) {
-              <div class="grid-cell phase-cell" 
-                   (dblclick)="onCellDoubleClick(goal.id, phase, $event)"
-                   (drop)="onCellDrop(goal.id, phase, $event)"
-                   (dragover)="onDragOver($event)">
-                
-                <!-- Milestones in this cell -->
-                @for (task of getMilestonesByGoalAndPhase(goal.id, phase); track task.id) {
-                  <div class="task-card"
-                       [class.completed]="task.status === 'completed'"
-                       [class.in-progress]="task.status === 'in-progress'"
-                       [class.highlighted]="isTaskHighlighted(task)"
-                       [class.dragging]="draggedTask?.id === task.id"
-                       draggable="true"
-                       (dragstart)="onTaskMouseDown(task, $event)"
-                       (click)="onTaskClick(task, $event)"
-                       (mouseenter)="onTaskHover(task, $event)"
-                       (mouseleave)="onTaskLeave()"
-                       (contextmenu)="onTaskContextMenu(task, $event)">
-                    
-                    <div class="task-card-content">
-                      <div class="task-name">{{task.name}}</div>
-                      
-                      <div class="task-quick-actions">
-                        <button class="quick-action-btn" (click)="markTaskComplete(task); $event.stopPropagation()" title="Mark Complete">✓</button>
-                        <button class="quick-action-btn" (click)="editTask(task); $event.stopPropagation()" title="Edit">✎</button>
-                        <button class="quick-action-btn" (click)="deleteTask(task); $event.stopPropagation()" title="Delete">×</button>
-                      </div>
-                    </div>
+            <div class="form-group">
+              <label>Barva</label>
+              <select [(ngModel)]="sectionColor" class="select-block">
+                @for (color of availableColors; track color) {
+                <option [value]="color" [style.color]="color">● {{ color }}</option>
+                }
+              </select>
+            </div>
+            <button class="btn-primary" (click)="createSection()">Vytvořit</button>
+          </div>
+        </div>
+      </div>
+      }
+
+      <!-- Empty State -->
+      @if (sections.length === 0 && !showAddSection) {
+      <div class="empty-state-large">
+        <div class="empty-icon" style="margin-bottom: 50px;">📦</div>
+        <p>Zatím nemáš žádné sekce projektu</p>
+        <p class="empty-hint">Klikni na "Přidat Sekci" a vytvoř první sekci</p>
+      </div>
+      }
+
+      <!-- Sections Grid -->
+      <div class="sections-grid">
+        @for (section of sections; track section.id) {
+        <div class="section-card" [class.expanded]="selectedSection === section.id">
+          <!-- Section Header -->
+          <div class="section-header-main" (click)="selectSection(section.id)">
+            <div class="section-info">
+              <span class="section-icon">{{ availableIcons[section.icon] }}</span>
+              <h3 [style.color]="section.color">{{ section.name }}</h3>
+            </div>
+            <div class="section-stats">
+              <span class="stat-badge">{{ getSectionMilestones(section.id).length }} milestones</span>
+              <button class="btn-delete-section" (click)="deleteSection(section.id); $event.stopPropagation()" title="Smazat sekci">🗑️</button>
+              <span class="expand-icon">{{ selectedSection === section.id ? '▼' : '▶' }}</span>
+            </div>
+          </div>
+          <!-- Section Content (expanded) -->
+          @if (selectedSection === section.id) {
+          <div class="section-content">
+            <!-- Milestones Section -->
+            <div class="subsection">
+              <div class="subsection-header">
+                <h4>🎯 Milestones</h4>
+                <button class="add-btn-small" (click)="toggleAddMilestone(section.id)">
+                  {{ showAddMilestone && milestoneSectionId === section.id ? 'Zrušit' : '+ Milestone' }}
+                </button>
+              </div>
+              <!-- Add Milestone Form -->
+              @if (showAddMilestone && milestoneSectionId === section.id) {
+              <div class="add-form-inline">
+                <input type="text" [(ngModel)]="milestoneName" placeholder="Název milestone (např. MVP, Beta...)" class="input-inline" />
+                <select [(ngModel)]="milestonePhase" class="select-inline">
+                  @for (phase of phases; track phase) {
+                  <option [ngValue]="phase">{{ phaseLabels[phase] }}</option>
+                  }
+                </select>
+                <input type="text" [(ngModel)]="milestoneDescription" placeholder="Popis (volitelné)" class="input-inline" />
+                <button class="btn-add-inline" (click)="createMilestone()">Přidat</button>
+              </div>
+              }
+              <!-- Milestones List -->
+              @if (getSectionMilestones(section.id).length === 0) {
+              <div class="empty-mini">Zatím žádné milestones</div>
+              } @else {
+              <div class="milestones-list">
+                @for (milestone of getSectionMilestones(section.id); track milestone.id) {
+                <div class="milestone-item">
+                  <div class="milestone-info">
+                    <span class="milestone-name">{{ milestone.name }}</span>
+                    <span class="milestone-phase">{{ phaseLabels[milestone.phase] }}</span>
+                    @if (milestone.description) {
+                    <span class="milestone-description">{{ milestone.description }}</span>
+                    }
                   </div>
+                  <button class="delete-btn-mini" (click)="deleteMilestone(milestone.id)">×</button>
+                </div>
                 }
               </div>
-            }
+              }
+            </div>
           </div>
-        }
-
-      </div>
-
-      <!-- Context Menu -->
-      @if (showContextMenu && contextMenuTask) {
-        <div class="context-menu" 
-             [style.left.px]="contextMenuPosition.x" 
-             [style.top.px]="contextMenuPosition.y"
-             (click)="$event.stopPropagation()">
-          <div class="context-menu-item" (click)="markTaskComplete(contextMenuTask)">
-            <span class="menu-icon">✓</span> Mark Complete
-          </div>
-          <div class="context-menu-item" (click)="editTask(contextMenuTask)">
-            <span class="menu-icon">✎</span> Edit Task
-          </div>
-          <div class="context-menu-item" (click)="duplicateTask(contextMenuTask)">
-            <span class="menu-icon">⧉</span> Duplicate
-          </div>
-          <div class="context-menu-divider"></div>
-          <div class="context-menu-item danger" (click)="deleteTask(contextMenuTask)">
-            <span class="menu-icon">×</span> Delete
-          </div>
-        </div>
-      }
-
-      <!-- Task Tooltip -->
-      @if (hoveredTask) {
-        <div class="task-tooltip" [style.left.px]="tooltipPosition.x" [style.top.px]="tooltipPosition.y">
-          <div class="tooltip-title">{{hoveredTask.name}}</div>
-          <div class="tooltip-row"><strong>Goal:</strong> {{hoveredTask.goalId}}</div>
-          <div class="tooltip-row"><strong>Phase:</strong> {{hoveredTask.phase}}</div>
-          <div class="tooltip-row"><strong>Assignee:</strong> {{hoveredTask.assignee}}</div>
-          <div class="tooltip-row"><strong>Deadline:</strong> {{hoveredTask.deadline}}</div>
-          <div class="tooltip-row"><strong>Status:</strong> 
-            <span class="tooltip-status" [class]="hoveredTask.status">{{hoveredTask.status}}</span>
-          </div>
-          @if (hoveredTask.dependencies && hoveredTask.dependencies.length > 0) {
-            <div class="tooltip-row"><strong>Dependencies:</strong> {{hoveredTask.dependencies.length}} task(s)</div>
           }
         </div>
-      }
+        }
+      </div>
 
-      <!-- Task Detail Modal -->
-      @if (showTaskModal && selectedTask) {
-        <div class="modal-overlay" (click)="closeTaskModal()">
-          <div class="modal-content" (click)="$event.stopPropagation()">
-            <div class="modal-header">
-              <h2>{{selectedTask.name}}</h2>
-              <button class="modal-close" (click)="closeTaskModal()">×</button>
-            </div>
-            <div class="modal-body">
-              <div class="modal-field">
-                <label>Category:</label>
-                <span class="goal-badge">{{selectedTask.goalId}}</span>
-                <span class="phase-badge">{{selectedTask.phase}}</span>
+      <!-- Roadmap Visualization -->
+      @if (sections.length > 0) {
+      <div class="roadmap-section">
+        <div class="roadmap-section-header">
+          <h2>🎯 RoadMap Preview</h2>
+          <p class="roadmap-hint">Dvojklik na buňku pro přidání milestone</p>
+        </div>
+        <div class="roadmap-grid">
+          <!-- Header Row -->
+          <div class="grid-header">
+            <div class="grid-cell section-header-cell"></div>
+            @for (phase of phases; track phase) {
+              <div class="grid-cell phase-header">{{ phaseLabels[phase] }}</div>
+            }
+          </div>
+          <!-- Section Rows -->
+          @for (section of sections; track section.id) {
+            <div class="grid-row">
+              <!-- Section Label -->
+              <div class="grid-cell section-label" [style.border-left-color]="section.color">
+                <span class="section-icon-small">{{ availableIcons[section.icon] }}</span>
+                <span class="section-name-small">{{ section.name }}</span>
               </div>
-              <div class="modal-field">
-                <label>Status:</label>
-                <span class="status-badge" [class]="selectedTask.status">{{selectedTask.status}}</span>
-              </div>
-              <div class="modal-field">
-                <label>Assignee:</label>
-                <span>{{selectedTask.assignee}}</span>
-              </div>
-              <div class="modal-field">
-                <label>Deadline:</label>
-                <span>{{selectedTask.deadline}}</span>
-              </div>
-              @if (selectedTask.description) {
-                <div class="modal-field">
-                  <label>Description:</label>
-                  <p>{{selectedTask.description}}</p>
+              <!-- Phase Cells -->
+              @for (phase of phases; track phase) {
+                <div class="grid-cell phase-cell" (dblclick)="toggleAddMilestone(section.id); milestonePhase = phase">
+                  <!-- Milestones in this cell -->
+                  @for (milestone of getMilestonesBySectionAndPhase(section.id, phase); track milestone.id) {
+                    <div class="milestone-card" [style.border-left-color]="section.color">
+                      <div class="milestone-card-content">
+                        <div class="milestone-card-name">{{ milestone.name }}</div>
+                        @if (milestone.description) {
+                        <div class="milestone-card-info">
+                          <span class="milestone-description-small">{{ milestone.description }}</span>
+                        </div>
+                        }
+                      </div>
+                      <button class="milestone-card-delete" (click)="deleteMilestone(milestone.id)" title="Smazat">×</button>
+                    </div>
+                  }
                 </div>
               }
             </div>
-            <div class="modal-footer">
-              <button class="modal-btn" (click)="closeTaskModal()">Close</button>
-            </div>
-          </div>
+          }
         </div>
+      </div>
       }
-
     </div>
   }
-
   <!-- Settings View -->
   @if (activeTab === 'Settings') {
     <div class="settings-content">
@@ -638,4 +656,3 @@
       </div>
     </div>
   }
-</div>

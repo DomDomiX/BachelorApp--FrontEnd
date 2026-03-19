@@ -124,6 +124,8 @@ export class ProjectSetupComponent implements OnInit {
         console.log('Section created successfully:', res);
         alert('Section created successfully!');
 
+        this.loadSections();
+
         this.sectionColor = '#4a9eff';
         this.sectionIcon = '💻';
         this.sectionName = '';
@@ -248,19 +250,25 @@ export class ProjectSetupComponent implements OnInit {
 
   // Actions
   finishSetup() {
-    // TODO: Service metoda - (volitelně) updateProjectStatus() pro update statusu projektu
     if (this.sections.length === 0) {
       alert('Vytvoř alespoň jednu sekci projektu!');
       return;
     }
-    console.log('Sections:', this.sections);
-    console.log('Milestones:', this.milestones);
-    alert('Projekt připraven!');
-    this.router.navigate(['/projectDashboard']);
+
+    if (this.projectId === null || Number.isNaN(this.projectId)) {
+      alert('Project ID is missing');
+      return;
+    }
+
+    this.router.navigate(['/projectDashboard', this.projectId]);
   }
 
   skipSetup() {
-    if (confirm('Přeskočit nastavení?')) this.router.navigate(['/projectDashboard']);
+    if (this.projectId === null) {
+      alert('Project ID is missing');
+      return;
+    }
+    if (confirm('Přeskočit nastavení?')) this.router.navigate(['/projectDashboard', this.projectId]);
   }
 
   // UI helper methods (used by template)

@@ -1029,6 +1029,515 @@
   margin-bottom: 30px;
 }
 
+/* === Setup-style section management === */
+
+.add-section-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.btn-add-section {
+  padding: 12px 32px;
+  background: linear-gradient(135deg, #4a9eff, #3d8de6);
+  border: 1px solid #4a9eff;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.btn-add-section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 158, 255, 0.3);
+}
+
+.section-form-card {
+  background: #161b33;
+  border: 2px solid #4a9eff;
+  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.section-form-card h3 {
+  margin: 0 0 16px 0;
+  color: #4a9eff;
+  font-size: 1.1rem;
+}
+
+.section-form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.icon-color-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  color: #a0a3bd;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.input-block,
+.select-block,
+.textarea-block {
+  width: 100%;
+  padding: 8px 12px;
+  background: #161b33;
+  border: 1px solid #1e2541;
+  color: #e4e6eb;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+}
+
+.textarea-block { resize: vertical; }
+
+.input-block:focus,
+.select-block:focus,
+.textarea-block:focus {
+  outline: none;
+  border-color: #4a9eff;
+}
+
+.btn-primary {
+  padding: 8px 16px;
+  background: #4a9eff;
+  border: 1px solid #4a9eff;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-primary:hover { background: #3d8de6; }
+
+.empty-state-large {
+  background: #161b33;
+  border: 2px dashed #1e2541;
+  border-radius: 4px;
+  padding: 60px 40px;
+  text-align: center;
+  margin: 40px 0;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 16px;
+}
+
+.empty-state-large p {
+  margin: 8px 0;
+  color: #a0a3bd;
+  font-size: 1.1rem;
+}
+
+.empty-hint {
+  color: #6b6e85 !important;
+  font-size: 0.95rem !important;
+}
+
+.sections-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.section-card {
+  background: #161b33;
+  border: 1px solid #1e2541;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.section-card.expanded { border-color: #4a9eff; }
+
+.section-header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.section-header-main:hover { background: #1a1f38; }
+
+.section-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-icon { font-size: 1.5rem; }
+
+.section-info h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.section-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-delete-section {
+  background: transparent;
+  border: 1px solid #1e2541;
+  color: #e74c3c;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+
+.btn-delete-section:hover {
+  opacity: 1;
+  background: rgba(231, 76, 60, 0.1);
+  border-color: #e74c3c;
+}
+
+.stat-badge {
+  padding: 4px 12px;
+  background: #0f1321;
+  border: 1px solid #1e2541;
+  border-radius: 12px;
+  color: #a0a3bd;
+  font-size: 0.85rem;
+}
+
+.expand-icon {
+  color: #a0a3bd;
+  font-size: 0.9rem;
+  margin-left: 8px;
+}
+
+.section-content {
+  padding: 0 20px 20px 20px;
+  border-top: 1px solid #1e2541;
+}
+
+.subsection { margin-top: 16px; }
+
+.subsection-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.subsection-header h4 {
+  margin: 0;
+  color: #e4e6eb;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.add-btn-small {
+  padding: 6px 14px;
+  background: transparent;
+  border: 1px solid #1e2541;
+  color: #4a9eff;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.add-btn-small:hover {
+  background: rgba(74, 158, 255, 0.1);
+  border-color: #4a9eff;
+}
+
+.add-form-inline {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #0f1321;
+  border: 1px dashed #1e2541;
+  border-radius: 4px;
+  flex-wrap: wrap;
+}
+
+.input-inline,
+.select-inline {
+  padding: 8px 12px;
+  background: #161b33;
+  border: 1px solid #1e2541;
+  color: #e4e6eb;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  flex: 1;
+  min-width: 150px;
+}
+
+.input-inline:focus,
+.select-inline:focus {
+  outline: none;
+  border-color: #4a9eff;
+}
+
+.btn-add-inline {
+  padding: 8px 16px;
+  background: #4a9eff;
+  border: 1px solid #4a9eff;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.btn-add-inline:hover { background: #3d8de6; }
+
+.milestones-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.milestone-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: #0f1321;
+  border: 1px solid #1e2541;
+  border-left: 3px solid #4a9eff;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.milestone-item:hover { background: #161b33; }
+
+.milestone-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.milestone-name { color: #e4e6eb; font-weight: 500; }
+
+.milestone-phase {
+  padding: 2px 8px;
+  background: #1e2541;
+  border-radius: 3px;
+  color: #4a9eff;
+  font-size: 0.8rem;
+}
+
+.milestone-description { color: #a0a3bd; font-size: 0.85rem; }
+
+.delete-btn-mini {
+  background: transparent;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  font-size: 1.3rem;
+  line-height: 1;
+  padding: 0 6px;
+  transition: all 0.3s ease;
+  opacity: 0.6;
+}
+
+.delete-btn-mini:hover { opacity: 1; }
+
+.empty-mini {
+  text-align: center;
+  padding: 16px;
+  color: #a0a3bd;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+/* Roadmap section below the cards */
+.roadmap-section {
+  margin-top: 24px;
+  background: #161b33;
+  border: 1px solid #1e2541;
+  border-radius: 4px;
+  padding: 24px;
+}
+
+.roadmap-section-header { margin-bottom: 24px; }
+
+.roadmap-section-header h2 {
+  margin: 0;
+  color: #e4e6eb;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.roadmap-hint {
+  margin: 4px 0 0 0;
+  color: #a0a3bd;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.section-header-cell {
+  width: 180px;
+  flex-shrink: 0;
+}
+
+.section-label {
+  width: 180px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 6px;
+  margin-right: 8px;
+  border-left: 4px solid;
+}
+
+.section-icon-small { font-size: 1.2rem; }
+
+.section-name-small {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #8892b8;
+}
+
+.milestone-card {
+  background: #161b33;
+  border-radius: 6px;
+  padding: 10px;
+  border-left: 4px solid;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.milestone-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.milestone-card-content { flex: 1; min-width: 0; }
+
+.milestone-card-name {
+  color: #e4e6eb;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.milestone-description-small {
+  color: #a0a3bd;
+  font-size: 11px;
+}
+
+.milestone-card-delete {
+  background: transparent;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  font-size: 1.4rem;
+  line-height: 1;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.milestone-card:hover .milestone-card-delete { opacity: 1; }
+
+.milestone-card-delete:hover {
+  color: #ff0000;
+  transform: scale(1.2);
+}
+
+.floating-milestone-form {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 360px;
+  background: #161b33;
+  border: 1px solid #4a9eff;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.floating-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: rgba(74, 158, 255, 0.1);
+  border-bottom: 1px solid #1e2541;
+}
+
+.floating-form-header h3 {
+  margin: 0;
+  color: #4a9eff;
+  font-size: 1rem;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: #a0a3bd;
+  cursor: pointer;
+  font-size: 1.4rem;
+  line-height: 1;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.close-btn:hover { color: #e4e6eb; }
+
+.floating-form-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .roadmap-header h2 {
   color: #fff;
   font-size: 24px;

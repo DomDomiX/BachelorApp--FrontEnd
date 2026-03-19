@@ -1,321 +1,316 @@
-import { Component } from '@angular/core';
-import { UpperCasePipe } from '@angular/common';
-
-interface RoadmapMilestone {
-  id: number;
-  name: string;
-  goalId: string; // Links to a goal/section
-  phase: string; // Flexible phase type (phase1-4, design/backend/frontend/testing, etc.)
-  assignee: string;
-  deadline: string;
-  status: 'completed' | 'in-progress' | 'pending';
-  description?: string;
-  dependencies?: number[]; // IDs of milestones this depends on
-}
-
-interface RoadmapGoal {
-  id: string;
-  name: string;
-  color: string;
-  description?: string;
-}
-
-interface TodoTask {
-  id: number;
-  title: string;
-  description: string;
-  goalId: string; // Links to ToDo section (frontend/backend/testing/documentation)
-  milestoneId?: number; // Links to RoadmapMilestone
-  priority: 'high' | 'medium' | 'low';
-  dueDate: string;
-  status: 'completed' | 'in-progress' | 'pending';
-}
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProjectService } from '../services/project.service';
+import { ProjectSetupService } from '../services/projectSetup.service';
 
 @Component({
   selector: 'app-project-dashboard',
-  imports: [UpperCasePipe],
+  imports: [FormsModule],
   templateUrl: './project-dashboard.component.html',
   styleUrl: './project-dashboard.component.css'
 })
-export class ProjectDashboardComponent {
+export class ProjectDashboardComponent implements OnInit {
+  projectId: number | null = null;
+  loading: boolean = true;
+
   activeTab: string = 'MainPage';
-  selectedCategory: string | null = null;
-  selectedMilestoneFilter: number | null = null;
-
-  // Roadmap state
-  selectedTask: RoadmapMilestone | null = null;
-  hoveredTask: RoadmapMilestone | null = null;
-  showTaskModal = false;
-  tooltipPosition = { x: 0, y: 0 };
-  currentDate = new Date();
-  
-  // Drag & Drop state
-  draggedTask: RoadmapMilestone | null = null;
-  dragStartX = 0;
-  dragStartLeft = 0;
-  isDragging = false;
-  
-  // Resize state
-  resizingTask: RoadmapMilestone | null = null;
-  resizeStartX = 0;
-  resizeStartWidth = 0;
-  resizeMode: 'left' | 'right' | null = null;
-  
-  // Context menu state
-  showContextMenu = false;
-  contextMenuTask: RoadmapMilestone | null = null;
-  contextMenuPosition = { x: 0, y: 0 };
-  
-  // Highlighted dependencies
-  highlightedTasks: Set<number> = new Set();
-
-  // Roadmap structure: Work Type Based
-  phases = ['phase1', 'phase2', 'phase3', 'phase4'];
-  phaseLabels: { [key: string]: string } = {
-    'phase1': 'Phase 1',
-    'phase2': 'Phase 2',
-    'phase3': 'Phase 3',
-    'phase4': 'Phase 4'
-  };
-
-  goals: RoadmapGoal[] = [
-    { id: 'frontend', name: 'Frontend Development', color: '#4a9eff', description: 'Frontend development work' },
-    { id: 'backend', name: 'Backend Development', color: '#2ecc71', description: 'Backend development work' },
-    { id: 'design', name: 'Design', color: '#9b59b6', description: 'UI/UX design work' },
-    { id: 'testing', name: 'Testing & QA', color: '#f39c12', description: 'Testing and quality assurance' },
-    { id: 'devops', name: 'DevOps', color: '#e74c3c', description: 'Infrastructure and deployment' }
-  ];
-
-  roadmapMilestones: RoadmapMilestone[] = [
-    // Frontend Development
-    { id: 101, name: 'Login System', goalId: 'frontend', phase: 'phase1', assignee: 'John', deadline: 'Feb 2026', status: 'completed', description: 'Create login page with validation' },
-    { id: 102, name: 'Dashboard UI', goalId: 'frontend', phase: 'phase2', assignee: 'Sarah', deadline: 'Mar 2026', status: 'in-progress', description: 'Build dashboard interface' },
-    { id: 103, name: 'User Profile', goalId: 'frontend', phase: 'phase2', assignee: 'Mike', deadline: 'Mar 2026', status: 'pending', description: 'User profile page' },
-    { id: 104, name: 'Reports Page', goalId: 'frontend', phase: 'phase3', assignee: 'Anna', deadline: 'Apr 2026', status: 'pending', description: 'Create reports interface' },
-    
-    // Backend Development
-    { id: 201, name: 'Auth API', goalId: 'backend', phase: 'phase1', assignee: 'Tom', deadline: 'Feb 2026', status: 'completed', description: 'Authentication endpoints' },
-    { id: 202, name: 'User API', goalId: 'backend', phase: 'phase2', assignee: 'Lisa', deadline: 'Mar 2026', status: 'in-progress', description: 'User management API' },
-    { id: 203, name: 'Data API', goalId: 'backend', phase: 'phase2', assignee: 'David', deadline: 'Mar 2026', status: 'pending', description: 'Data processing endpoints' },
-    
-    // Design
-    { id: 301, name: 'Wireframes', goalId: 'design', phase: 'phase1', assignee: 'Emma', deadline: 'Feb 2026', status: 'completed', description: 'Initial wireframes' },
-    { id: 302, name: 'UI Components', goalId: 'design', phase: 'phase2', assignee: 'Emma', deadline: 'Mar 2026', status: 'in-progress', description: 'Design system components' },
-    
-    // Testing
-    { id: 401, name: 'Unit Tests', goalId: 'testing', phase: 'phase3', assignee: 'Chris', deadline: 'Apr 2026', status: 'pending', description: 'Write unit tests' },
-    { id: 402, name: 'Integration Tests', goalId: 'testing', phase: 'phase4', assignee: 'Chris', deadline: 'May 2026', status: 'pending', description: 'Integration testing' },
-    
-    // DevOps
-    { id: 501, name: 'CI/CD Setup', goalId: 'devops', phase: 'phase1', assignee: 'Kevin', deadline: 'Feb 2026', status: 'completed', description: 'Setup pipelines' },
-    { id: 502, name: 'Production Deploy', goalId: 'devops', phase: 'phase4', assignee: 'Kevin', deadline: 'May 2026', status: 'pending', description: 'Deploy to production' }
-  ];
-
-  // TODO Tasks linked to milestones
-  todoTasks: TodoTask[] = [
-    // Frontend tasks
-    { id: 1, title: 'Create login page', description: 'Implement authentication UI with form validation', goalId: 'frontend', milestoneId: 101, priority: 'high', dueDate: 'Jan 25', status: 'completed' },
-    { id: 2, title: 'Build dashboard components', description: 'Design and implement main dashboard with statistics', goalId: 'frontend', milestoneId: 102, priority: 'medium', dueDate: 'Jan 30', status: 'in-progress' },
-    { id: 3, title: 'Responsive design implementation', description: 'Make all pages mobile-friendly', goalId: 'frontend', milestoneId: 103, priority: 'low', dueDate: 'Feb 5', status: 'pending' },
-    
-    // Backend tasks
-    { id: 4, title: 'Setup API endpoints', description: 'Create RESTful API for user management', goalId: 'backend', milestoneId: 202, priority: 'high', dueDate: 'Jan 28', status: 'in-progress' },
-    { id: 5, title: 'Database schema design', description: 'Design normalized database structure', goalId: 'backend', milestoneId: 203, priority: 'medium', dueDate: 'Feb 2', status: 'pending' },
-    
-    // Testing tasks
-    { id: 6, title: 'Write unit tests', description: 'Create test cases for core components', goalId: 'testing', milestoneId: 401, priority: 'medium', dueDate: 'Feb 10', status: 'pending' },
-    { id: 7, title: 'Integration testing', description: 'Test API integration with frontend', goalId: 'testing', milestoneId: 402, priority: 'low', dueDate: 'Feb 15', status: 'pending' },
-    
-    // Documentation tasks
-    { id: 8, title: 'API documentation', description: 'Document all API endpoints and responses', goalId: 'documentation', priority: 'high', dueDate: 'Jan 31', status: 'in-progress' },
-    { id: 9, title: 'User manual', description: 'Write comprehensive user guide', goalId: 'documentation', priority: 'medium', dueDate: 'Feb 20', status: 'pending' }
-  ];
-
-
 
   setActiveTab(tab: string) {
     this.activeTab = tab;
-    this.selectedCategory = null;
   }
 
-  selectCategory(category: string | null) {
-    this.selectedCategory = this.selectedCategory === category ? null : category;
-    this.clearMilestoneFilter(); // Clear filter when switching categories
+  // Available icons for sections
+  availableIcons = ['💻', '⚙️', '🎨', '🧪', '📝', '🗄️', '🔧', '🌐', '📊', '🔐', '📱', '☁️'];
+  availableColors = ['#4a9eff', '#2ecc71', '#9b59b6', '#f39c12', '#e67e22', '#e74c3c', '#1abc9c', '#3498db'];
+
+  phases = [0, 1, 2, 3];
+  phaseLabels: string[] = ['Phase 1', 'Phase 2', 'Phase 3', 'Phase 4'];
+
+  goals = [];
+
+  // Project Info
+  projectInfo = {
+    name: '',
+    description: '', 
+    deadline: new Date(), 
+    technologies: [], 
+    status: 'Active' 
+  };
+
+  // Data structure
+  sections: any[] = []; // User-created sections
+  milestones: any[] = [];
+
+  // Sections
+  selectedSection: string | null = null;
+  showAddSection = false;
+  showAddMilestone = false;
+  sectionName: string = '';
+  sectionIcon: string = '💻';
+  sectionColor: string = '#4a9eff';
+
+  // Milestones
+  milestoneName: string = '';
+  milestoneDescription: string = '';
+  milestonePhase: number = this.phases[0];
+  milestoneSectionId: string = '';
+
+  // Roadmap logic (stejné jako project-setup)
+  selectedCategory: string | null = null;
+  selectedMilestoneFilter: string | null = null;
+  
+  draggedTask: any = null;
+  contextMenuPosition = { x: 0, y: 0 };
+  contextMenuTask: any = null;
+  tooltipPosition = { x: 0, y: 0 };
+  hoveredTask: any = null;
+  selectedTask: any = null;
+
+  constructor(private route: ActivatedRoute, private router: Router, private projectService: ProjectService, private projectSetupService: ProjectSetupService) {}
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.projectId = +params['id'];
+      
+      if (this.projectId) {
+        this.loadProject();
+        this.loadSections();
+        this.loadMilestones();
+      }
+   
+    })
   }
 
-  getMilestonesByGoalAndPhase(goalId: string, phase: string): RoadmapMilestone[] {
-    return this.roadmapMilestones.filter(m => m.goalId === goalId && m.phase === phase);
+  loadProject() {
+    if (!this.projectId) return;
+
+    this.projectService.getProjectById(this.projectId).subscribe({
+      next: (res) => {
+        const project = res.project;
+        this.projectInfo = {
+          name: project.name,
+          description: project.description,
+          deadline: new Date(project.deadline),
+          technologies: (project.technologies || []).map((tech: any) => tech.name),
+          status: project.status
+        };
+        this.loading = false;
+        console.log('Loaded project: ', this.projectInfo);
+      },
+      error: (err) => {
+        console.error('Error loading project: ', err)
+        this.loading = false;
+        alert('Failed to load project');
+      }
+    })
   }
 
-  getTasksByGoal(goalId: string): TodoTask[] {
-    let tasks = this.todoTasks.filter(t => t.goalId === goalId);
-    
-    // Apply milestone filter if selected
-    if (this.selectedMilestoneFilter !== null) {
-      tasks = tasks.filter(t => t.milestoneId === this.selectedMilestoneFilter);
+  // Roadmap
+  createSection() {
+    if (!this.sectionName.trim()) return;
+
+    if (this.projectId === null) {
+      alert('Project ID is missing');
+      return;
     }
-    
-    return tasks;
-  }
 
-  getMilestoneName(milestoneId?: number): string {
-    if (!milestoneId) return 'No milestone';
-    const milestone = this.roadmapMilestones.find(m => m.id === milestoneId);
-    return milestone ? milestone.name : 'Unknown milestone';
-  }
-
-  getMilestonesByGoal(goalId: string): RoadmapMilestone[] {
-    // Get milestones that have tasks in this goal
-    const tasksInGoal = this.todoTasks.filter(t => t.goalId === goalId && t.milestoneId);
-    const milestoneIds = new Set(tasksInGoal.map(t => t.milestoneId!));
-    return this.roadmapMilestones.filter(m => milestoneIds.has(m.id));
-  }
-
-  setMilestoneFilter(milestoneId: number | null) {
-    this.selectedMilestoneFilter = milestoneId;
-  }
-
-  clearMilestoneFilter() {
-    this.selectedMilestoneFilter = null;
-  }
-
-  // Task interaction methods
-  getTasksByCategory(category: string): RoadmapMilestone[] {
-    return this.roadmapMilestones.filter(m => m.goalId === category);
-  }
-
-  onTaskClick(task: RoadmapMilestone, event: MouseEvent) {
-    this.selectedTask = task;
-    this.showTaskModal = true;
-  }
-
-  onTaskHover(task: RoadmapMilestone, event: MouseEvent) {
-    this.hoveredTask = task;
-    this.tooltipPosition = { x: event.clientX + 10, y: event.clientY + 10 };
-    this.highlightRelatedTasks(task);
-  }
-
-  onTaskLeave() {
-    this.hoveredTask = null;
-    this.highlightedTasks.clear();
-  }
-
-  onTaskMouseDown(task: RoadmapMilestone, event: MouseEvent | DragEvent) {
-    this.draggedTask = task;
-    this.isDragging = true;
-    event.preventDefault();
-  }
-
-  onMouseMove(event: MouseEvent) {
-    // Simple drag cursor update
-  }
-
-  onMouseUp() {
-    this.isDragging = false;
-    this.draggedTask = null;
-  }
-
-  // Drop handler for grid cells
-  onCellDrop(goalId: string, phase: string, event: DragEvent) {
-    event.preventDefault();
-    if (this.draggedTask) {
-      this.draggedTask.goalId = goalId;
-      this.draggedTask.phase = phase as any;
-      this.draggedTask = null;
-      this.isDragging = false;
-    }
-  }
-
-  onDragOver(event: DragEvent) {
-    event.preventDefault();
-  }
-
-  // Context menu methods
-  onTaskContextMenu(task: RoadmapMilestone, event: MouseEvent) {
-    event.preventDefault();
-    this.contextMenuTask = task;
-    this.showContextMenu = true;
-    this.contextMenuPosition = { x: event.clientX, y: event.clientY };
-  }
-
-  closeContextMenu() {
-    this.showContextMenu = false;
-    this.contextMenuTask = null;
-  }
-
-  markTaskComplete(task: RoadmapMilestone) {
-    task.status = 'completed';
-    this.closeContextMenu();
-  }
-
-  editTask(task: RoadmapMilestone) {
-    this.selectedTask = task;
-    this.showTaskModal = true;
-    this.closeContextMenu();
-  }
-
-  deleteTask(task: RoadmapMilestone) {
-    const index = this.roadmapMilestones.indexOf(task);
-    if (index > -1) {
-      this.roadmapMilestones.splice(index, 1);
-    }
-    this.closeContextMenu();
-  }
-
-  duplicateTask(task: RoadmapMilestone) {
-    const newTask: RoadmapMilestone = {
-      ...task,
-      id: Math.max(...this.roadmapMilestones.map(t => t.id)) + 1,
-      name: task.name + ' (Copy)',
-      status: 'pending'
+    const sectionData = {
+      projectId: this.projectId,
+      name: this.sectionName,
+      icon: this.availableIcons.indexOf(this.sectionIcon),
+      color: this.sectionColor
     };
-    this.roadmapMilestones.push(newTask);
-    this.closeContextMenu();
+
+    console.log('Creating section with data:', sectionData);
+
+    this.projectSetupService.addSection(sectionData).subscribe({
+      next: (res) => {
+        console.log('Section created successfully:', res);
+        alert('Section created successfully!');
+
+        this.loadSections();
+
+        this.sectionColor = '#4a9eff';
+        this.sectionIcon = '💻';
+        this.sectionName = '';
+        this.showAddSection = false;
+      },
+      error: (err) => {
+        console.error('Error creating section:', err);
+        alert('Failed to create section');
+      } 
+    });
   }
 
-  // Double-click to create new task in grid cell
-  onCellDoubleClick(goalId: string, phase: string, event: MouseEvent) {
-    const newTask: RoadmapMilestone = {
-      id: Math.max(...this.roadmapMilestones.map(t => t.id)) + 1,
-      name: 'New Milestone',
-      goalId: goalId,
-      phase: phase as any,
-      assignee: 'Unassigned',
-      deadline: 'TBD',
-      status: 'pending',
-      description: 'Click to edit'
-    };
-    this.roadmapMilestones.push(newTask);
-  }
+  loadSections() {
+    if (this.projectId === null) {
+      alert('Project ID is missing');
+      return;
+    }
 
-  // Highlight related tasks (dependencies)
-  highlightRelatedTasks(task: RoadmapMilestone) {
-    this.highlightedTasks.clear();
-    this.roadmapMilestones.forEach(t => {
-      if (t.dependencies && t.dependencies.includes(task.id)) {
-        this.highlightedTasks.add(t.id);
+    this.projectSetupService.loadSections(this.projectId).subscribe({
+      next: (res) => {
+        this.sections = res.sections || [];
+        this.loading = false;
+        console.log('Loaded sections:', this.sections);
+      },
+      error: (err) => {
+        console.error('Error loading sections:', err);
+        this.sections = [];
+        this.loading = false;
       }
     });
   }
 
-  isTaskHighlighted(task: RoadmapMilestone): boolean {
-    return this.highlightedTasks.has(task.id);
+  deleteSection(id: number) {
+    this.projectSetupService.deleteSection(id).subscribe({
+      next: () => {
+        this.loadSections();
+      },
+      error: (err) => {
+        console.error('Error deleting section:', err);
+        alert('Failed to delete section');
+      }
+    });
   }
 
-  closeTaskModal() {
-    this.showTaskModal = false;
-    this.selectedTask = null;
+  // Milestones
+  createMilestone() {
+    if (!this.milestoneName.trim()) return;
+
+    if (this.projectId === null) {
+      alert('Project ID is missing');
+      return;
+    }
+
+    if (!this.milestoneSectionId) {
+      alert('Nejprve vyber sekci pro milestone');
+      return;
+    }
+
+    const milestoneData = {
+      projectId: this.projectId,
+      sectionId: this.milestoneSectionId,
+      name: this.milestoneName,
+      description: this.milestoneDescription,
+      phase: this.milestonePhase
+    };
+
+    console.log('Creating milestone with data:', milestoneData);
+
+    this.projectSetupService.addMilestone(milestoneData).subscribe({
+      next: (res) => {
+        console.log('Milestone created successfully:', res);
+        alert('Milestone created successfully!');
+        this.showAddMilestone = false;
+        this.resetMilestoneForm();
+        this.loadMilestones();
+      },
+      error: (err) => {
+        console.error('Error creating milestone:', err);
+        alert('Failed to create milestone');
+      } 
+    });
   }
 
-  // Get current date position on timeline (percentage)
-  getCurrentDatePosition(): number {
-    const startDate = new Date(2025, 9, 1); // Oct 1, 2025
-    const endDate = new Date(2026, 4, 31); // May 31, 2026
-    const current = this.currentDate;
-    
-    const totalTime = endDate.getTime() - startDate.getTime();
-    const elapsedTime = current.getTime() - startDate.getTime();
-    
-    return Math.max(0, Math.min(100, (elapsedTime / totalTime) * 100));
+  loadMilestones() {
+    if (this.projectId === null) {
+      alert('Project ID is missing');
+      return;
+    }
+
+    this.projectSetupService.loadMilestones(this.projectId).subscribe({
+      next: (res) => {
+        this.milestones = res.milestones || [];
+        this.loading = false;
+        console.log('Loaded milestones:', this.milestones);
+      },
+      error: (err) => {
+        console.error('Error loading milestones:', err);
+        this.milestones = [];
+        this.loading = false;
+      }
+    });
   }
-}
+
+  deleteMilestone(id: number) {
+    this.projectSetupService.deleteMilestone(id).subscribe({
+      next: () => {
+        this.loadMilestones();
+      },
+      error: (err) => {
+        console.error('Error deleting milestone:', err);
+        alert('Failed to delete milestone');
+      }
+    });
+  }
+
+  resetMilestoneForm() {
+    this.milestoneDescription = '';
+    this.milestoneName = '';
+    this.milestonePhase = this.phases[0];
+    this.milestoneSectionId = '';
+  }
+
+  selectSection(sectionId: string) {
+    this.selectedSection = this.selectedSection === sectionId ? null : sectionId;
+  }
+
+  getSectionMilestones(sectionId: string) {
+    return this.milestones.filter(m => {
+      const milestoneSectionId = m.sectionId ?? m.sectionid;
+      return String(milestoneSectionId) === String(sectionId);
+    });
+  }
+
+  getMilestonesBySectionAndPhase(sectionId: string, phase: number) {
+    return this.milestones.filter(m => {
+      const milestoneSectionId = m.sectionId ?? m.sectionid;
+      return String(milestoneSectionId) === String(sectionId) && Number(m.phase) === phase;
+    });
+  }
+
+  toggleAddSection() {
+    this.showAddSection = !this.showAddSection;
+    if (!this.showAddSection) this.sectionName = '';
+  }
+
+  toggleAddMilestone(sectionId: string) {
+    if (this.showAddMilestone && this.milestoneSectionId === sectionId) {
+      this.showAddMilestone = false;
+      this.resetMilestoneForm();
+    } else {
+      this.milestoneSectionId = sectionId;
+      this.showAddMilestone = true;
+    }
+  }
+
+  onCellDoubleClick(sectionId: string, phase: number, event?: any) {
+    this.milestoneSectionId = String(sectionId);
+    this.milestonePhase = phase;
+    this.showAddMilestone = true;
+  }
+
+  
+  // Stub methods - TODO: implement
+  selectCategory(cat: string | null) { this.selectedCategory = cat; }
+  clearMilestoneFilter() { this.selectedMilestoneFilter = null; }
+  getMilestonesByGoal(goal: string): any[] { return []; }
+  setMilestoneFilter(id: string) { this.selectedMilestoneFilter = id; }
+  getTasksByGoal(goal: string): any[] { return []; }
+  getMilestoneName(id: string): string { return ''; }
+  onCellDrop(goalId: string, phase: number, event: any) {}
+  onDragOver(event: any) { event.preventDefault(); }
+  getMilestonesByGoalAndPhase(goalId: string, phase: number): any[] { return []; }
+  isTaskHighlighted(task: any): boolean { return false; }
+  onTaskMouseDown(task: any, event: any) {}
+  onTaskClick(task: any, event: any) {}
+  onTaskHover(task: any, event: any) {}
+  onTaskLeave() {}
+  onTaskContextMenu(task: any, event: any) { event.preventDefault(); }
+  markTaskComplete(task: any) {}
+  editTask(task: any) {}
+  deleteTask(task: any) {}
+  duplicateTask(task: any) {}
+  closeTaskModal() { this.selectedTask = null; }}
