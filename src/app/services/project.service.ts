@@ -153,7 +153,6 @@ export class ProjectService {
             'Authorization': `Bearer ${token}`,
         });
 
-        // Some backend handlers require projectId in query to validate task belongs to project
         const url = projectId ? `${this.apiUrl}/edit-task/${taskId}?projectId=${projectId}` : `${this.apiUrl}/edit-task/${taskId}`;
         return this.http.patch(url, taskData, { headers });
     }
