@@ -141,4 +141,20 @@ export class ProjectService {
         
         return this.http.delete(`${this.apiUrl}/delete-task/${taskId}?projectId=${projectId}`, { headers });
     }
+
+    editTask(taskId: number, taskData: { title: string, description: string, status: string, priority: string, deadline: Date | null, sectionId: number | null, milestoneId: number | null }, projectId: number): Observable<any> {
+        const token = localStorage.getItem('accessToken');
+
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${token}`,
+        });
+
+        // Some backend handlers require projectId in query to validate task belongs to project
+        const url = projectId ? `${this.apiUrl}/edit-task/${taskId}?projectId=${projectId}` : `${this.apiUrl}/edit-task/${taskId}`;
+        return this.http.patch(url, taskData, { headers });
+    }
 }

@@ -257,7 +257,18 @@
                   }
                 </select>
 
-                <button class="btn-primary" (click)="addTask()">+ Přidat úkol</button>
+                @if (editingTaskId) {
+                  <button class="btn-primary" (click)="editTask()" style="background-color: #f39c12;">
+                    Uložit změny
+                  </button>
+                  <button class="btn-secondary" (click)="cancelTaskOperation()">
+                    Zrušit editaci
+                  </button>
+                } @else {
+                  <button class="btn-primary" (click)="addTask()">
+                    + Přidat úkol
+                  </button>
+                }
               </div>
             </div>
           }
@@ -301,8 +312,8 @@
                   </div>
                 </div>
                 <div class="task-actions">
-                  <button class="btn-edit">✎</button>
-                  <button class="btn-delete">×</button>
+                  <button class="btn-edit" (click)="startEditTask(task)">✎</button>
+                  <button class="btn-delete" (click)="deleteTask(task.id)">×</button>
                 </div>
               </div>
             }

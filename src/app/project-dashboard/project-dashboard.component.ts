@@ -69,6 +69,7 @@ export class ProjectDashboardComponent implements OnInit {
 
   // Tasks
   tasks: any[] = [];
+  editingTaskId: number | null = null;
 
   // New task form fields
   newTaskTitle: string = '';
@@ -394,18 +395,82 @@ export class ProjectDashboardComponent implements OnInit {
   }
 
   toggleAddTaskForm() {
-    this.showAddTask = !this.showAddTask;
-    if (!this.showAddTask) {
-      this.newTaskTitle = '';
-      this.newTaskDescription = '';
-      this.newTaskPriority = 'medium';
-      this.newTaskMilestoneId = null;
-      this.newTaskStatus = 'pending';
+    if (this.showAddTask) {
+      this.cancelTaskOperation();
+    } else {
+      this.editingTaskId = null;
+      this.cancelTaskOperation();
+      this.showAddTask = true;
     }
   }
 
   closeTaskModal() { 
     this.selectedTask = null; 
+  }
+
+  deleteTask(taskId: number) {
+    if (this.projectId == null) {
+      alert('Project ID is missing');
+      return;
+    }
+
+    this.projectService.deleteTask(taskId, this.projectId).subscribe({
+      next: () => {
+        alert('Task deleted successfully');
+        this.loadTasks();
+      }
+    });
+  }
+
+  editTask() {
+  if (!this.editingTaskId || !this.newTaskTitle.trim()) return;
+
+  const updateData = {
+    title: this.newTaskTitle,
+    description: this.newTaskDescription,
+    status: this.newTaskStatus,
+    priority: this.newTaskPriority,
+    deadline: this.newTaskDeadline,
+    sectionId: this.selectedCategory as number, 
+    milestoneId: this.newTaskMilestoneId as number
+  };
+
+  // Nyní už by TypeScript neměl hlásit chybu
+  this.projectService.editTask(this.editingTaskId, updateData, this.projectId as number).subscribe({
+    next: () => {
+      alert('Úkol upraven!');
+      this.loadTasks();
+      this.cancelTaskOperation();
+    },
+    error: (err) => {
+      console.error('Error updating task:', err);
+      alert('Failed to update task');
+    } 
+  });
+}
+
+  startEditTask(task: any) {
+  this.editingTaskId = task.id; 
+  this.showAddTask = true;    
+  
+  this.newTaskTitle = task.title;
+  this.newTaskDescription = task.description;
+  this.newTaskPriority = task.priority;
+  this.newTaskDeadline = task.deadline ? task.deadline.split('T')[0] : null; 
+  this.newTaskStatus = task.status;
+  this.newTaskMilestoneId = task.milestoneid; 
+  this.selectedCategory = task.sectionid;
+}
+
+  cancelTaskOperation() {
+    this.editingTaskId = null;
+    this.showAddTask = false;
+    this.newTaskTitle = '';
+    this.newTaskDescription = '';
+    this.newTaskPriority = 'medium';
+    this.newTaskMilestoneId = null;
+    this.newTaskDeadline = null;
+    this.newTaskStatus = 'pending';
   }
 
   // Stub methods - TODO: implement
@@ -424,6 +489,4 @@ export class ProjectDashboardComponent implements OnInit {
   onTaskLeave() {}
   onTaskContextMenu(task: any, event: any) { event.preventDefault(); }
   markTaskComplete(task: any) {}
-  editTask(task: any) {}
-  deleteTask(task: any) {}
   duplicateTask(task: any) {}}
