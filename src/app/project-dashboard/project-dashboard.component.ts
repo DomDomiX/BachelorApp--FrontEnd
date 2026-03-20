@@ -70,6 +70,16 @@ export class ProjectDashboardComponent implements OnInit {
   // Tasks
   tasks: any[] = [];
 
+  // New task form fields
+  newTaskTitle: string = '';
+  newTaskDescription: string = '';
+  newTaskPriority: string = 'medium';
+  newTaskMilestoneId: any = null;
+  newTaskStatus: string = 'pending';
+  newTaskSectionId: any = null;
+  newTaskDeadline: any = null;
+  showAddTask: boolean = false;
+
   constructor(private route: ActivatedRoute, private router: Router, private projectService: ProjectService, private projectSetupService: ProjectSetupService) {}
 
   ngOnInit() {
@@ -257,10 +267,6 @@ export class ProjectDashboardComponent implements OnInit {
     this.milestoneSectionId = '';
   }
 
-  selectSection(sectionId: string) {
-    this.selectedSection = this.selectedSection === sectionId ? null : sectionId;
-  }
-
   getSectionMilestones(sectionId: number | null) {
     return this.milestones.filter(m => {
       const milestoneSectionId = m.sectionId ?? m.sectionid;
@@ -305,7 +311,10 @@ export class ProjectDashboardComponent implements OnInit {
   }
 
    selectCategory(id: number | null) { 
+    // set selectedCategory so the tasks detail view opens
     this.selectedCategory = id; 
+    // also set newTaskSectionId so Add Task uses current section
+    this.newTaskSectionId = id; 
   }
 
   // Tasks
@@ -313,8 +322,8 @@ export class ProjectDashboardComponent implements OnInit {
     if (this.projectId == null) return;
     this.projectService.getTasksByProject(this.projectId).subscribe({
       next: (res) => {
-        // assign response directly
-        this.tasks = res;
+        // backend returns { tasks: [...] } — handle both shapes
+        this.tasks = (res && (res.tasks || res)) || [];
         console.log('Loaded tasks:', this.tasks);
       },
       error: (err) => {
@@ -332,14 +341,73 @@ export class ProjectDashboardComponent implements OnInit {
     });
   }
 
-  // Spočítá úkoly podle statusu v dané sekci
   countTasksByStatus(sectionId: number, status: string): number {
     return this.tasks.filter(task => 
       task.sectionid === sectionId && task.status === status
     ).length;
   }
 
-  
+  // Add new task
+  addTask() {
+    if (!this.newTaskTitle.trim()) {
+      alert('Zadej název úkolu');
+      return;
+    }
+
+    this.newTaskSectionId = this.selectedCategory;
+
+    if (this.projectId == null) {
+      alert('Project ID is missing');
+      return;
+    }
+
+    const taskData = {
+      projectId: this.projectId,
+      title: this.newTaskTitle,
+      description: this.newTaskDescription,
+      priority: this.newTaskPriority,
+      milestoneId: this.newTaskMilestoneId,
+      status: this.newTaskStatus,
+      sectionId: this.newTaskSectionId,
+      deadline: this.newTaskDeadline
+    }
+
+    console.log('Adding task with data:', taskData);
+
+    this.projectService.addTask(taskData).subscribe({
+      next: (res) => {
+        console.log('Task added successfully:', res);
+        alert('Task added successfully!');
+
+        this.loadTasks();
+
+        this.newTaskTitle = '';
+        this.newTaskDescription = '';
+        this.newTaskPriority = 'medium';
+        this.newTaskMilestoneId = null;
+        this.newTaskStatus = 'pending';
+        this.newTaskSectionId = null;
+        this.newTaskDeadline = null;
+        this.showAddTask = false;
+      }
+    });
+  }
+
+  toggleAddTaskForm() {
+    this.showAddTask = !this.showAddTask;
+    if (!this.showAddTask) {
+      this.newTaskTitle = '';
+      this.newTaskDescription = '';
+      this.newTaskPriority = 'medium';
+      this.newTaskMilestoneId = null;
+      this.newTaskStatus = 'pending';
+    }
+  }
+
+  closeTaskModal() { 
+    this.selectedTask = null; 
+  }
+
   // Stub methods - TODO: implement
   clearMilestoneFilter() { this.selectedMilestoneFilter = null; }
   getMilestonesByGoal(goal: string): any[] { return []; }
@@ -358,5 +426,4 @@ export class ProjectDashboardComponent implements OnInit {
   markTaskComplete(task: any) {}
   editTask(task: any) {}
   deleteTask(task: any) {}
-  duplicateTask(task: any) {}
-  closeTaskModal() { this.selectedTask = null; }}
+  duplicateTask(task: any) {}}

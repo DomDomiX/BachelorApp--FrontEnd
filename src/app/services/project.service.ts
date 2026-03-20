@@ -106,16 +106,15 @@ export class ProjectService {
             throw new Error('No token found');
         }
 
-        const headers = new HttpHeaders({});
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${token}`,
+        });
 
-        if (isPlatformBrowser(this.platformId)) {
-            headers.set('Authorization', `Bearer ${token}`);
-        }
-
-        return this.http.get(`${this.apiUrl}/projects/${projectId}/tasks`, { headers });
+        // backend exposes tasks at /api/tasks?projectId=<id>
+        return this.http.get(`${this.apiUrl}/tasks?projectId=${projectId}`, { headers });
     }
 
-    addTask(taskData: { projectId: number, name: string, description: string, status: string, milestoneId: number }): Observable<any> {
+    addTask(taskData: { projectId: number, title: string, description: string, status: string, priority: string, deadline: Date | null, sectionId: number | null, milestoneId: number }): Observable<any> {
         const token = localStorage.getItem('accessToken');
 
         if (!token) {

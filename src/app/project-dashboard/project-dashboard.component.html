@@ -225,9 +225,43 @@
         <div class="tasks-detail-section">
           <div class="detail-header">
             <h2>{{ getIconByIndex(currentSection.icon)}} {{currentSection.name}} Tasks</h2>
-            <button class="close-btn" (click)="selectCategory(null)">×</button>
+            <div class="detail-header-actions">
+              <button class="btn-toggle-add" (click)="toggleAddTaskForm()">{{ showAddTask ? '× Zrušit' : '+ Přidat úkol' }}</button>
+              <button class="close-btn" (click)="selectCategory(null)">×</button>
+            </div>
           </div>
           
+          @if (showAddTask) {
+            <div class="add-task-form">
+              <h3>Přidat nový úkol</h3>
+              <div class="form-row">
+                <input type="text" [(ngModel)]="newTaskTitle" placeholder="Název úkolu" class="input-block" />
+              </div>
+              <div class="form-row">
+                <textarea [(ngModel)]="newTaskDescription" placeholder="Popis (volitelně)" class="input-block textarea-block"></textarea>
+              </div>
+              <div class="form-row">
+                <input type="date" [(ngModel)]="newTaskDeadline" class="input-block" />
+              </div>
+              <div class="form-row form-controls">
+                <select [(ngModel)]="newTaskPriority" class="select-block">
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+
+                <select [(ngModel)]="newTaskMilestoneId" class="select-block">
+                  <option [ngValue]="null">Žádný milník</option>
+                  @for (m of getSectionMilestones(selectedCategory); track m.id) {
+                    <option [ngValue]="m.id">{{m.name}}</option>
+                  }
+                </select>
+
+                <button class="btn-primary" (click)="addTask()">+ Přidat úkol</button>
+              </div>
+            </div>
+          }
+
           <!-- Milestone Filter -->
           <div class="milestone-filter">
             <span class="filter-label">Filter by milestone:</span>
@@ -333,9 +367,9 @@
       <!-- Sections Grid -->
       <div class="sections-grid">
         @for (section of sections; track section.id) {
-        <div class="section-card" [class.expanded]="selectedSection === section.id">
+        <div class="section-card" [class.expanded]="selectedCategory === section.id">
           <!-- Section Header -->
-          <div class="section-header-main" (click)="selectSection(section.id)">
+          <div class="section-header-main" (click)="selectCategory(section.id)">
             <div class="section-info">
               <span class="section-icon">{{ availableIcons[section.icon] }}</span>
               <h3 [style.color]="section.color">{{ section.name }}</h3>
@@ -343,11 +377,11 @@
             <div class="section-stats">
               <span class="stat-badge">{{ getSectionMilestones(section.id).length }} milestones</span>
               <button class="btn-delete-section" (click)="deleteSection(section.id); $event.stopPropagation()" title="Smazat sekci">🗑️</button>
-              <span class="expand-icon">{{ selectedSection === section.id ? '▼' : '▶' }}</span>
+              <span class="expand-icon">{{ selectedCategory === section.id ? '▼' : '▶' }}</span>
             </div>
           </div>
           <!-- Section Content (expanded) -->
-          @if (selectedSection === section.id) {
+          @if (selectedCategory === section.id) {
           <div class="section-content">
             <!-- Milestones Section -->
             <div class="subsection">
