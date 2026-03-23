@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../services/project.service';
 import { ProjectSetupService } from '../services/projectSetup.service';
+import { ActivityService } from '../services/activity.service';
 
 @Component({
   selector: 'app-project-setup',
@@ -53,7 +54,8 @@ export class ProjectSetupComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private projectService: ProjectService,
-    private projectSetupService: ProjectSetupService
+    private projectSetupService: ProjectSetupService,
+    private activityService: ActivityService
   ) {}
 
   ngOnInit() {
@@ -89,7 +91,18 @@ export class ProjectSetupComponent implements OnInit {
         this.loading = false;
         alert('Failed to load project');
       }
-    })
+    });
+  }
+
+  activityLog(action: string, projectId: number) {
+    this.activityService.logActivity(action, projectId).subscribe({
+      next: (res) => {
+        console.log('Activity logged successfully:', res);
+      },
+      error: (err) => {
+        console.error('Error logging activity:', err);  
+      }
+    });
   }
 
   // Section management
@@ -125,6 +138,8 @@ export class ProjectSetupComponent implements OnInit {
         alert('Section created successfully!');
 
         this.loadSections();
+        this.activityLog(`Created section "${this.sectionName}"`, this.projectId!);
+        console.log(`Logged activity: Created section "${this.sectionName}" for project ID ${this.projectId}`);
 
         this.sectionColor = '#4a9eff';
         this.sectionIcon = '💻';
@@ -162,6 +177,7 @@ export class ProjectSetupComponent implements OnInit {
     this.projectSetupService.deleteSection(id).subscribe({
       next: () => {
         this.loadSections();
+        this.activityLog(`Deleted section`, this.projectId!);
       },
       error: (err) => {
         console.error('Error deleting section:', err);
@@ -198,6 +214,7 @@ export class ProjectSetupComponent implements OnInit {
       next: (res) => {
         console.log('Milestone created successfully:', res);
         alert('Milestone created successfully!');
+        this.activityLog(`Created milestone "${this.milestoneName}" in section ID ${this.milestoneSectionId}`, this.projectId!);
         this.showAddMilestone = false;
         this.resetMilestoneForm();
         this.loadMilestones();
@@ -233,6 +250,7 @@ export class ProjectSetupComponent implements OnInit {
     this.projectSetupService.deleteMilestone(id).subscribe({
       next: () => {
         this.loadMilestones();
+        this.activityLog(`Deleted milestone "${this.milestoneName}"`, this.projectId!);
       },
       error: (err) => {
         console.error('Error deleting milestone:', err);

@@ -2,7 +2,7 @@
   <!-- Header with project name and navigation -->
   <div class="dashboard-header">
     <div class="header-content">
-      <h1>ProjectName</h1>
+    <h1>{{ projectInfo.name || 'ProjectName' }}</h1>
       <div class="nav-tabs">
         <button class="tab" [class.active]="activeTab === 'MainPage'" (click)="setActiveTab('MainPage')">MainPage</button>
         <button class="tab" [class.active]="activeTab === 'ToDo'" (click)="setActiveTab('ToDo')">ToDo</button>
@@ -22,19 +22,19 @@
         </div>
         <div class="stats-grid">
           <div class="stat-card">
-            <div class="stat-value">15</div>
+            <div class="stat-value">{{ getTotalTasks() }}</div>
             <div class="stat-label">Total Tasks</div>
           </div>
           <div class="stat-card">
-            <div class="stat-value">8</div>
+            <div class="stat-value">{{ getTasksCountByStatus('completed') }}</div>
             <div class="stat-label">Completed</div>
           </div>
           <div class="stat-card">
-            <div class="stat-value">5</div>
+            <div class="stat-value">{{ getTasksCountByStatus('in-progress') }}</div>
             <div class="stat-label">In Progress</div>
           </div>
           <div class="stat-card">
-            <div class="stat-value">2</div>
+            <div class="stat-value">{{ getTasksCountByStatus('pending') }}</div>
             <div class="stat-label">Pending</div>
           </div>
         </div>
@@ -55,21 +55,23 @@
                 </linearGradient>
               </defs>
               <circle class="progress-bg" cx="60" cy="60" r="50"></circle>
-              <circle class="progress-bar" cx="60" cy="60" r="50" style="stroke-dashoffset: 62.8"></circle>
+              <circle class="progress-bar" cx="60" cy="60" r="50"
+                      [attr.stroke-dasharray]="progressCircumference"
+                      [attr.stroke-dashoffset]="getProgressDashoffset()"></circle>
             </svg>
             <div class="progress-text">
-              <div class="progress-value">53%</div>
+              <div class="progress-value">{{ computeProjectProgress() }}%</div>
               <div class="progress-label">Complete</div>
             </div>
           </div>
           <div class="progress-stats">
             <div class="progress-stat-item">
               <span class="progress-stat-label">Tasks Completed:</span>
-              <span class="progress-stat-value">8 / 15</span>
+              <span class="progress-stat-value">{{ getCompletedTasksCount() }} / {{ getTotalTasks() }}</span>
             </div>
             <div class="progress-stat-item">
               <span class="progress-stat-label">Days Remaining:</span>
-              <span class="progress-stat-value">12</span>
+              <span class="progress-stat-value">{{ daysRemaining() }}</span>
             </div>
           </div>
         </div>
@@ -82,27 +84,15 @@
           <button class="add-btn">+ Add Task</button>
         </div>
         <div class="tasks-list">
-          <div class="task-item">
-            <div class="task-status in-progress"></div>
-            <div class="task-details">
-              <div class="task-title">Implement authentication</div>
-              <div class="task-meta">Due: Tomorrow</div>
+          @for (task of getTasksByStatus('pending'); track task.id) {
+            <div class="task-item">
+              <div class="task-status" [class.pending]="task.status === 'pending'" [class.in-progress]="task.status === 'in-progress'" [class.completed]="task.status === 'completed'"></div>
+              <div class="task-details">
+                <div class="task-title">{{ task.title }}</div>
+                <div class="task-meta">Due: {{ task.deadline ? (task.deadline | date:'shortDate') : '—' }}</div>
+              </div>
             </div>
-          </div>
-          <div class="task-item">
-            <div class="task-status in-progress"></div>
-            <div class="task-details">
-              <div class="task-title">Design database schema</div>
-              <div class="task-meta">Due: This week</div>
-            </div>
-          </div>
-          <div class="task-item">
-            <div class="task-status pending"></div>
-            <div class="task-details">
-              <div class="task-title">Write documentation</div>
-              <div class="task-meta">Due: Next week</div>
-            </div>
-          </div>
+          }
         </div>
       </div>
 
@@ -112,27 +102,20 @@
           <h2>Recent Activity</h2>
         </div>
         <div class="activity-list">
-          <div class="activity-item">
-            <div class="activity-icon">✓</div>
-            <div class="activity-content">
-              <div class="activity-title">Task completed</div>
-              <div class="activity-time">2 hours ago</div>
-            </div>
-          </div>
-          <div class="activity-item">
-            <div class="activity-icon">+</div>
-            <div class="activity-content">
-              <div class="activity-title">New task added</div>
-              <div class="activity-time">5 hours ago</div>
-            </div>
-          </div>
-          <div class="activity-item">
-            <div class="activity-icon">↑</div>
-            <div class="activity-content">
-              <div class="activity-title">Priority updated</div>
-              <div class="activity-time">1 day ago</div>
-            </div>
-          </div>
+          @if (recentActivity.length === 0) {
+            <div class="empty-mini">No recent activity</div>
+          } @else {
+            @for (act of recentActivity; track act.id) {
+              <div class="activity-item">
+                <div class="activity-icon">
+                  @if ((act.action || act.summary || '').toLowerCase().indexOf('completed') !== -1) { ✓ } @else if ((act.action || act.summary || '').toLowerCase().indexOf('added') !== -1) { + } @else if ((act.action || act.summary || '').toLowerCase().indexOf('deleted') !== -1) { 🗑️ } @else { • }
+                </div>
+                <div class="activity-content">
+                  <div class="activity-title">{{ act.action || act.summary || act.type || 'Activity' }}</div>
+                </div>
+              </div>
+            }
+          }
         </div>
       </div>
 
@@ -168,25 +151,23 @@
     </div>
   }
 
-  <!-- ToDo View -->
   @if (activeTab === 'ToDo') {
     <div class="todo-content">
-      <!-- ToDo Stats -->
       <div class="todo-stats">
         <div class="stat-item">
-          <span class="stat-number">9</span>
+          <span class="stat-number">{{ getTotalTasks() }}</span>
           <span class="stat-label">Total Tasks</span>
         </div>
         <div class="stat-item">
-          <span class="stat-number">1</span>
+          <span class="stat-number">{{ getTasksCountByStatus('completed') }}</span>
           <span class="stat-label">Completed</span>
         </div>
         <div class="stat-item">
-          <span class="stat-number">3</span>
+          <span class="stat-number">{{ getTasksCountByStatus('in-progress') }}</span>
           <span class="stat-label">In Progress</span>
         </div>
         <div class="stat-item">
-          <span class="stat-number">5</span>
+          <span class="stat-number">{{ getTasksCountByStatus('pending') }}</span>
           <span class="stat-label">Pending</span>
         </div>
       </div>
@@ -200,10 +181,9 @@
           <div class="category-card-header">
             <div class="category-icon">{{ availableIcons[section.icon] }}</div>
             <h2>{{section.name}}</h2>
-            <span class="task-count-badge">3 tasks</span>
+            <span class="task-count-badge">{{ countTasksInSection(section.id) }} tasks</span>
           </div>
 
-          <!-- TODO: Add category-specific stats -->
           <div class="category-stats">
         <span class="stat-mini completed">
           {{ countTasksByStatus(section.id, 'completed') }} completed
@@ -473,7 +453,7 @@
               </div>
               <!-- Phase Cells -->
               @for (phase of phases; track phase) {
-                <div class="grid-cell phase-cell" (dblclick)="toggleAddMilestone(section.id); milestonePhase = phase">
+                <div class="grid-cell phase-cell">
                   <!-- Milestones in this cell -->
                   @for (milestone of getMilestonesBySectionAndPhase(section.id, phase); track milestone.id) {
                     <div class="milestone-card" [style.border-left-color]="section.color">

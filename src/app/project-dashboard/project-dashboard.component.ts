@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from '../services/project.service';
 import { ProjectSetupService } from '../services/projectSetup.service';
+import { ActivityService } from '../services/activity.service';
 
 @Component({
   selector: 'app-project-dashboard',
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './project-dashboard.component.html',
   styleUrl: './project-dashboard.component.css'
 })
@@ -69,6 +71,7 @@ export class ProjectDashboardComponent implements OnInit {
 
   // Tasks
   tasks: any[] = [];
+  recentActivity: any[] = [];
   editingTaskId: number | null = null;
 
   // New task form fields
@@ -81,7 +84,7 @@ export class ProjectDashboardComponent implements OnInit {
   newTaskDeadline: any = null;
   showAddTask: boolean = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private projectService: ProjectService, private projectSetupService: ProjectSetupService) {}
+  constructor(private route: ActivatedRoute, private router: Router, private projectService: ProjectService, private projectSetupService: ProjectSetupService, private activityService: ActivityService) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -92,6 +95,7 @@ export class ProjectDashboardComponent implements OnInit {
         this.loadSections();
         this.loadMilestones();
         this.loadTasks();
+        this.loadRecentActivity();
       }
    
     })
@@ -121,6 +125,17 @@ export class ProjectDashboardComponent implements OnInit {
     })
   }
 
+  activityLog(action: string, projectId: number) {
+    this.activityService.logActivity(action, projectId).subscribe({
+      next: (res) => {
+        console.log('Activity logged successfully:', res);
+      },
+      error: (err) => {
+        console.error('Error logging activity:', err);  
+      }
+    });
+  }
+
   // Roadmap
   createSection() {
     if (!this.sectionName.trim()) return;
@@ -144,6 +159,7 @@ export class ProjectDashboardComponent implements OnInit {
         console.log('Section created successfully:', res);
         alert('Section created successfully!');
 
+        this.activityLog(`Created section "${this.sectionName}"`, this.projectId as number);
         this.loadSections();
 
         this.sectionColor = '#4a9eff';
@@ -179,9 +195,13 @@ export class ProjectDashboardComponent implements OnInit {
   }
 
   deleteSection(id: number) {
+    const sectionToDelete = this.sections.find(s => s.id === id);
+    const sectionName = sectionToDelete ? sectionToDelete.name : 'Unknown';
+
     this.projectSetupService.deleteSection(id).subscribe({
       next: () => {
         this.loadSections();
+        this.activityLog(`Deleted section "${sectionName}"`, this.projectId as number);
       },
       error: (err) => {
         console.error('Error deleting section:', err);
@@ -219,6 +239,7 @@ export class ProjectDashboardComponent implements OnInit {
         console.log('Milestone created successfully:', res);
         alert('Milestone created successfully!');
         this.showAddMilestone = false;
+        this.activityLog(`Created milestone "${this.milestoneName}"`, this.projectId as number);
         this.resetMilestoneForm();
         this.loadMilestones();
       },
@@ -250,9 +271,13 @@ export class ProjectDashboardComponent implements OnInit {
   }
 
   deleteMilestone(id: number) {
+    const milestoneToDelete = this.milestones.find(m => m.id === id);
+    const milestoneName = milestoneToDelete ? milestoneToDelete.name : 'Unknown';
+
     this.projectSetupService.deleteMilestone(id).subscribe({
       next: () => {
         this.loadMilestones();
+        this.activityLog(`Deleted milestone "${milestoneName}"`, this.projectId as number);
       },
       error: (err) => {
         console.error('Error deleting milestone:', err);
@@ -312,9 +337,7 @@ export class ProjectDashboardComponent implements OnInit {
   }
 
    selectCategory(id: number | null) { 
-    // set selectedCategory so the tasks detail view opens
     this.selectedCategory = id; 
-    // also set newTaskSectionId so Add Task uses current section
     this.newTaskSectionId = id; 
   }
 
@@ -334,6 +357,21 @@ export class ProjectDashboardComponent implements OnInit {
     });
   }
 
+  loadRecentActivity() {
+    if (this.projectId == null) return;
+
+    this.activityService.getProjectActivities(this.projectId).subscribe({
+      next: (res) => {
+        this.recentActivity = ((res && (res.activities || res)) || []).slice(0, 3);
+        console.log('Loaded recent activity:', this.recentActivity);
+      },
+      error: (err) => {
+        console.error('Error loading recent activity:', err);
+        this.recentActivity = [];
+      }
+    });
+  }
+
   getTasksBySection(sectionId: number, milestoneId: string | null = null): any[] {
     return this.tasks.filter(task => {
       const matchesSection = task.sectionid === sectionId;
@@ -346,6 +384,55 @@ export class ProjectDashboardComponent implements OnInit {
     return this.tasks.filter(task => 
       task.sectionid === sectionId && task.status === status
     ).length;
+  }
+
+  getTotalTasks(): number {
+    return this.tasks.length;
+  }
+
+  getTasksCountByStatus(status: string): number {
+    return this.tasks.filter(t => t.status === status).length;
+  }
+
+  getCompletedTasksCount(): number {
+    return this.getTasksCountByStatus('completed');
+  }
+
+  computeProjectProgress(): number {
+    const total = this.getTotalTasks();
+    if (!total) return 0;
+    const completed = this.getCompletedTasksCount();
+    return Math.round((completed / total) * 100);
+  }
+
+  computeSectionProgress(sectionId: number): number {
+    const total = this.countTasksInSection(sectionId);
+    if (!total) return 0;
+    const completed = this.tasks.filter(t => t.sectionid === sectionId && t.status === 'completed').length;
+    return Math.round((completed / total) * 100);
+  }
+
+  readonly progressRadius = 50;
+  get progressCircumference(): number { return 2 * Math.PI * this.progressRadius; }
+  getProgressDashoffset(): number {
+    const percent = this.computeProjectProgress();
+    return Math.round(this.progressCircumference * (1 - percent / 100));
+  }
+
+  daysRemaining(): number {
+    if (!this.projectInfo || !this.projectInfo.deadline) return 0;
+    const now = new Date();
+    const deadline = new Date(this.projectInfo.deadline);
+    const diff = deadline.getTime() - now.getTime();
+    return diff > 0 ? Math.ceil(diff / (1000 * 60 * 60 * 24)) : 0;
+  }
+
+  countTasksInSection(sectionId: number): number {
+    return this.tasks.filter(t => t.sectionid === sectionId).length;
+  }
+
+  getTasksByStatus(status: string): any[] {
+    return this.tasks.filter(t => t.status === status);
   }
 
   // Add new task
@@ -380,6 +467,7 @@ export class ProjectDashboardComponent implements OnInit {
         console.log('Task added successfully:', res);
         alert('Task added successfully!');
 
+        this.activityLog(`Added task "${this.newTaskTitle}"`, this.projectId as number);
         this.loadTasks();
 
         this.newTaskTitle = '';
@@ -414,10 +502,18 @@ export class ProjectDashboardComponent implements OnInit {
       return;
     }
 
+    const task = this.tasks.find(t => t.id === taskId);
+    const taskTitle = task?.title || 'Task';
+
     this.projectService.deleteTask(taskId, this.projectId).subscribe({
       next: () => {
         alert('Task deleted successfully');
         this.loadTasks();
+        this.activityLog(`Deleted task "${taskTitle}"`, this.projectId as number);
+      },
+      error: (err) => {
+        console.error('Error deleting task:', err);
+        alert('Failed to delete task');
       }
     });
   }
@@ -440,6 +536,7 @@ export class ProjectDashboardComponent implements OnInit {
     next: () => {
       alert('Úkol upraven!');
       this.loadTasks();
+      this.activityLog(`Edited task "${this.newTaskTitle}"`, this.projectId as number);
       this.cancelTaskOperation();
     },
     error: (err) => {
@@ -473,18 +570,16 @@ export class ProjectDashboardComponent implements OnInit {
     this.newTaskStatus = 'pending';
   }
 
-  setTaskStatus(task: any, status: 'pending' | 'in-progress' | 'completed') {
+  setTaskStatus(task: any, newStatus: 'pending' | 'in-progress' | 'completed') {
     if (this.projectId == null) {
       alert('Project ID is missing');
       return;
     }
 
-    if (task.status === status) return;
-
     const updateData = {
       title: task.title,
       description: task.description,
-      status: status,
+      status: newStatus,
       priority: task.priority,
       deadline: task.deadline || null,
       sectionId: task.sectionid ?? task.sectionId ?? null,
@@ -493,7 +588,9 @@ export class ProjectDashboardComponent implements OnInit {
 
     this.projectService.editTask(task.id, updateData, this.projectId).subscribe({
       next: () => {
+        this.activityLog(`Changed status of task "${task.title}" to "${newStatus}"`, this.projectId as number);
         this.loadTasks();
+        this.loadRecentActivity();
       },
       error: (err) => {
         console.error('Error updating task status:', err);
@@ -517,4 +614,5 @@ export class ProjectDashboardComponent implements OnInit {
   onTaskHover(task: any, event: any) {}
   onTaskLeave() {}
   onTaskContextMenu(task: any, event: any) { event.preventDefault(); }
-  duplicateTask(task: any) {}}
+  duplicateTask(task: any) {}
+}

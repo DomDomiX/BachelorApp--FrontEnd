@@ -4,6 +4,7 @@ import { ProjectService } from '../services/project.service';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { ActivityService } from '../services/activity.service';
 
 @Component({
   selector: 'app-projects',
@@ -36,12 +37,24 @@ export class ProjectsComponent implements OnInit {
 
   constructor(
     private projectService: ProjectService,
-    private router: Router
+    private router: Router,
+    private activityService: ActivityService
   ) { }
 
   ngOnInit() {
     this.loadTechnologies();
     this.loadProjects(); 
+  }
+
+  activityLog(action: string, projectId: number) {
+    this.activityService.logActivity(action, projectId).subscribe({
+      next: (res) => {
+        console.log('Activity logged successfully:', res);
+      },
+      error: (err) => {
+        console.error('Error logging activity:', err);  
+      }
+    });
   }
 
   setFilter(filter: string) {
@@ -83,6 +96,7 @@ export class ProjectsComponent implements OnInit {
         console.log('Status updated:', res);
         // Update local project status
         this.editingProject.status = this.newStatus;
+        this.activityLog(`Updated project status to "${this.newStatus}"`, this.editingProject.id);
         this.closeEditStatusModal();
         alert('Project status updated successfully!');
       },
@@ -103,6 +117,7 @@ export class ProjectsComponent implements OnInit {
         console.log('Project deleted:', response);
         // Remove from local array
         this.projects = this.projects.filter(p => p.id !== project.id);
+        this.activityLog(`Deleted project "${project.name}"`, project.id);
         alert('Project deleted successfully!');
       },
       error: (error) => {
@@ -204,6 +219,8 @@ export class ProjectsComponent implements OnInit {
           console.error('No project ID returned from createProject response:', response);
           this.loadProjects();
         }
+
+        this.activityLog(`Created project "${this.projectName}"`, response.projectId);
 
         this.toggleCreateForm();
         // Reset form fields
