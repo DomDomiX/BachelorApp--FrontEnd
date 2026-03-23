@@ -473,6 +473,35 @@ export class ProjectDashboardComponent implements OnInit {
     this.newTaskStatus = 'pending';
   }
 
+  setTaskStatus(task: any, status: 'pending' | 'in-progress' | 'completed') {
+    if (this.projectId == null) {
+      alert('Project ID is missing');
+      return;
+    }
+
+    if (task.status === status) return;
+
+    const updateData = {
+      title: task.title,
+      description: task.description,
+      status: status,
+      priority: task.priority,
+      deadline: task.deadline || null,
+      sectionId: task.sectionid ?? task.sectionId ?? null,
+      milestoneId: task.milestoneid ?? task.milestoneId ?? null
+    };
+
+    this.projectService.editTask(task.id, updateData, this.projectId).subscribe({
+      next: () => {
+        this.loadTasks();
+      },
+      error: (err) => {
+        console.error('Error updating task status:', err);
+        alert('Nepodařilo se změnit stav úkolu');
+      }
+    });
+  }
+
   // Stub methods - TODO: implement
   clearMilestoneFilter() { this.selectedMilestoneFilter = null; }
   getMilestonesByGoal(goal: string): any[] { return []; }
@@ -488,5 +517,4 @@ export class ProjectDashboardComponent implements OnInit {
   onTaskHover(task: any, event: any) {}
   onTaskLeave() {}
   onTaskContextMenu(task: any, event: any) { event.preventDefault(); }
-  markTaskComplete(task: any) {}
   duplicateTask(task: any) {}}

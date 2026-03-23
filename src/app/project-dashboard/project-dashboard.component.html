@@ -261,7 +261,7 @@
                   <button class="btn-primary" (click)="editTask()" style="background-color: #f39c12;">
                     Uložit změny
                   </button>
-                  <button class="btn-secondary" (click)="cancelTaskOperation()">
+                  <button class="btn-primary" (click)="cancelTaskOperation()" style="background-color: #f32112;">
                     Zrušit editaci
                   </button>
                 } @else {
@@ -291,7 +291,7 @@
           
           <div class="tasks-list-todo">
             @for (task of getTasksBySection(selectedCategory, selectedMilestoneFilter); track task.id) {
-              <div class="todo-task-card">
+                  <div class="todo-task-card" [class.completed]="task.status === 'completed'">
                 <div class="task-status" [class.completed]="task.status === 'completed'" 
                      [class.in-progress]="task.status === 'in-progress'"
                      [class.pending]="task.status === 'pending'"></div>
@@ -312,6 +312,13 @@
                   </div>
                 </div>
                 <div class="task-actions">
+                  <label class="status-select-wrap">
+                    <select class="status-select" [(ngModel)]="task.status" (ngModelChange)="setTaskStatus(task, $event)" aria-label="Změň stav úkolu">
+                      <option value="pending">Pending</option>
+                      <option value="in-progress">In progress</option>
+                      <option value="completed">Done</option>
+                    </select>
+                  </label>
                   <button class="btn-edit" (click)="startEditTask(task)">✎</button>
                   <button class="btn-delete" (click)="deleteTask(task.id)">×</button>
                 </div>
