@@ -349,6 +349,7 @@ export class ProjectDashboardComponent implements OnInit {
         // backend returns { tasks: [...] } — handle both shapes
         this.tasks = (res && (res.tasks || res)) || [];
         console.log('Loaded tasks:', this.tasks);
+        this.syncProgress();
       },
       error: (err) => {
         console.error('Error loading tasks:', err);
@@ -468,6 +469,7 @@ export class ProjectDashboardComponent implements OnInit {
         alert('Task added successfully!');
 
         this.activityLog(`Added task "${this.newTaskTitle}"`, this.projectId as number);
+        this.syncProgress();
         this.loadTasks();
 
         this.newTaskTitle = '';
@@ -510,6 +512,7 @@ export class ProjectDashboardComponent implements OnInit {
         alert('Task deleted successfully');
         this.loadTasks();
         this.activityLog(`Deleted task "${taskTitle}"`, this.projectId as number);
+        this.syncProgress();
       },
       error: (err) => {
         console.error('Error deleting task:', err);
@@ -590,11 +593,30 @@ export class ProjectDashboardComponent implements OnInit {
       next: () => {
         this.activityLog(`Changed status of task "${task.title}" to "${newStatus}"`, this.projectId as number);
         this.loadTasks();
+        this.syncProgress();
         this.loadRecentActivity();
       },
       error: (err) => {
         console.error('Error updating task status:', err);
         alert('Nepodařilo se změnit stav úkolu');
+      }
+    });
+  }
+
+  syncProgress() {
+    if (this.projectId == null) {
+      alert('Project ID is missing');
+      return;
+    }
+
+    const progress = this.computeProjectProgress();
+
+    this.projectService.updateProgress(progress, this.projectId).subscribe({
+      next: () => {
+        console.log('Progress synced successfully');
+      },
+      error: (err) => {
+        console.error('Error syncing progress:', err);
       }
     });
   }

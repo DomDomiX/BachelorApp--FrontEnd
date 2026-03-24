@@ -35,23 +35,25 @@
         <h2>Projects Overview</h2>
       </div>
       <div class="projects-list">
+        @for (project of projects; track project.id) {
         <!-- Project Card 1 -->
-        <div class="project-card">
+        <div class="project-card" (click)="goToProject(project.id)">
           <div class="project-info">
-            <h3>Bachelor Thesis App</h3>
-            <p>Frontend development with Angular & Taiga UI</p>
+            <h3>{{ project.name }}</h3>
+            <p>{{ project.description }}</p>
           </div>
           <div class="project-progress">
             <div class="progress-bar">
-              <div class="progress-fill" style="width: 65%"></div>
+              <div class="progress-fill" [style.width.%]="project.progress"></div>
             </div>
-            <span class="progress-text">65% Complete</span>
+            <span class="progress-text">{{ project.progress }}% Complete</span>
           </div>
           <div class="project-deadline">
             <tui-icon>tuiIconCalendar</tui-icon>
-            Due: Dec 15, 2025
+            {{ project.deadline | date:'MMM d, y' }}
           </div>
         </div>
+        }
       </div>
     </section>
 
@@ -59,47 +61,21 @@
     <section class="deadlines-section">
       <div class="section-header">
         <h2>Upcoming Deadlines</h2>
-        <button tuiButton appearance="secondary" size="s">
-          <tui-icon>tuiIconPlus</tui-icon>
-          Add Task
-        </button>
       </div>
       <div class="deadlines-list">
+      @for (task of tasks; track task.id) {
         <div class="deadline-item urgent">
           <div class="deadline-priority"></div>
           <div class="deadline-content">
-            <h4>Submit Chapter 3 Draft</h4>
-            <p>Bachelor thesis - theoretical framework</p>
+            <h4>{{task.title}}</h4>
+            <p>{{task.description}}</p>
           </div>
           <div class="deadline-date">
             <tui-icon>tuiIconClock</tui-icon>
-            <span>In 3 days</span>
+            <span>{{ task.deadline | date:'MMM d, y' }}</span>
           </div>
         </div>
-
-        <div class="deadline-item medium">
-          <div class="deadline-priority"></div>
-          <div class="deadline-content">
-            <h4>Implement User Profile</h4>
-            <p>Frontend component with edit functionality</p>
-          </div>
-          <div class="deadline-date">
-            <tui-icon>tuiIconClock</tui-icon>
-            <span>In 1 week</span>
-          </div>
-        </div>
-
-        <div class="deadline-item low">
-          <div class="deadline-priority"></div>
-          <div class="deadline-content">
-            <h4>Code Review Meeting</h4>
-            <p>Supervisor feedback session</p>
-          </div>
-          <div class="deadline-date">
-            <tui-icon>tuiIconClock</tui-icon>
-            <span>In 2 weeks</span>
-          </div>
-        </div>
+      }
       </div>
     </section>
 

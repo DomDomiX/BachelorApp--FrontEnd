@@ -114,6 +114,20 @@ export class ProjectService {
         return this.http.get(`${this.apiUrl}/tasks?projectId=${projectId}`, { headers });
     }
 
+    getAllTasks(): Observable<any> {
+        const token = localStorage.getItem('accessToken');
+
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${token}`,
+        });
+
+        return this.http.get(`${this.apiUrl}/allTasks`, { headers });
+    }
+
     addTask(taskData: { projectId: number, title: string, description: string, status: string, priority: string, deadline: Date | null, sectionId: number | null, milestoneId: number }): Observable<any> {
         const token = localStorage.getItem('accessToken');
 
@@ -155,5 +169,19 @@ export class ProjectService {
 
         const url = projectId ? `${this.apiUrl}/edit-task/${taskId}?projectId=${projectId}` : `${this.apiUrl}/edit-task/${taskId}`;
         return this.http.patch(url, taskData, { headers });
+    }
+
+    updateProgress(progress: number, projectId: number): Observable<any> {
+        const token = localStorage.getItem('accessToken');
+
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${token}`,
+        });
+
+        return this.http.patch(`${this.apiUrl}/projects/${projectId}/progress`, { progress }, { headers });
     }
 }

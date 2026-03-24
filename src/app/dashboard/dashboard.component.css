@@ -139,6 +139,7 @@
   border-color: #4a9eff;
   background: #161b33;
   transform: translateX(2px);
+  cursor: pointer;
 }
 
 .project-info h3 {
