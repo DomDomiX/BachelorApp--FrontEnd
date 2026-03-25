@@ -65,7 +65,7 @@
       <div class="projects-list">
         @for (project of projects; track project.id) {
         <!-- Project Card 1 -->
-        <div class="project-card" (click)="goToProject(project.id)">
+        <div class="project-card" (click)="goToProject(project)">
           <div class="project-info">
             <h3>{{ project.name }}</h3>
             <p>{{ project.description }}</p>

@@ -47,26 +47,24 @@
     </div>
   </div>
 
-  <div class="project-info-card">
-    <div class="project-info-header">
-      <h2>📋 Roadmap</h2>
-    </div>
-    
-    <div class="setup-content">
+  <div class="roadmap-content">
+      <div class="roadmap-header">
+        <h2>Roadmap</h2>
+      </div>
+
       <!-- Add Section Button -->
       <div class="add-section-header">
         <button class="btn-add-section" (click)="toggleAddSection()">
-          {{ showAddSection ? '✕ Zrušit' : '+ Přidat Sekci' }}
+          {{ showAddSection ? '× Zrušit' : '+ Přidat Sekci' }}
         </button>
       </div>
 
       <!-- Add Section Form -->
-      @if (showAddSection) {
+    @if (showAddSection) {
       <div class="section-form-card">
         <h3>Nová Sekce</h3>
         <div class="section-form-grid">
           <input type="text" [(ngModel)]="sectionName" placeholder="Název sekce (např. Frontend, Backend, Databáze...)" class="input-block" />
-          
           <div class="icon-color-row">
             <div class="form-group">
               <label>Ikona</label>
@@ -76,21 +74,19 @@
                 }
               </select>
             </div>
-            
             <div class="form-group">
               <label>Barva</label>
               <select [(ngModel)]="sectionColor" class="select-block">
                 @for (color of availableColors; track color) {
-                <option [value]="color" [style.color]="color">⬤ {{ color }}</option>
+                <option [value]="color" [style.color]="color">● {{ color }}</option>
                 }
               </select>
             </div>
-            
             <button class="btn-primary" (click)="createSection()">Vytvořit</button>
           </div>
         </div>
       </div>
-      }
+    }
 
       <!-- Empty State -->
       @if (sections.length === 0 && !showAddSection) {
@@ -103,10 +99,10 @@
 
       <!-- Sections Grid -->
       <div class="sections-grid">
-        @for (section of sections; track section.id) {
-        <div class="section-card" [class.expanded]="selectedSection === section.id">
+      @for (section of sections; track section.id) {
+        <div class="section-card" [class.expanded]="selectedCategory === section.id">
           <!-- Section Header -->
-          <div class="section-header-main" (click)="selectSection(section.id)">
+          <div class="section-header-main" (click)="selectCategory(section.id)">
             <div class="section-info">
               <span class="section-icon">{{ availableIcons[section.icon] }}</span>
               <h3 [style.color]="section.color">{{ section.name }}</h3>
@@ -114,23 +110,20 @@
             <div class="section-stats">
               <span class="stat-badge">{{ getSectionMilestones(section.id).length }} milestones</span>
               <button class="btn-delete-section" (click)="deleteSection(section.id); $event.stopPropagation()" title="Smazat sekci">🗑️</button>
-              <span class="expand-icon">{{ selectedSection === section.id ? '▼' : '▶' }}</span>
+              <span class="expand-icon">{{ selectedCategory === section.id ? '▼' : '▶' }}</span>
             </div>
           </div>
-
           <!-- Section Content (expanded) -->
-          @if (selectedSection === section.id) {
+          @if (selectedCategory === section.id) {
           <div class="section-content">
-            
             <!-- Milestones Section -->
             <div class="subsection">
               <div class="subsection-header">
-                <h4>📍 Milestones</h4>
+                <h4>🎯 Milestones</h4>
                 <button class="add-btn-small" (click)="toggleAddMilestone(section.id)">
                   {{ showAddMilestone && milestoneSectionId === section.id ? 'Zrušit' : '+ Milestone' }}
                 </button>
               </div>
-
               <!-- Add Milestone Form -->
               @if (showAddMilestone && milestoneSectionId === section.id) {
               <div class="add-form-inline">
@@ -144,7 +137,6 @@
                 <button class="btn-add-inline" (click)="createMilestone()">Přidat</button>
               </div>
               }
-
               <!-- Milestones List -->
               @if (getSectionMilestones(section.id).length === 0) {
               <div class="empty-mini">Zatím žádné milestones</div>
@@ -168,17 +160,15 @@
           </div>
           }
         </div>
-        }
+      }
       </div>
 
-      <!-- Roadmap Visualization -->
-      @if (sections.length > 0) {
+    <!-- Roadmap Visualization -->
+    @if (sections.length > 0) {
       <div class="roadmap-section">
         <div class="roadmap-section-header">
-          <h2>📍 RoadMap Preview</h2>
-          <p class="roadmap-hint">Dvojklik na buňku pro přidání milestone</p>
+          <h2>🎯 RoadMap Preview</h2>
         </div>
-
         <div class="roadmap-grid">
           <!-- Header Row -->
           <div class="grid-header">
@@ -187,21 +177,17 @@
               <div class="grid-cell phase-header">{{ phaseLabels[phase] }}</div>
             }
           </div>
-
           <!-- Section Rows -->
           @for (section of sections; track section.id) {
             <div class="grid-row">
               <!-- Section Label -->
               <div class="grid-cell section-label" [style.border-left-color]="section.color">
-                <span class="section-icon-small">{{ section.icon }}</span>
+                <span class="section-icon-small">{{ availableIcons[section.icon] }}</span>
                 <span class="section-name-small">{{ section.name }}</span>
               </div>
-              
               <!-- Phase Cells -->
               @for (phase of phases; track phase) {
-                <div class="grid-cell phase-cell" 
-                    (dblclick)="onCellDoubleClick(section.id, phase)">
-                  
+                <div class="grid-cell phase-cell">
                   <!-- Milestones in this cell -->
                   @for (milestone of getMilestonesBySectionAndPhase(section.id, phase); track milestone.id) {
                     <div class="milestone-card" [style.border-left-color]="section.color">
@@ -221,28 +207,7 @@
             </div>
           }
         </div>
-
-        <!-- Add Milestone Form (Floating) -->
-        @if (showAddMilestone) {
-        <div class="floating-milestone-form">
-          <div class="floating-form-header">
-            <h3>Nový Milestone</h3>
-            <button class="close-btn" (click)="showAddMilestone = false; resetMilestoneForm()">×</button>
-          </div>
-          <div class="floating-form-body">
-            <input type="text" [(ngModel)]="milestoneName" placeholder="Název milestone (např. MVP, Beta, Launch)" class="input-block" />
-            <select [(ngModel)]="milestonePhase" class="select-block">
-              @for (phase of phases; track phase) {
-              <option [ngValue]="phase">{{ phaseLabels[phase] }}</option>
-              }
-            </select>
-            <textarea [(ngModel)]="milestoneDescription" placeholder="Popis mílníku (volitelné)" class="textarea-block" rows="3"></textarea>
-            <button class="btn-primary" (click)="createMilestone()">Přidat Milestone</button>
-          </div>
-        </div>
-        }
       </div>
-      }
+    }
     </div>
-  </div>
 </div>

@@ -107,6 +107,14 @@ export class ProjectsComponent implements OnInit {
     });
   }
 
+  goToProject(project: any) {
+    if (project.status === 'planning') {
+    this.router.navigate(['/projectSetup', project.id]);
+  } else {
+    this.router.navigate(['/projectDashboard', project.id]);
+  }
+  }
+
   deleteProject(project: any) {
     if (!confirm(`Are you sure you want to delete project "${project.name}"?`)) {
       return;

@@ -326,7 +326,7 @@
       </div>
 
       <!-- Add Section Form -->
-      @if (showAddSection) {
+    @if (showAddSection) {
       <div class="section-form-card">
         <h3>Nová Sekce</h3>
         <div class="section-form-grid">
@@ -352,7 +352,7 @@
           </div>
         </div>
       </div>
-      }
+    }
 
       <!-- Empty State -->
       @if (sections.length === 0 && !showAddSection) {
@@ -365,7 +365,7 @@
 
       <!-- Sections Grid -->
       <div class="sections-grid">
-        @for (section of sections; track section.id) {
+      @for (section of sections; track section.id) {
         <div class="section-card" [class.expanded]="selectedCategory === section.id">
           <!-- Section Header -->
           <div class="section-header-main" (click)="selectCategory(section.id)">
@@ -426,15 +426,14 @@
           </div>
           }
         </div>
-        }
+      }
       </div>
 
-      <!-- Roadmap Visualization -->
-      @if (sections.length > 0) {
+    <!-- Roadmap Visualization -->
+    @if (sections.length > 0) {
       <div class="roadmap-section">
         <div class="roadmap-section-header">
           <h2>🎯 RoadMap Preview</h2>
-          <p class="roadmap-hint">Dvojklik na buňku pro přidání milestone</p>
         </div>
         <div class="roadmap-grid">
           <!-- Header Row -->
@@ -475,7 +474,7 @@
           }
         </div>
       </div>
-      }
+    }
     </div>
   }
   <!-- Settings View -->

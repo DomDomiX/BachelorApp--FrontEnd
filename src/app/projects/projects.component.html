@@ -181,7 +181,7 @@
 
         <div class="project-actions">
           <button (click)="openEditStatusModal(project)" tuiButton appearance="outline" size="s" class="edit-status-btn">Edit status</button>
-          <button tuiButton appearance="primary" size="s" [routerLink]="['/projectSetup', project.id]">Continue Work</button>
+          <button tuiButton appearance="primary" size="s" (click)="goToProject(project)">Continue Work</button>
         </div>
       </div>
     }

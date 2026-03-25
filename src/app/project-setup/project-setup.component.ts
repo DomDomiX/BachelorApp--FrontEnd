@@ -50,6 +50,9 @@ export class ProjectSetupComponent implements OnInit {
   milestonePhase: number = this.phases[0];
   milestoneSectionId: string = '';
 
+  // Roadmap state (matches project-dashboard)
+  selectedCategory: number | null = null;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -278,7 +281,14 @@ export class ProjectSetupComponent implements OnInit {
       return;
     }
 
-    this.router.navigate(['/projectDashboard', this.projectId]);
+    this.projectService.updateProjectStatus(this.projectId, 'active').subscribe({
+      next: () => {
+        this.activityLog('Finished project setup', this.projectId!);
+        console.log('Logged activity: Finished project setup for project ID', this.projectId);
+
+        this.router.navigate(['/projectDashboard', this.projectId]);
+      },
+    });
   }
 
   skipSetup() {
@@ -308,6 +318,14 @@ export class ProjectSetupComponent implements OnInit {
     });
   }
 
+  getSectionById(id: number | null) {
+    return this.sections.find(s => s.id === id);
+  }
+
+  getIconByIndex(index: number) {
+    return this.availableIcons[index] || '❓';
+  }
+
   onCellDoubleClick(sectionId: string, phase: number) {
     this.milestoneSectionId = sectionId;
     this.milestonePhase = phase;
@@ -322,6 +340,10 @@ export class ProjectSetupComponent implements OnInit {
       this.showAddMilestone = true;
       this.milestoneSectionId = sectionId;
     }
+  }
+
+  selectCategory(id: number | null) {
+    this.selectedCategory = id;
   }
 
 }

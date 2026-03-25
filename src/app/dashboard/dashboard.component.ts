@@ -9,7 +9,7 @@ import { ActivityService } from '../services/activity.service';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [TuiButton, TuiIcon, FormsModule, CommonModule],
+  imports: [TuiIcon, FormsModule, CommonModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -69,10 +69,15 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  goToProject(id: number) {
-    this.router.navigate(['/projectDashboard', id]);
-    console.log('Navigating to project with ID:', id);
+  goToProject(project: any) {
+  if (project.status === 'planning') {
+    this.router.navigate(['/projectSetup', project.id]);
+    console.log('Navigating to SETUP for project:', project.id);
+  } else {
+    this.router.navigate(['/projectDashboard', project.id]);
+    console.log('Navigating to DASHBOARD for project:', project.id);
   }
+}
 
   loadAllTasks() {
     this.loading = true;
