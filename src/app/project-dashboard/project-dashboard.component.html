@@ -81,10 +81,9 @@
       <div class="section tasks-section">
         <div class="section-header">
           <h2>Active Tasks</h2>
-          <button class="add-btn">+ Add Task</button>
         </div>
         <div class="tasks-list">
-          @for (task of getTasksByStatus('pending'); track task.id) {
+          @for (task of getUpcomingActiveTasks(); track task.id) {
             <div class="task-item">
               <div class="task-status" [class.pending]="task.status === 'pending'" [class.in-progress]="task.status === 'in-progress'" [class.completed]="task.status === 'completed'"></div>
               <div class="task-details">
@@ -92,6 +91,8 @@
                 <div class="task-meta">Due: {{ task.deadline ? (task.deadline | date:'shortDate') : '—' }}</div>
               </div>
             </div>
+          } @empty {
+            <div class="empty-mini">No active tasks</div>
           }
         </div>
       </div>
@@ -288,7 +289,7 @@
                     <span class="priority" [class.high]="task.priority === 'high'"
                           [class.medium]="task.priority === 'medium'"
                           [class.low]="task.priority === 'low'">{{task.priority}} Priority</span>
-                    <span class="due-date">Due: {{task.dueDate}}</span>
+                    <span class="due-date">Due: {{ task.deadline ? (task.deadline | date:'shortDate') : '—' }}</span>
                   </div>
                 </div>
                 <div class="task-actions">

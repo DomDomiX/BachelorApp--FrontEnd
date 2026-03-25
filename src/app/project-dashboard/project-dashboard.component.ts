@@ -346,8 +346,7 @@ export class ProjectDashboardComponent implements OnInit {
     if (this.projectId == null) return;
     this.projectService.getTasksByProject(this.projectId).subscribe({
       next: (res) => {
-        // backend returns { tasks: [...] } — handle both shapes
-        this.tasks = (res && (res.tasks || res)) || [];
+        this.tasks = res.tasks || [];
         console.log('Loaded tasks:', this.tasks);
         this.syncProgress();
       },
@@ -356,6 +355,12 @@ export class ProjectDashboardComponent implements OnInit {
         this.tasks = [];
       }
     });
+  }
+
+  getUpcomingActiveTasks(): any[] {
+    return this.tasks
+      .filter(t => t.status !== 'completed') 
+      .slice(0, 3); 
   }
 
   loadRecentActivity() {

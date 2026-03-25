@@ -28,6 +28,20 @@ export class ActivityService {
         return this.http.get(`${this.apiUrl}/activities/${projectId}`, { headers });
     }
 
+    getAllActivities(): Observable<any> {
+        const token = localStorage.getItem('accessToken');
+
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${token}`,
+        });
+
+        return this.http.get(`${this.apiUrl}/allActivities`, { headers });
+    }
+
     logActivity(action: string, projectId: number): Observable<any> {
         const token = localStorage.getItem('accessToken');
 

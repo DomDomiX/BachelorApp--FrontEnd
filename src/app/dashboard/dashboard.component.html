@@ -11,23 +11,51 @@
     
     <!-- Calendar Section -->
     <section class="calendar-section">
-      <div class="section-header">
-        <h2>Calendar & Deadlines</h2>
-        <button tuiButton appearance="secondary" size="s">View All</button>
+    <div class="section-header">
+      <div class="calendar-nav">
+        <button class="nav-btn" (click)="changeMonth(-1)">&lt;</button>
+        
+        <h2>{{ monthNames[currentDate.getMonth()] }} {{ currentDate.getFullYear() }}</h2>
+        
+        <button class="nav-btn" (click)="changeMonth(1)">&gt;</button>
       </div>
-      <div class="calendar-placeholder">
-        <!-- TODO: Implementovat kalendář -->
-        <div class="calendar-mock">
-          <div class="calendar-month">October 2025</div>
-          <div class="calendar-grid">
-            <div class="calendar-day today">25</div>
-            <div class="calendar-day has-deadline">28</div>
-            <div class="calendar-day">29</div>
-            <div class="calendar-day has-deadline">31</div>
+    </div>
+
+    <div class="calendar-wrapper">
+      <div class="weekdays-grid">
+        <div>Po</div><div>Út</div><div>St</div><div>Čt</div><div>Pá</div><div>So</div><div>Ne</div>
+      </div>
+
+      <div class="days-grid">
+        @for (day of startOffset; track $index) {
+          <div class="day other-month">{{ day }}</div>
+        }
+
+        @for (day of daysInMonth; track day) {
+          <div class="day" [class.today]="isToday(day)" [class.has-event]="hasDeadline(day)">
+            {{ day }}
+            @if (hasDeadline(day)) {
+              <div class="dot"></div>
+            }
           </div>
+        }
+
+        @for (day of endOffset; track $index) {
+          <div class="day other-month">{{ day }}</div>
+        }
+      </div>
+
+      <div class="calendar-footer-stats">
+      <div class="mini-stat">
+        <span class="mini-stat-icon">📅</span>
+        <div class="mini-stat-info">
+          <span class="mini-stat-value">{{ getTasksThisWeek() }}</span>
+          <span class="mini-stat-label">Tasks this week</span>
         </div>
       </div>
-    </section>
+    </div>
+    </div>
+  </section>
 
     <!-- Projects Overview Section -->
     <section class="projects-section">
@@ -71,7 +99,6 @@
             <p>{{task.description}}</p>
           </div>
           <div class="deadline-date">
-            <tui-icon>tuiIconClock</tui-icon>
             <span>{{ task.deadline | date:'MMM d, y' }}</span>
           </div>
         </div>
@@ -79,59 +106,19 @@
       </div>
     </section>
 
-    <!-- Quick Stats Section -->
-    <section class="stats-section">
-      <div class="section-header">
-        <h2>Quick Stats</h2>
-      </div>
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-number">3</div>
-          <div class="stat-label">Active Projects</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">7</div>
-          <div class="stat-label">Tasks This Week</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">2</div>
-          <div class="stat-label">Overdue Items</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">73%</div>
-          <div class="stat-label">Overall Progress</div>
-        </div>
-      </div>
-    </section>
-
     <!-- Recent Activity Section -->
     <section class="activity-section">
       <div class="section-header">
         <h2>Recent Activity</h2>
-        <button tuiButton appearance="secondary" size="s">View All</button>
       </div>
       <div class="activity-list">
+        @for (activity of activities; track activity.id) {
         <div class="activity-item">
-          <tui-icon class="activity-icon">tuiIconCheck</tui-icon>
           <div class="activity-content">
-            <p><strong>User Authentication</strong> marked as completed</p>
-            <span class="activity-time">2 hours ago</span>
+            <p><strong>{{ activity.action }}</strong></p>
           </div>
         </div>
-        <div class="activity-item">
-          <tui-icon class="activity-icon">tuiIconEdit</tui-icon>
-          <div class="activity-content">
-            <p>Updated <strong>Database Design</strong> progress to 80%</p>
-            <span class="activity-time">1 day ago</span>
-          </div>
-        </div>
-        <div class="activity-item">
-          <tui-icon class="activity-icon">tuiIconPlus</tui-icon>
-          <div class="activity-content">
-            <p>Added new task: <strong>Implement User Profile</strong></p>
-            <span class="activity-time">2 days ago</span>
-          </div>
-        </div>
+      }
       </div>
     </section>
 
