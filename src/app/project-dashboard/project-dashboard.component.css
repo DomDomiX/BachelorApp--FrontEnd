@@ -1,3 +1,176 @@
+/* Settings Content - full width */
+.settings-content {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.settings-content .section {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  border-radius: 4px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Align the outer "Project Settings" header with the inner form content */
+.settings-content .section .section-header {
+  padding-left: 48px; /* matches .settings-form left padding */
+}
+/* Project Settings Styles */
+.settings-form {
+  background: #161b33;
+  
+  border-radius: 4px;
+  padding: 32px 48px;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  box-sizing: border-box;
+  color: #e4e6eb;
+}
+
+.settings-section {
+  margin-bottom: 32px;
+  max-width: none;
+  margin: 0;
+  width: 100%;
+}
+
+.settings-section-title {
+  color: #e4e6eb;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  color: #a0a3bd;
+  margin-bottom: 6px;
+  font-size: 0.97rem;
+}
+
+.input-block {
+  background: #0a0e27;
+  border: 1px solid #1e2541;
+  color: #e4e6eb;
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.input-block:focus {
+  border-color: #4a9eff;
+}
+
+/* Prevent description textarea from being manually resized */
+.settings-form textarea {
+  resize: none;
+  overflow: auto;
+}
+
+.form-group-inline {
+  display: flex;
+  gap: 24px;
+}
+
+/* Danger Zone */
+.danger-zone {
+  background: #1a1620;
+  border: 1px solid #e74c3c;
+  border-radius: 4px;
+  padding: 5px 15px 15px 15px;
+  margin-top: 10px;
+  margin-bottom: 32px;
+}
+.danger-zone-title {
+  color: #e74c3c;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+.danger-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.danger-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #161b33;
+  border: 1px solid #1e2541;
+  border-radius: 4px;
+  padding: 16px 12px;
+}
+.danger-desc {
+  color: #a0a3bd;
+  font-size: 0.95rem;
+  margin-top: 2px;
+}
+.btn-archive {
+  background: #f39c12;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0 18px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-archive:hover {
+  background: #e67e22;
+}
+.btn-delete {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0 18px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.danger-action .btn-archive,
+.danger-action .btn-delete {
+  min-width: 110px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  text-align: center;
+  box-sizing: border-box;
+}
+.settings-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+.btn-save {
+  background: #4a9eff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 28px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-save:hover {
+  background: #2176bd;
+}
 .project-dashboard-container {
   padding: 20px;
   max-width: 1400px;
@@ -243,6 +416,24 @@
 
 .progress-stat-value.status-good {
   color: #28a745;
+}
+
+/* Override for Danger Zone delete button to avoid being overridden by task button styles */
+.settings-form .danger-zone .danger-action .btn-delete {
+  background: #e74c3c !important;
+  border-color: #e74c3c !important;
+  color: #fff !important;
+  font-size: 0.9rem !important;
+  padding: 0 18px !important;
+  height: 36px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.settings-form .danger-zone .danger-action .btn-delete:hover {
+  background: #e74c3c !important;
+  border-color: #e74c3c !important;
+  color: #fff !important;
 }
 
 .progress-stat-value.status-warning {

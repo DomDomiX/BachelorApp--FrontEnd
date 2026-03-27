@@ -184,4 +184,18 @@ export class ProjectService {
 
         return this.http.patch(`${this.apiUrl}/projects/${projectId}/progress`, { progress }, { headers });
     }
+
+    updateProject(projectId: number, data: { name: string, description: string, deadline: string | Date,  status: string }): Observable<any> {
+        const token = localStorage.getItem('accessToken');
+
+        if (!token) {
+            throw new Error('No token found');
+        }
+
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${token}`,
+        });
+
+        return this.http.patch(`${this.apiUrl}/projects/${projectId}`, data, { headers });
+    }
 }

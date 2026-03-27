@@ -40,6 +40,12 @@
           (click)="setFilter('on-hold')">
           On Hold
         </button>
+        <button 
+          class="filter-btn" 
+          [class.active]="selectedFilter === 'archived'"
+          (click)="setFilter('archived')">
+          Archived
+        </button>
       </div>
     </div>
   </section>

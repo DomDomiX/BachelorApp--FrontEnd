@@ -484,9 +484,69 @@
         <div class="section-header">
           <h2>Project Settings</h2>
         </div>
-        <div class="settings-placeholder">
-          <p style="color: #a0a3bd; text-align: center; padding: 40px;">Settings view - Coming soon</p>
-        </div>
+        <form class="settings-form">
+          <!-- General Information -->
+          <div class="settings-section">
+            <h3 class="settings-section-title">General Information</h3>
+            <div class="form-group">
+              <label for="projectName">Project Name</label>
+              <input id="projectName" class="input-block" type="text" [(ngModel)]="projectInfo.name" name="projectName" />
+            </div>
+            <div class="form-group">
+              <label for="projectDescription">Description</label>
+              <textarea id="projectDescription" class="input-block" rows="2" [(ngModel)]="projectInfo.description" name="projectDescription"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="projectStatus">Status</label>
+              <select id="projectStatus" class="input-block" [(ngModel)]="projectInfo.status" (ngModelChange)="projectInfo.status = $event" name="projectStatus">
+                <option value="planning">Planning</option>
+                <option value="active">Active</option>
+                <option value="completed">Completed</option>
+                <option value="on-hold">On-Hold</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Project Timeline -->
+          <div class="settings-section">
+            <h3 class="settings-section-title">Project Timeline</h3>
+            <div class="form-group-inline">
+              <div class="form-group">
+                  <label for="targetDate">Target Completion Date</label>
+                  <!-- Bind date input as yyyy-MM-dd string so value displays correctly -->
+                  <input id="targetDate" class="input-block" type="date"
+                    [ngModel]="projectInfo.deadline | date:'yyyy-MM-dd'"
+                    (ngModelChange)="projectInfo.deadline = $event"
+                    name="targetDate" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Danger Zone -->
+          <div class="danger-zone">
+            <h3 class="danger-zone-title">Danger Zone</h3>
+            <div class="danger-actions">
+              <div class="danger-action">
+                <div>
+                  <strong>Archive Project</strong>
+                  <div class="danger-desc">Mark this project as archived</div>
+                </div>
+                <button type="button" class="btn-archive" (click)="updateStatus()">Archive</button>
+              </div>
+              <div class="danger-action">
+                <div>
+                  <strong>Delete Project</strong>
+                  <div class="danger-desc">Permanently delete this project and all its data</div>
+                </div>
+                <button type="button" class="btn-delete" (click)="deleteProject(projectId!)">Delete</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-actions">
+            <button type="submit" class="btn-save" (click)="updateProject()">Save Changes</button>
+          </div>
+        </form>
       </div>
     </div>
   }

@@ -205,6 +205,12 @@
   border-color: #ff6b6b;
 }
 
+.project-status[data-status="archived"] {
+  background: rgba(174, 0, 255, 0.15);
+  color: #d03afd;
+  border-color: #d03afd;
+}
+
 .project-menu {
   color: #6c727f;
   cursor: pointer;
@@ -840,6 +846,12 @@ button[tuiButton][data-appearance="secondary"]:hover {
   background: rgba(255, 107, 107, 0.15);
   color: #ff6b6b;
   border-color: #ff6b6b;
+}
+
+.status-badge[data-status="archived"] {
+  background: rgba(174, 0, 255, 0.15);
+  color: #d03afd;
+  border-color: #d03afd;
 }
 
 .modal-actions {

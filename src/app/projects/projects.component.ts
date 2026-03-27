@@ -8,7 +8,7 @@ import { ActivityService } from '../services/activity.service';
 
 @Component({
   selector: 'app-projects',
-  imports: [TuiButton, FormsModule, DatePipe, RouterLink],
+  imports: [TuiButton, FormsModule, DatePipe],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.css'
 })
@@ -62,10 +62,14 @@ export class ProjectsComponent implements OnInit {
   }
 
   get filteredProjects() {
-    if (this.selectedFilter === 'all') {
-      return this.projects;
+    if (this.selectedFilter === 'archived') {
+      return this.projects.filter(p => (p.status || '').toLowerCase() === 'archived');
     }
-    return this.projects.filter(p => p.status === this.selectedFilter);
+    
+    if (this.selectedFilter === 'all') {
+      return this.projects.filter(p => (p.status || '').toLowerCase() !== 'archived');
+    }
+    return this.projects.filter(p => (p.status || '').toLowerCase() === this.selectedFilter && (p.status || '').toLowerCase() !== 'archived');
   }
 
   toggleCreateForm() {

@@ -110,7 +110,7 @@ export class ProjectDashboardComponent implements OnInit {
         this.projectInfo = {
           name: project.name,
           description: project.description,
-          deadline: new Date(project.deadline),
+          deadline: new Date(project.deadline),          
           technologies: (project.technologies || []).map((tech: any) => tech.name),
           status: project.status
         };
@@ -123,6 +123,70 @@ export class ProjectDashboardComponent implements OnInit {
         alert('Failed to load project');
       }
     })
+  }
+
+  updateProject() {
+    if (!this.projectId) return;
+
+    const updateData = {
+      projectId: this.projectId,
+      name: this.projectInfo.name,
+      description: this.projectInfo.description,
+      deadline: this.projectInfo.deadline,
+      status: this.projectInfo.status
+    };
+
+    this.projectService.updateProject(this.projectId, updateData).subscribe({
+      next: (res) => {
+        console.log('Project updated successfully:', res);
+        alert('Project updated successfully!');
+      },
+      error: (err) => {
+        console.error('Error updating project:', err);
+        alert('Failed to update project');
+      }
+    });  
+  }
+
+  updateStatus() {
+    if (!this.projectId) {
+      return;
+    }
+    // Nastavit status na 'Archived' před odesláním
+    this.projectInfo.status = 'archived';
+    this.projectService.updateProjectStatus(this.projectId, this.projectInfo.status).subscribe({
+      next: (res) => {
+        console.log('Status updated:', res);
+        alert('Project status updated successfully!');
+      },
+      error: (error) => {
+        console.error('Error updating status:', error);
+        alert('Failed to update project status');
+      }
+    });
+  }
+
+  deleteProject(projectId: number) {
+    if (projectId == null) {
+      alert('Project ID is missing');
+      return;
+    }
+
+    if (!confirm(`Are you sure you want to delete project "${this.projectInfo.name}"?`)) {
+      return;
+    }
+
+    this.projectService.deleteProject(projectId).subscribe({
+      next: (response) => {
+        console.log('Project deleted:', response);
+        alert('Project deleted successfully!');
+        this.router.navigate(['/dashboard']);
+      },
+      error: (error) => {
+        console.error('Error deleting project:', error);
+        alert('Failed to delete project. Please try again.');
+      }
+    });
   }
 
   activityLog(action: string, projectId: number) {

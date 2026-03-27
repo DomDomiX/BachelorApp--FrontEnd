@@ -16,13 +16,11 @@ export class AppComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    this.loggedIn = false;
-    this.isUserLoggedIn();
+    
   }
 
-  isUserLoggedIn(): boolean {
-    localStorage.getItem("accessToken") ? this.loggedIn = true : this.loggedIn = false;
-    return this.loggedIn;
+  get isUserLoggedIn(): boolean {
+    return !!localStorage.getItem("accessToken");
   }
 
   isActiveRoute(route: string): boolean {
