@@ -7,8 +7,8 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root'
 })
 export class ProjectService {
-    private apiUrl = 'http://localhost:3000/api';
-    private apiTech = 'http://localhost:3000/api/public';
+    private apiUrl = 'https://bachelorapp-backend.onrender.com/api';
+    private apiTech = 'https://bachelorapp-backend.onrender.com/api/public';
 
     constructor(
         private http: HttpClient, 

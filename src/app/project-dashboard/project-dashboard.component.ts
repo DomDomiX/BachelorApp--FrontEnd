@@ -140,6 +140,7 @@ export class ProjectDashboardComponent implements OnInit {
       next: (res) => {
         console.log('Project updated successfully:', res);
         alert('Project updated successfully!');
+        this.activityLog(`Updated project "${this.projectInfo.name}" details`, this.projectId as number);
       },
       error: (err) => {
         console.error('Error updating project:', err);
@@ -158,6 +159,7 @@ export class ProjectDashboardComponent implements OnInit {
       next: (res) => {
         console.log('Status updated:', res);
         alert('Project status updated successfully!');
+        this.activityLog(`Archived project "${this.projectInfo.name}"`, this.projectId as number);
       },
       error: (error) => {
         console.error('Error updating status:', error);
@@ -180,6 +182,7 @@ export class ProjectDashboardComponent implements OnInit {
       next: (response) => {
         console.log('Project deleted:', response);
         alert('Project deleted successfully!');
+        this.activityLog(`Deleted project "${this.projectInfo.name}"`, this.projectId as number);
         this.router.navigate(['/dashboard']);
       },
       error: (error) => {

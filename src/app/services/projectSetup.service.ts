@@ -6,7 +6,7 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root'
 })
 export class ProjectSetupService {
-    private apiUrl = 'http://localhost:3000/api';
+    private apiUrl = 'https://bachelorapp-backend.onrender.com/api';
 
   constructor(private http: HttpClient) { }
 

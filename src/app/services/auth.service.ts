@@ -6,7 +6,7 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-    private apiUrl = 'http://localhost:3000/api/auth';    
+    private apiUrl = 'https://bachelorapp-backend.onrender.com/api/auth';   
 
     constructor(private http: HttpClient) { }
 

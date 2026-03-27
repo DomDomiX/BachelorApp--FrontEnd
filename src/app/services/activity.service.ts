@@ -7,7 +7,7 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root'
 })
 export class ActivityService {
-    private apiUrl = 'http://localhost:3000/api';
+    private apiUrl = 'https://bachelorapp-backend.onrender.com/api';
 
     constructor(
         private http: HttpClient, 
