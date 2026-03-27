@@ -142,19 +142,27 @@ export class ProjectsComponent implements OnInit {
   loadProjects() {
     this.projectService.getUserProjects().subscribe({
       next: (res) => {
-        this.projects = res.projects;
+        this.projects = res.projects || [];
         this.loading = false;
         console.log('Loaded projects:', this.projects);
-        
-        // Načti technologie pro každý projekt
-        this.projects.forEach(project => {
+
+        // Načti technologie pro každý projekt (pokud nějaké jsou)
+        (this.projects || []).forEach(project => {
           this.loadProjectTechnologies(project.id, project);
         });
       },
       error: (error) => {
         console.error('Error loading projects:', error);
-        this.error = 'Nepodařilo se načíst projekty';
-        this.projects = [];
+        // Pokud backend vrací 404 (no projects), zobrazíme prázdný seznam místo chybového banneru
+        if (error && error.status === 404) {
+          this.projects = [];
+          this.error = null;
+          this.loading = false;
+        } else {
+          this.error = 'Nepodařilo se načíst projekty';
+          this.projects = [];
+          this.loading = false;
+        }
       }
     });
   }

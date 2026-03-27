@@ -96,6 +96,7 @@ export class ProjectDashboardComponent implements OnInit {
         this.loadMilestones();
         this.loadTasks();
         this.loadRecentActivity();
+        this.syncProgress();
       }
    
     })

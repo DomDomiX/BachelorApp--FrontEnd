@@ -825,32 +825,56 @@
 
 .category-card {
   background: #161b33;
-  border: 1px solid #1e2541;
-  border-radius: 8px;
-  padding: 24px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
+        border: 1px solid #1e2541;
+        border-radius: 6px;
+        margin-bottom: 12px;
+        padding: 16px; /* added padding for internal spacing */
+        box-sizing: border-box;
+        transition: transform 220ms cubic-bezier(.2,.8,.2,1), box-shadow 220ms cubic-bezier(.2,.8,.2,1), border-color 180ms ease;
+        will-change: transform, box-shadow;
+      }
 
-.category-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  transition: width 0.3s ease;
-}
+      .category-card-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
 
-.category-card.frontend::before {
-  background: #4a9eff;
-}
+      .category-icon {
+        font-size: 1.6rem;
+        margin-right: 8px;
+      }
 
-.category-card.backend::before {
-  background: #2ecc71;
-}
+      .task-count-badge {
+        margin-left: auto; /* push the badge to the far right, keeping icon on the left */
+      }
+      .section-form-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .icon-color-row {
+        display: flex;
+        gap: 12px;
+        align-items: flex-end; /* align selects and button on the same baseline */
+        margin-top: 20px; /* move the icon/color row slightly lower */
+      }
+      .section-form-card .btn-primary {
+        height: 38px;
+        padding: 0 16px;
+        margin-left: auto; /* push button to the right */
+        align-self: center;
+      }
+      .select-block {
+        background: #0a0e27;
+        border: 1px solid #1e2541;
+        color: #e4e6eb;
+        border-radius: 4px;
+        padding: 8px 12px;
+        font-size: 1rem;
+        height: 38px;
+        outline: none;
+      }
 
 .category-card.testing::before {
   background: #f39c12;
@@ -910,20 +934,22 @@
 
 .category-card-header {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   gap: 12px;
   margin-bottom: 16px;
 }
 
 .category-icon {
-  font-size: 2.5rem;
+  font-size: 3rem; /* slightly larger icon */
   line-height: 1;
+  margin-right: 12px; /* ensure spacing between icon and title */
 }
 
 .category-card h2 {
   margin: 0;
   color: #e4e6eb;
-  font-size: 1.25rem;
+  font-size: 1.4rem; /* slightly larger section title */
   font-weight: 600;
 }
 
@@ -936,7 +962,8 @@
   color: #a0a3bd;
   font-size: 0.85rem;
   font-weight: 500;
-  align-self: flex-start;
+  margin-left: auto;
+  align-self: center;
 }
 
 .category-stats {
@@ -1017,8 +1044,24 @@
   align-items: center;
 }
 
+/* Make the Create button match the adjacent field height and vertically center */
+.add-task-form .form-controls .btn-primary {
+  height: 38px; /* match select/input height */
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 160ms cubic-bezier(.2,.8,.2,1), box-shadow 160ms ease;
+}
+.add-task-form .form-controls .btn-primary {
+  transform: translateY(-3px); /* move button slightly down visually */
+}
+.add-task-form .form-controls .btn-primary:hover {
+  transform: translateY(0px); /* raise to baseline on hover */
+}
+
 .btn-toggle-add {
-  padding: 8px 12px;
+  padding: 10px 5px;
   background: transparent;
   border: 1px solid #1e2541;
   color: #a0a3bd;
@@ -1398,8 +1441,13 @@
   background: #161b33;
   border: 2px solid #4a9eff;
   border-radius: 4px;
-  padding: 20px;
-  margin-bottom: 20px;
+  /* match empty state vertical spacing so form appears at same coordinates */
+  padding: 36px 20px; /* balanced vertical spacing */
+  margin: 40px 0;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* vertically center the form content */
 }
 
 .section-form-card h3 {
@@ -1475,7 +1523,7 @@
   background: #161b33;
   border: 2px dashed #1e2541;
   border-radius: 4px;
-  padding: 60px 40px;
+  padding: 61px 40px;
   text-align: center;
   margin: 40px 0;
 }
@@ -2538,7 +2586,8 @@
   display: flex;
   gap: 16px;
   font-size: 12px;
-  color: #a0a3bd;
+  margin-top: 0; /* layout unaffected */
+  transform: translateY(8px); /* visual shift without increasing container height */
 }
 
 .task-status-badge {

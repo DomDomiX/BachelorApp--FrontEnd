@@ -180,7 +180,7 @@
         <div class="category-card" [class.selected]="selectedCategory === section.id" [style.borderLeftColor]="section.color" [style.--section-color]="section.color"
         style="border-left-width: 3px; border-left-style: solid;" (click)="selectCategory(section.id)">
           <div class="category-card-header">
-            <div class="category-icon">{{ availableIcons[section.icon] }}</div>
+            <div class="category-icon">{{ getIconByIndex(section.icon) }}</div>
             <h2>{{section.name}}</h2>
             <span class="task-count-badge">{{ countTasksInSection(section.id) }} tasks</span>
           </div>
@@ -370,7 +370,7 @@
           <!-- Section Header -->
           <div class="section-header-main" (click)="selectCategory(section.id)">
             <div class="section-info">
-              <span class="section-icon">{{ availableIcons[section.icon] }}</span>
+              <span class="section-icon">{{ getIconByIndex(section.icon) }}</span>
               <h3 [style.color]="section.color">{{ section.name }}</h3>
             </div>
             <div class="section-stats">
@@ -448,7 +448,7 @@
             <div class="grid-row">
               <!-- Section Label -->
               <div class="grid-cell section-label" [style.border-left-color]="section.color">
-                <span class="section-icon-small">{{ availableIcons[section.icon] }}</span>
+                <span class="section-icon-small">{{ getIconByIndex(section.icon) }}</span>
                 <span class="section-name-small">{{ section.name }}</span>
               </div>
               <!-- Phase Cells -->
