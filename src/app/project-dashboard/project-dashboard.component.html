@@ -226,6 +226,7 @@
               </div>
               <div class="form-row form-controls">
                 <select [(ngModel)]="newTaskPriority" class="select-block">
+                  <option [ngValue]="''" disabled>Vyber prioritu</option>
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
                   <option value="high">High</option>

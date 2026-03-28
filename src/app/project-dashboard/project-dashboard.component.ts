@@ -77,7 +77,7 @@ export class ProjectDashboardComponent implements OnInit {
   // New task form fields
   newTaskTitle: string = '';
   newTaskDescription: string = '';
-  newTaskPriority: string = 'medium';
+  newTaskPriority: string = '';
   newTaskMilestoneId: any = null;
   newTaskStatus: string = 'pending';
   newTaskSectionId: any = null;
@@ -516,6 +516,11 @@ export class ProjectDashboardComponent implements OnInit {
       return;
     }
 
+    if (!this.newTaskPriority) {
+      alert('Vyber prioritu úkolu');
+      return;
+    }
+
     this.newTaskSectionId = this.selectedCategory;
 
     if (this.projectId == null) {
@@ -547,7 +552,7 @@ export class ProjectDashboardComponent implements OnInit {
 
         this.newTaskTitle = '';
         this.newTaskDescription = '';
-        this.newTaskPriority = 'medium';
+        this.newTaskPriority = '';
         this.newTaskMilestoneId = null;
         this.newTaskStatus = 'pending';
         this.newTaskSectionId = null;
@@ -640,7 +645,7 @@ export class ProjectDashboardComponent implements OnInit {
     this.showAddTask = false;
     this.newTaskTitle = '';
     this.newTaskDescription = '';
-    this.newTaskPriority = 'medium';
+    this.newTaskPriority = '';
     this.newTaskMilestoneId = null;
     this.newTaskDeadline = null;
     this.newTaskStatus = 'pending';

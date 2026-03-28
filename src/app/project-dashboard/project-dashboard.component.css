@@ -67,6 +67,7 @@
   outline: none;
   transition: border-color 0.2s;
 }
+
 .input-block:focus {
   border-color: #4a9eff;
 }

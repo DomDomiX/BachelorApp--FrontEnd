@@ -58,6 +58,8 @@ export class LoginComponent {
         },
         error: (err) => {
           console.error('Login failed', err);
+          const serverMsg = err?.error?.error || err?.error?.message || err?.message || 'Unknown error';
+          alert(serverMsg);
         }
       })
     } 
