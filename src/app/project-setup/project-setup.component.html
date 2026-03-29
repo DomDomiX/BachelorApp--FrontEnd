@@ -17,7 +17,7 @@
     <div class="project-info-header">
       <h2>📋 {{ projectInfo.name }}</h2>
       <span class="project-status" [class]="'status-' + projectInfo.status">
-        {{ projectInfo.status }}
+        {{ statusLabels[projectInfo.status] || projectInfo.status }}
       </span>
     </div>
     
@@ -49,7 +49,7 @@
 
   <div class="roadmap-content">
       <div class="roadmap-header">
-        <h2>Roadmap</h2>
+        <h2>Roadmapa</h2>
       </div>
 
       <!-- Add Section Button -->
@@ -108,7 +108,7 @@
               <h3 [style.color]="section.color">{{ section.name }}</h3>
             </div>
             <div class="section-stats">
-              <span class="stat-badge">{{ getSectionMilestones(section.id).length }} milestones</span>
+              <span class="stat-badge">{{ getSectionMilestones(section.id).length }} milníků</span>
               <button class="btn-delete-section" (click)="deleteSection(section.id); $event.stopPropagation()" title="Smazat sekci">🗑️</button>
               <span class="expand-icon">{{ selectedCategory === section.id ? '▼' : '▶' }}</span>
             </div>
@@ -119,15 +119,15 @@
             <!-- Milestones Section -->
             <div class="subsection">
               <div class="subsection-header">
-                <h4>🎯 Milestones</h4>
+                <h4>🎯 Milníky</h4>
                 <button class="add-btn-small" (click)="toggleAddMilestone(section.id)">
-                  {{ showAddMilestone && milestoneSectionId === section.id ? 'Zrušit' : '+ Milestone' }}
+                  {{ showAddMilestone && milestoneSectionId === section.id ? 'Zrušit' : '+ Milník' }}
                 </button>
               </div>
               <!-- Add Milestone Form -->
               @if (showAddMilestone && milestoneSectionId === section.id) {
               <div class="add-form-inline">
-                <input type="text" [(ngModel)]="milestoneName" placeholder="Název milestone (např. MVP, Beta...)" class="input-inline" />
+                <input type="text" [(ngModel)]="milestoneName" placeholder="Název milníku (např. MVP, Beta...)" class="input-inline" />
                 <select [(ngModel)]="milestonePhase" class="select-inline">
                   @for (phase of phases; track phase) {
                   <option [ngValue]="phase">{{ phaseLabels[phase] }}</option>
@@ -167,7 +167,7 @@
     @if (sections.length > 0) {
       <div class="roadmap-section">
         <div class="roadmap-section-header">
-          <h2>🎯 RoadMap Preview</h2>
+          <h2>🎯 Přehled roadmapy</h2>
         </div>
         <div class="roadmap-grid">
           <!-- Header Row -->

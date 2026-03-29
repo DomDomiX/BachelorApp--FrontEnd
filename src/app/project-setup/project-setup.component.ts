@@ -32,6 +32,15 @@ export class ProjectSetupComponent implements OnInit {
     status: 'planning' 
   };
 
+  // Czech labels for project statuses
+  statusLabels: { [key: string]: string } = {
+    'planning': 'Plánování',
+    'active': 'Aktivní',
+    'completed': 'Dokončeno',
+    'on-hold': 'Pozastaveno',
+    'archived': 'Archivováno'
+  };
+
   // Data structure
   sections: any[] = []; // User-created sections
   milestones: any[] = [];
@@ -141,7 +150,7 @@ export class ProjectSetupComponent implements OnInit {
         alert('Section created successfully!');
 
         this.loadSections();
-        this.activityLog(`Created section "${this.sectionName}"`, this.projectId!);
+        this.activityLog(`Vytvořena sekce "${this.sectionName}"`, this.projectId!);
         console.log(`Logged activity: Created section "${this.sectionName}" for project ID ${this.projectId}`);
 
         this.sectionColor = '#4a9eff';
@@ -180,7 +189,7 @@ export class ProjectSetupComponent implements OnInit {
     this.projectSetupService.deleteSection(id).subscribe({
       next: () => {
         this.loadSections();
-        this.activityLog(`Deleted section`, this.projectId!);
+        this.activityLog(`Smazána sekce "${this.sectionName}"`, this.projectId!);
       },
       error: (err) => {
         console.error('Error deleting section:', err);
@@ -217,7 +226,7 @@ export class ProjectSetupComponent implements OnInit {
       next: (res) => {
         console.log('Milestone created successfully:', res);
         alert('Milestone created successfully!');
-        this.activityLog(`Created milestone "${this.milestoneName}" in section ID ${this.milestoneSectionId}`, this.projectId!);
+        this.activityLog(`Vytvořen milestone "${this.milestoneName}" v sekci ID ${this.milestoneSectionId}`, this.projectId!);
         this.showAddMilestone = false;
         this.resetMilestoneForm();
         this.loadMilestones();
@@ -253,7 +262,7 @@ export class ProjectSetupComponent implements OnInit {
     this.projectSetupService.deleteMilestone(id).subscribe({
       next: () => {
         this.loadMilestones();
-        this.activityLog(`Deleted milestone "${this.milestoneName}"`, this.projectId!);
+        this.activityLog(`Smazán milestone "${this.milestoneName}"`, this.projectId!);
       },
       error: (err) => {
         console.error('Error deleting milestone:', err);
@@ -283,7 +292,7 @@ export class ProjectSetupComponent implements OnInit {
 
     this.projectService.updateProjectStatus(this.projectId, 'active').subscribe({
       next: () => {
-        this.activityLog('Finished project setup', this.projectId!);
+        this.activityLog('Dokončeno nastavení projektu', this.projectId!);
         console.log('Logged activity: Finished project setup for project ID', this.projectId);
 
         this.router.navigate(['/projectDashboard', this.projectId]);

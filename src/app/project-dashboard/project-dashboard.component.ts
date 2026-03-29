@@ -84,6 +84,18 @@ export class ProjectDashboardComponent implements OnInit {
   newTaskDeadline: any = null;
   showAddTask: boolean = false;
 
+  statusLabels: { [key: string]: string } = {
+    'pending': 'Čekající',
+    'in-progress': 'Probíhá',
+    'completed': 'Dokončeno'
+  };
+
+  priorityLabels: { [key: string]: string } = {
+    'low': 'Nízká',
+    'medium': 'Střední',
+    'high': 'Vysoká'
+  };
+
   constructor(private route: ActivatedRoute, private router: Router, private projectService: ProjectService, private projectSetupService: ProjectSetupService, private activityService: ActivityService) {}
 
   ngOnInit() {
@@ -141,7 +153,7 @@ export class ProjectDashboardComponent implements OnInit {
       next: (res) => {
         console.log('Project updated successfully:', res);
         alert('Project updated successfully!');
-        this.activityLog(`Updated project "${this.projectInfo.name}" details`, this.projectId as number);
+        this.activityLog(`Detaily projektu "${this.projectInfo.name}" aktualizovány`, this.projectId as number);
       },
       error: (err) => {
         console.error('Error updating project:', err);
@@ -160,7 +172,7 @@ export class ProjectDashboardComponent implements OnInit {
       next: (res) => {
         console.log('Status updated:', res);
         alert('Project status updated successfully!');
-        this.activityLog(`Archived project "${this.projectInfo.name}"`, this.projectId as number);
+        this.activityLog(`Archivován projekt "${this.projectInfo.name}"`, this.projectId as number);
       },
       error: (error) => {
         console.error('Error updating status:', error);
@@ -183,7 +195,7 @@ export class ProjectDashboardComponent implements OnInit {
       next: (response) => {
         console.log('Project deleted:', response);
         alert('Project deleted successfully!');
-        this.activityLog(`Deleted project "${this.projectInfo.name}"`, this.projectId as number);
+        this.activityLog(`Smazán projekt "${this.projectInfo.name}"`, this.projectId as number);
         this.router.navigate(['/dashboard']);
       },
       error: (error) => {
@@ -227,7 +239,7 @@ export class ProjectDashboardComponent implements OnInit {
         console.log('Section created successfully:', res);
         alert('Section created successfully!');
 
-        this.activityLog(`Created section "${this.sectionName}"`, this.projectId as number);
+        this.activityLog(`Vytvořena sekce "${this.sectionName}"`, this.projectId as number);
         this.loadSections();
 
         this.sectionColor = '#4a9eff';
@@ -269,7 +281,7 @@ export class ProjectDashboardComponent implements OnInit {
     this.projectSetupService.deleteSection(id).subscribe({
       next: () => {
         this.loadSections();
-        this.activityLog(`Deleted section "${sectionName}"`, this.projectId as number);
+        this.activityLog(`Smazána sekce "${sectionName}"`, this.projectId as number);
       },
       error: (err) => {
         console.error('Error deleting section:', err);
@@ -307,7 +319,7 @@ export class ProjectDashboardComponent implements OnInit {
         console.log('Milestone created successfully:', res);
         alert('Milestone created successfully!');
         this.showAddMilestone = false;
-        this.activityLog(`Created milestone "${this.milestoneName}"`, this.projectId as number);
+        this.activityLog(`Vytvořen milestone "${this.milestoneName}"`, this.projectId as number);
         this.resetMilestoneForm();
         this.loadMilestones();
       },
@@ -345,7 +357,7 @@ export class ProjectDashboardComponent implements OnInit {
     this.projectSetupService.deleteMilestone(id).subscribe({
       next: () => {
         this.loadMilestones();
-        this.activityLog(`Deleted milestone "${milestoneName}"`, this.projectId as number);
+        this.activityLog(`Smazán milestone "${milestoneName}"`, this.projectId as number);
       },
       error: (err) => {
         console.error('Error deleting milestone:', err);
@@ -546,7 +558,7 @@ export class ProjectDashboardComponent implements OnInit {
         console.log('Task added successfully:', res);
         alert('Task added successfully!');
 
-        this.activityLog(`Added task "${this.newTaskTitle}"`, this.projectId as number);
+        this.activityLog(`Přidán úkol "${this.newTaskTitle}"`, this.projectId as number);
         this.syncProgress();
         this.loadTasks();
 
@@ -589,7 +601,7 @@ export class ProjectDashboardComponent implements OnInit {
       next: () => {
         alert('Task deleted successfully');
         this.loadTasks();
-        this.activityLog(`Deleted task "${taskTitle}"`, this.projectId as number);
+        this.activityLog(`Smazán úkol "${taskTitle}"`, this.projectId as number);
         this.syncProgress();
       },
       error: (err) => {
@@ -617,7 +629,7 @@ export class ProjectDashboardComponent implements OnInit {
     next: () => {
       alert('Úkol upraven!');
       this.loadTasks();
-      this.activityLog(`Edited task "${this.newTaskTitle}"`, this.projectId as number);
+      this.activityLog(`Upraven úkol "${this.newTaskTitle}"`, this.projectId as number);
       this.cancelTaskOperation();
     },
     error: (err) => {
@@ -669,7 +681,7 @@ export class ProjectDashboardComponent implements OnInit {
 
     this.projectService.editTask(task.id, updateData, this.projectId).subscribe({
       next: () => {
-        this.activityLog(`Changed status of task "${task.title}" to "${newStatus}"`, this.projectId as number);
+        this.activityLog(`Změněn stav úkolu "${task.title}" na "${newStatus}"`, this.projectId as number);
         this.loadTasks();
         this.syncProgress();
         this.loadRecentActivity();

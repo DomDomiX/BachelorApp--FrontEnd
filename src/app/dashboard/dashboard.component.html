@@ -50,7 +50,7 @@
         <span class="mini-stat-icon">📅</span>
         <div class="mini-stat-info">
           <span class="mini-stat-value">{{ getTasksThisWeek() }}</span>
-          <span class="mini-stat-label">Tasks this week</span>
+          <span class="mini-stat-label">Úkolů tento týden</span>
         </div>
       </div>
     </div>
@@ -60,7 +60,7 @@
     <!-- Projects Overview Section -->
     <section class="projects-section">
       <div class="section-header">
-        <h2>Projects Overview</h2>
+        <h2>Přehled projektů</h2>
       </div>
       <div class="projects-list">
         @for (project of projects; track project.id) {
@@ -74,7 +74,7 @@
             <div class="progress-bar">
               <div class="progress-fill" [style.width.%]="project.progress"></div>
             </div>
-            <span class="progress-text">{{ project.progress }}% Complete</span>
+            <span class="progress-text">{{ project.progress }}% Hotovo</span>
           </div>
           <div class="project-deadline">
             <tui-icon>tuiIconCalendar</tui-icon>
@@ -88,7 +88,7 @@
     <!-- Upcoming Deadlines & Important Tasks -->
     <section class="deadlines-section">
       <div class="section-header">
-        <h2>Upcoming Deadlines</h2>
+        <h2>Blížící se termíny</h2>
       </div>
       <div class="deadlines-list">
       @for (task of tasks; track task.id) {
@@ -109,7 +109,7 @@
     <!-- Recent Activity Section -->
     <section class="activity-section">
       <div class="section-header">
-        <h2>Recent Activity</h2>
+        <h2>Poslední aktivita</h2>
       </div>
       <div class="activity-list">
         @for (activity of activities; track activity.id) {

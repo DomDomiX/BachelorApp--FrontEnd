@@ -38,6 +38,8 @@ export class LoginComponent {
       },
       error: (err) => {
         console.error("Chyba při registraci:", err);
+        const serverMsg = err?.error?.error || err?.error?.message || err?.message || 'Unknown error';
+          alert(serverMsg);
       }
     });
   }

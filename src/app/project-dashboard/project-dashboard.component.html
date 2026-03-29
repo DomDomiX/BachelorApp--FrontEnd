@@ -4,10 +4,10 @@
     <div class="header-content">
     <h1>{{ projectInfo.name || 'ProjectName' }}</h1>
       <div class="nav-tabs">
-        <button class="tab" [class.active]="activeTab === 'MainPage'" (click)="setActiveTab('MainPage')">MainPage</button>
-        <button class="tab" [class.active]="activeTab === 'ToDo'" (click)="setActiveTab('ToDo')">ToDo</button>
-        <button class="tab" [class.active]="activeTab === 'RoadMap'" (click)="setActiveTab('RoadMap')">RoadMap</button>
-        <button class="tab" [class.active]="activeTab === 'Settings'" (click)="setActiveTab('Settings')">Settings</button>
+        <button class="tab" [class.active]="activeTab === 'MainPage'" (click)="setActiveTab('MainPage')">Hlavní stránka</button>
+        <button class="tab" [class.active]="activeTab === 'ToDo'" (click)="setActiveTab('ToDo')">Úkoly</button>
+        <button class="tab" [class.active]="activeTab === 'RoadMap'" (click)="setActiveTab('RoadMap')">Road Map</button>
+        <button class="tab" [class.active]="activeTab === 'Settings'" (click)="setActiveTab('Settings')">Nastavení</button>
       </div>
     </div>
   </div>
@@ -18,24 +18,24 @@
       <!-- Project Overview -->
       <div class="section overview-section">
         <div class="section-header">
-          <h2>Project Task Overview</h2>
+          <h2>Přehled úkolů</h2>
         </div>
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-value">{{ getTotalTasks() }}</div>
-            <div class="stat-label">Total Tasks</div>
+            <div class="stat-label">Celkem úkolů</div>
           </div>
           <div class="stat-card">
             <div class="stat-value">{{ getTasksCountByStatus('completed') }}</div>
-            <div class="stat-label">Completed</div>
+            <div class="stat-label">Dokončeno</div>
           </div>
           <div class="stat-card">
             <div class="stat-value">{{ getTasksCountByStatus('in-progress') }}</div>
-            <div class="stat-label">In Progress</div>
+            <div class="stat-label">Probíhá</div>
           </div>
           <div class="stat-card">
             <div class="stat-value">{{ getTasksCountByStatus('pending') }}</div>
-            <div class="stat-label">Pending</div>
+            <div class="stat-label">Čekající</div>
           </div>
         </div>
       </div>
@@ -43,7 +43,7 @@
       <!-- Project Progress -->
       <div class="section progress-section">
         <div class="section-header">
-          <h2>Project Progress</h2>
+          <h2>Postup projektu</h2>
         </div>
         <div class="progress-content">
           <div class="progress-circle">
@@ -61,16 +61,16 @@
             </svg>
             <div class="progress-text">
               <div class="progress-value">{{ computeProjectProgress() }}%</div>
-              <div class="progress-label">Complete</div>
+              <div class="progress-label">Dokončeno</div>
             </div>
           </div>
           <div class="progress-stats">
             <div class="progress-stat-item">
-              <span class="progress-stat-label">Tasks Completed:</span>
+              <span class="progress-stat-label">Splněno úkolů:</span>
               <span class="progress-stat-value">{{ getCompletedTasksCount() }} / {{ getTotalTasks() }}</span>
             </div>
             <div class="progress-stat-item">
-              <span class="progress-stat-label">Days Remaining:</span>
+              <span class="progress-stat-label">Zbývající dny:</span>
               <span class="progress-stat-value">{{ daysRemaining() }}</span>
             </div>
           </div>
@@ -80,7 +80,7 @@
       <!-- Tasks Section -->
       <div class="section tasks-section">
         <div class="section-header">
-          <h2>Active Tasks</h2>
+          <h2>Aktivní úkoly</h2>
         </div>
         <div class="tasks-list">
           @for (task of getUpcomingActiveTasks(); track task.id) {
@@ -88,11 +88,11 @@
               <div class="task-status" [class.pending]="task.status === 'pending'" [class.in-progress]="task.status === 'in-progress'" [class.completed]="task.status === 'completed'"></div>
               <div class="task-details">
                 <div class="task-title">{{ task.title }}</div>
-                <div class="task-meta">Due: {{ task.deadline ? (task.deadline | date:'shortDate') : '—' }}</div>
+                <div class="task-meta">Do: {{ task.deadline ? (task.deadline | date:'shortDate') : '—' }}</div>
               </div>
             </div>
           } @empty {
-            <div class="empty-mini">No active tasks</div>
+            <div class="empty-mini">Žádné aktivní úkoly</div>
           }
         </div>
       </div>
@@ -100,11 +100,11 @@
       <!-- Recent Activity -->
       <div class="section activity-section">
         <div class="section-header">
-          <h2>Recent Activity</h2>
+          <h2>Nedávná aktivita</h2>
         </div>
         <div class="activity-list">
           @if (recentActivity.length === 0) {
-            <div class="empty-mini">No recent activity</div>
+            <div class="empty-mini">Žádná nedávná aktivita</div>
           } @else {
             @for (act of recentActivity; track act.id) {
               <div class="activity-item">
@@ -123,7 +123,7 @@
       <!-- Team Section -->
       <div class="section team-section">
         <div class="section-header">
-          <h2>Team Members</h2>
+          <h2>Členové týmu</h2>
         </div>
         <div class="team-list">
           <div class="team-member">
@@ -157,19 +157,19 @@
       <div class="todo-stats">
         <div class="stat-item">
           <span class="stat-number">{{ getTotalTasks() }}</span>
-          <span class="stat-label">Total Tasks</span>
+          <span class="stat-label">Celkem úkolů</span>
         </div>
         <div class="stat-item">
           <span class="stat-number">{{ getTasksCountByStatus('completed') }}</span>
-          <span class="stat-label">Completed</span>
+          <span class="stat-label">Dokončeno</span>
         </div>
         <div class="stat-item">
           <span class="stat-number">{{ getTasksCountByStatus('in-progress') }}</span>
-          <span class="stat-label">In Progress</span>
+          <span class="stat-label">Probíhá</span>
         </div>
         <div class="stat-item">
           <span class="stat-number">{{ getTasksCountByStatus('pending') }}</span>
-          <span class="stat-label">Pending</span>
+          <span class="stat-label">Čekající</span>
         </div>
       </div>
 
@@ -182,18 +182,18 @@
           <div class="category-card-header">
             <div class="category-icon">{{ getIconByIndex(section.icon) }}</div>
             <h2>{{section.name}}</h2>
-            <span class="task-count-badge">{{ countTasksInSection(section.id) }} tasks</span>
+            <span class="task-count-badge">{{ countTasksInSection(section.id) }} úkolů</span>
           </div>
 
           <div class="category-stats">
         <span class="stat-mini completed">
-          {{ countTasksByStatus(section.id, 'completed') }} completed
+          {{ countTasksByStatus(section.id, 'completed') }} dokončeno
         </span>
         <span class="stat-mini in-progress">
-          {{ countTasksByStatus(section.id, 'in-progress') }} in progress
+          {{ countTasksByStatus(section.id, 'in-progress') }} probíhá
         </span>
         <span class="stat-mini pending">
-          {{ countTasksByStatus(section.id, 'pending') }} pending
+          {{ countTasksByStatus(section.id, 'pending') }} čekající
         </span>
       </div>
         </div>
@@ -205,7 +205,7 @@
         @let currentSection = getSectionById(selectedCategory);
         <div class="tasks-detail-section">
           <div class="detail-header">
-            <h2>{{ getIconByIndex(currentSection.icon)}} {{currentSection.name}} Tasks</h2>
+            <h2>{{ getIconByIndex(currentSection.icon)}} {{currentSection.name}}</h2>
             <div class="detail-header-actions">
               <button class="btn-toggle-add" (click)="toggleAddTaskForm()">{{ showAddTask ? '× Zrušit' : '+ Přidat úkol' }}</button>
               <button class="close-btn" (click)="selectCategory(null)">×</button>
@@ -227,9 +227,9 @@
               <div class="form-row form-controls">
                 <select [(ngModel)]="newTaskPriority" class="select-block">
                   <option [ngValue]="''" disabled>Vyber prioritu</option>
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
+                  <option value="low">Nízká</option>
+                  <option value="medium">Střední</option>
+                  <option value="high">Vysoká</option>
                 </select>
 
                 <select [(ngModel)]="newTaskMilestoneId" class="select-block">
@@ -257,11 +257,11 @@
 
           <!-- Milestone Filter -->
           <div class="milestone-filter">
-            <span class="filter-label">Filter by milestone:</span>
+            <span class="filter-label">Filtrovat podle milníku:</span>
             <div class="filter-buttons">
               <button class="filter-btn" 
                       [class.active]="selectedMilestoneFilter === null"
-                      (click)="clearMilestoneFilter()">All Tasks</button>
+                      (click)="clearMilestoneFilter()">Všechny úkoly</button>
 
               @for (milestone of getSectionMilestones(selectedCategory); track milestone.id) {
                 <button class="filter-btn" 
@@ -287,18 +287,18 @@
                     </div>
                   }
                   <div class="task-meta">
-                    <span class="priority" [class.high]="task.priority === 'high'"
-                          [class.medium]="task.priority === 'medium'"
-                          [class.low]="task.priority === 'low'">{{task.priority}} Priority</span>
-                    <span class="due-date">Due: {{ task.deadline ? (task.deadline | date:'shortDate') : '—' }}</span>
+                      <span class="priority" [class.high]="task.priority === 'high'"
+                        [class.medium]="task.priority === 'medium'"
+                        [class.low]="task.priority === 'low'">{{ priorityLabels[task.priority] || task.priority }}</span>
+                    <span class="due-date">Do: {{ task.deadline ? (task.deadline | date:'shortDate') : '—' }}</span>
                   </div>
                 </div>
                 <div class="task-actions">
                   <label class="status-select-wrap">
                     <select class="status-select" [(ngModel)]="task.status" (ngModelChange)="setTaskStatus(task, $event)" aria-label="Změň stav úkolu">
-                      <option value="pending">Pending</option>
-                      <option value="in-progress">In progress</option>
-                      <option value="completed">Done</option>
+                      <option value="pending">Čekající</option>
+                      <option value="in-progress">Probíhá</option>
+                      <option value="completed">Dokončeno</option>
                     </select>
                   </label>
                   <button class="btn-edit" (click)="startEditTask(task)">✎</button>
@@ -316,7 +316,7 @@
   @if (activeTab === 'RoadMap') {
     <div class="roadmap-content">
       <div class="roadmap-header">
-        <h2>Roadmap</h2>
+        <h2>Roadmapa</h2>
       </div>
 
       <!-- Add Section Button -->
@@ -375,7 +375,7 @@
               <h3 [style.color]="section.color">{{ section.name }}</h3>
             </div>
             <div class="section-stats">
-              <span class="stat-badge">{{ getSectionMilestones(section.id).length }} milestones</span>
+              <span class="stat-badge">{{ getSectionMilestones(section.id).length }} milníků</span>
               <button class="btn-delete-section" (click)="deleteSection(section.id); $event.stopPropagation()" title="Smazat sekci">🗑️</button>
               <span class="expand-icon">{{ selectedCategory === section.id ? '▼' : '▶' }}</span>
             </div>
@@ -386,9 +386,9 @@
             <!-- Milestones Section -->
             <div class="subsection">
               <div class="subsection-header">
-                <h4>🎯 Milestones</h4>
+                <h4>🎯 Milníky</h4>
                 <button class="add-btn-small" (click)="toggleAddMilestone(section.id)">
-                  {{ showAddMilestone && milestoneSectionId === section.id ? 'Zrušit' : '+ Milestone' }}
+                  {{ showAddMilestone && milestoneSectionId === section.id ? 'Zrušit' : '+ Milník' }}
                 </button>
               </div>
               <!-- Add Milestone Form -->
@@ -434,7 +434,7 @@
     @if (sections.length > 0) {
       <div class="roadmap-section">
         <div class="roadmap-section-header">
-          <h2>🎯 RoadMap Preview</h2>
+          <h2>🎯 Přehled roadmapy</h2>
         </div>
         <div class="roadmap-grid">
           <!-- Header Row -->
@@ -483,37 +483,37 @@
     <div class="settings-content">
       <div class="section">
         <div class="section-header">
-          <h2>Project Settings</h2>
+          <h2>Nastavení projektu</h2>
         </div>
         <form class="settings-form">
           <!-- General Information -->
           <div class="settings-section">
-            <h3 class="settings-section-title">General Information</h3>
+            <h3 class="settings-section-title">Obecné informace</h3>
             <div class="form-group">
-              <label for="projectName">Project Name</label>
+              <label for="projectName">Název projektu</label>
               <input id="projectName" class="input-block" type="text" [(ngModel)]="projectInfo.name" name="projectName" />
             </div>
             <div class="form-group">
-              <label for="projectDescription">Description</label>
+              <label for="projectDescription">Popis</label>
               <textarea id="projectDescription" class="input-block" rows="2" [(ngModel)]="projectInfo.description" name="projectDescription"></textarea>
             </div>
             <div class="form-group">
-              <label for="projectStatus">Status</label>
+              <label for="projectStatus">Stav</label>
               <select id="projectStatus" class="input-block" [(ngModel)]="projectInfo.status" (ngModelChange)="projectInfo.status = $event" name="projectStatus">
-                <option value="planning">Planning</option>
-                <option value="active">Active</option>
-                <option value="completed">Completed</option>
-                <option value="on-hold">On-Hold</option>
+                <option value="planning">Plánování</option>
+                <option value="active">Aktivní</option>
+                <option value="completed">Dokončeno</option>
+                <option value="on-hold">Pozastaveno</option>
               </select>
             </div>
           </div>
 
           <!-- Project Timeline -->
           <div class="settings-section">
-            <h3 class="settings-section-title">Project Timeline</h3>
+            <h3 class="settings-section-title">Časový plán projektu</h3>
             <div class="form-group-inline">
               <div class="form-group">
-                  <label for="targetDate">Target Completion Date</label>
+                  <label for="targetDate">Cílové datum dokončení</label>
                   <!-- Bind date input as yyyy-MM-dd string so value displays correctly -->
                   <input id="targetDate" class="input-block" type="date"
                     [ngModel]="projectInfo.deadline | date:'yyyy-MM-dd'"
@@ -525,27 +525,27 @@
 
           <!-- Danger Zone -->
           <div class="danger-zone">
-            <h3 class="danger-zone-title">Danger Zone</h3>
+            <h3 class="danger-zone-title">Nebezpečná zóna</h3>
             <div class="danger-actions">
               <div class="danger-action">
                 <div>
-                  <strong>Archive Project</strong>
-                  <div class="danger-desc">Mark this project as archived</div>
+                  <strong>Archivovat projekt</strong>
+                  <div class="danger-desc">Označit tento projekt jako archivovaný</div>
                 </div>
-                <button type="button" class="btn-archive" (click)="updateStatus()">Archive</button>
+                <button type="button" class="btn-archive" (click)="updateStatus()">Archivovat</button>
               </div>
               <div class="danger-action">
                 <div>
-                  <strong>Delete Project</strong>
-                  <div class="danger-desc">Permanently delete this project and all its data</div>
+                  <strong>Smazat projekt</strong>
+                  <div class="danger-desc">Trvale smazat tento projekt a všechna jeho data</div>
                 </div>
-                <button type="button" class="btn-delete" (click)="deleteProject(projectId!)">Delete</button>
+                <button type="button" class="btn-delete" (click)="deleteProject(projectId!)">Smazat</button>
               </div>
             </div>
           </div>
 
           <div class="settings-actions">
-            <button type="submit" class="btn-save" (click)="updateProject()">Save Changes</button>
+            <button type="submit" class="btn-save" (click)="updateProject()">Uložit změny</button>
           </div>
         </form>
       </div>

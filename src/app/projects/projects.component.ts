@@ -35,6 +35,14 @@ export class ProjectsComponent implements OnInit {
   newStatus: string = '';
   availableStatuses: string[] = ['planning', 'active', 'completed', 'on-hold'];
 
+  statusLabels: { [key: string]: string } = {
+    'planning': 'Plánování',
+    'active': 'Aktivní',
+    'completed': 'Dokončeno',
+    'on-hold': 'Pozastaveno',
+    'archived': 'Archivováno'
+  };
+
   constructor(
     private projectService: ProjectService,
     private router: Router,
@@ -100,7 +108,7 @@ export class ProjectsComponent implements OnInit {
         console.log('Status updated:', res);
         // Update local project status
         this.editingProject.status = this.newStatus;
-        this.activityLog(`Updated project status to "${this.newStatus}"`, this.editingProject.id);
+        this.activityLog(`Stav projektu změnen na "${this.newStatus}"`, this.editingProject.id);
         this.closeEditStatusModal();
         alert('Project status updated successfully!');
       },
@@ -129,7 +137,7 @@ export class ProjectsComponent implements OnInit {
         console.log('Project deleted:', response);
         // Remove from local array
         this.projects = this.projects.filter(p => p.id !== project.id);
-        this.activityLog(`Deleted project "${project.name}"`, project.id);
+        this.activityLog(`Smazán projekt "${project.name}"`, project.id);
         alert('Project deleted successfully!');
       },
       error: (error) => {
@@ -240,7 +248,7 @@ export class ProjectsComponent implements OnInit {
           this.loadProjects();
         }
 
-        this.activityLog(`Created project "${this.projectName}"`, response.projectId);
+        this.activityLog(`Vytvořen projekt "${this.projectName}"`, response.projectId);
 
         this.toggleCreateForm();
         // Reset form fields

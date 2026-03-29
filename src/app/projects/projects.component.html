@@ -3,11 +3,11 @@
   <header class="projects-header">
     <div class="header-content">
       <div class="header-info">
-        <h1>My Projects</h1>
+        <h1>Moje projekty</h1>
       </div>
       <div class="header-actions">
         <button (click)="toggleCreateForm()" tuiButton appearance="primary" size="m">
-          + New Project
+          + Nový projekt
         </button>
       </div>
     </div>
@@ -20,31 +20,31 @@
           class="filter-btn" 
           [class.active]="selectedFilter === 'all'"
           (click)="setFilter('all')">
-          All Projects
+          Všechny projekty
         </button>
         <button 
           class="filter-btn" 
           [class.active]="selectedFilter === 'active'"
           (click)="setFilter('active')">
-          Active
+          Aktivní
         </button>
         <button 
           class="filter-btn" 
           [class.active]="selectedFilter === 'completed'"
           (click)="setFilter('completed')">
-          Completed
+          Dokončené
         </button>
         <button 
           class="filter-btn" 
           [class.active]="selectedFilter === 'on-hold'"
           (click)="setFilter('on-hold')">
-          On Hold
+          Pozastaveno
         </button>
         <button 
           class="filter-btn" 
           [class.active]="selectedFilter === 'archived'"
           (click)="setFilter('archived')">
-          Archived
+          Archivované
         </button>
       </div>
     </div>
@@ -55,14 +55,14 @@
     <div class="modal-overlay" (click)="toggleCreateForm()">
       <div class="modal-content" (click)="$event.stopPropagation()">
         <div class="modal-header">
-          <h2>Create New Project</h2>
+          <h2>Vytvořit nový projekt</h2>
           <button class="close-button" (click)="toggleCreateForm()">✖</button>
         </div>
         <form class="project-form">
           
           <!-- Název projektu -->
           <div class="form-group">
-            <label class="form-label">Project Name *</label>
+            <label class="form-label">Název projektu *</label>
             <input 
               type="text" 
               class="form-input" 
@@ -74,7 +74,7 @@
 
           <!-- Popis projektu -->
           <div class="form-group">
-            <label class="form-label">Description *</label>
+            <label class="form-label">Popis projektu *</label>
             <textarea 
               class="form-textarea" 
               rows="2" 
@@ -86,7 +86,7 @@
 
           <!-- Technologie -->
           <div class="form-group">
-            <label class="form-label">Technologies *</label>
+            <label class="form-label">Technologie *</label>
             <div class="tech-selection">
               @for (tech of technologies; track tech.id) {
                 <div
@@ -97,7 +97,7 @@
                   {{ tech.name }}
                 </div>
               } @empty {
-                <div>Loading technologies...</div>
+                <div>Nahrávám technologie...</div>
               }
             </div>
           </div>
@@ -115,10 +115,10 @@
           
           <div class="form-actions">
             <button type="button" (click)="toggleCreateForm()" tuiButton appearance="secondary" size="m">
-              Cancel
+              Zrušit
             </button>
             <button type="submit" (click)="createProject()" tuiButton appearance="primary" size="m">
-              Create Project
+              Vytvořit projekt
             </button>
           </div>
         </form>
@@ -149,7 +149,7 @@
         <button class="delete-project-btn" (click)="deleteProject(project)" title="Delete project">✖</button>
 
         <div class="project-header">
-          <div class="project-status" [attr.data-status]="project.status">{{ project.status }}</div>
+          <div class="project-status" [attr.data-status]="project.status">{{ statusLabels[project.status] || project.status }}</div>
         </div>
 
         <div class="project-content">
@@ -162,14 +162,14 @@
                 <span class="tech-tag">{{ tech }}</span>
               }
             } @else {
-              <span class="tech-tag">No technologies</span>
+              <span class="tech-tag">Žádné technologie</span>
             }
           </div>
         </div>
 
         <div class="project-progress">
           <div class="progress-info">
-            <span class="progress-label">Overall Progress</span>
+            <span class="progress-label">Celkový pokrok</span>
             <span class="progress-percentage">{{ project.progress || 0 }}%</span>
           </div>
           
@@ -181,13 +181,13 @@
         <div class="project-meta">
           <div class="project-deadline">
             <span class="deadline-icon">📅</span>
-            <span>Due: {{ project.deadline | date:'MMM d, y' }}</span>
+            <span>Do: {{ project.deadline | date:'MMM d, y' }}</span>
           </div>
         </div>
 
         <div class="project-actions">
-          <button (click)="openEditStatusModal(project)" tuiButton appearance="outline" size="s" class="edit-status-btn">Edit status</button>
-          <button tuiButton appearance="primary" size="s" (click)="goToProject(project)">Continue Work</button>
+          <button (click)="openEditStatusModal(project)" tuiButton appearance="outline" size="s" class="edit-status-btn">Upravit status</button>
+          <button tuiButton appearance="primary" size="s" (click)="goToProject(project)">Pokračovat v práci</button>
         </div>
       </div>
     }
@@ -199,17 +199,17 @@
     <div class="modal-overlay" (click)="closeEditStatusModal()">
       <div class="modal-content status-modal" (click)="$event.stopPropagation()">
         <div class="modal-header">
-          <h2>Edit Project Status</h2>
+          <h2>Upravit status projektu</h2>
           <button class="close-button" (click)="closeEditStatusModal()">✖</button>
         </div>
         
         <div class="status-modal-body">
           <p class="project-info">
-            <strong>Project:</strong> {{ editingProject?.name }}
+            <strong>Projekt:</strong> {{ editingProject?.name }}
           </p>
           
           <div class="form-group">
-            <label class="form-label">Select New Status</label>
+            <label class="form-label">Vyberte nový status</label>
             <div class="status-options">
               @for (status of availableStatuses; track status) {
                 <div 
@@ -218,7 +218,7 @@
                   (click)="newStatus = status"
                 >
                   <div class="status-badge" [attr.data-status]="status">
-                    {{ status }}
+                    {{ statusLabels[status] || status }}
                   </div>
                 </div>
               }
@@ -227,10 +227,10 @@
           
           <div class="modal-actions">
             <button type="button" (click)="closeEditStatusModal()" tuiButton appearance="secondary" size="m">
-              Cancel
+              Zrušit
             </button>
             <button type="button" (click)="updateStatus()" tuiButton appearance="primary" size="m">
-              Update Status
+              Aktualizovat status
             </button>
           </div>
         </div>

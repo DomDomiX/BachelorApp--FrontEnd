@@ -1,14 +1,14 @@
 <div class="container">
         @if (!isRegistering) {
         <div class="login-container">
-            <h2>Login</h2>
+            <h2>Přihlášení</h2>
             <form>
             <div>
                 <label tuiLabel>
                     Email
                     <tui-textfield>
                         <input
-                            placeholder="Enter your email"
+                            placeholder="Zadejte svůj email"
                             tuiTextfield
                             type="text"
                             [(ngModel)]="email"
@@ -20,10 +20,10 @@
             </div>
             <div>
                 <label tuiLabel>
-                Password
+                Heslo
                 <tui-textfield>
                     <input
-                        placeholder="Enter your password"
+                        placeholder="Zadejte své heslo"
                         tuiTextfield
                         type="password"
                         [(ngModel)]="password"
@@ -34,21 +34,21 @@
                 </tui-textfield>
                 </label>
             </div>
-            <button appearance="primary" tuiButton type="button" (click)="login()">Login</button>
-            <p>{{ isRegistering ? 'Already have an account? ' : "Don't have an account? " }} <span class="p-text" (click)="changeForm()">{{ isRegistering ? 'Login' : 'Register' }}</span></p>
+            <button appearance="primary" tuiButton type="button" (click)="login()">Přihlásit</button>
+            <p>{{ isRegistering ? 'Už máte účet? ' : "Nemáte účet? " }} <span class="p-text" (click)="changeForm()">{{ isRegistering ? 'Přihlásit se' : 'Registrovat se' }}</span></p>
         </form>
         </div>
         }
         @if (isRegistering) {
         <div class="register-container">
-            <h2>Register</h2>
+            <h2>Registrace</h2>
             <form>
             <div>
                 <label tuiLabel>
                     Email
                     <tui-textfield>
                         <input
-                            placeholder="Enter your email"
+                            placeholder="Zadejte svůj email"
                             tuiTextfield
                             type="text"
                             [(ngModel)]="email"
@@ -61,10 +61,10 @@
 
             <div>
                 <label tuiLabel>
-                    Username
+                    Uživatelské jméno
                     <tui-textfield>
                         <input
-                            placeholder="Enter your username"
+                            placeholder="Zadejte své uživatelské jméno"
                             tuiTextfield
                             type="text"
                             [(ngModel)]="username"
@@ -77,10 +77,10 @@
 
             <div>
                 <label tuiLabel>
-                Password
+                Heslo
                 <tui-textfield>
                     <input
-                        placeholder="Enter your password"
+                        placeholder="Zadejte své heslo"
                         tuiTextfield
                         type="password"
                         [(ngModel)]="password"
@@ -92,8 +92,8 @@
                 </label>
             </div>
             
-            <button appearance="primary" tuiButton type="button" (click)="register()">Register</button>
-            <p>{{ isRegistering ? 'Already have an account? ' : "Don't have an account? " }} <span class="p-text" (click)="changeForm()">{{ isRegistering ? 'Login' : 'Register' }}</span></p>
+            <button appearance="primary" tuiButton type="button" (click)="register()">Registrovat</button>
+            <p>{{ isRegistering ? 'Už máte účet? ' : "Nemáte účet? " }} <span class="p-text" (click)="changeForm()">{{ isRegistering ? 'Přihlásit se' : 'Registrovat se' }}</span></p>
         </form>
         </div>
         } 
