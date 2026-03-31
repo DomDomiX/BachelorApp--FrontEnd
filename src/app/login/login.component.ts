@@ -26,6 +26,12 @@ export class LoginComponent {
   constructor(public router: Router, private route: ActivatedRoute, private authService: AuthService) { }
 
    register() {
+    if (this.username.trim() === '' || this.email.trim() === '' || this.password.trim() === '') {
+      alert('Please fill in all fields');
+      return;
+    }
+
+
     this.authService.register({
       username: this.username,
       email: this.email,
