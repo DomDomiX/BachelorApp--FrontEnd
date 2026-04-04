@@ -1727,11 +1727,31 @@
 
 .milestone-item:hover { background: #161b33; }
 
+.milestone-item.completed {
+  border-left-color: #2ecc71;
+  background: rgba(46, 204, 113, 0.08);
+}
+
+.milestone-item.completed .milestone-name {
+  text-decoration: line-through;
+  color: #9fb3a8;
+}
+
 .milestone-info {
   display: flex;
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+.milestone-done-badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(46, 204, 113, 0.18);
+  border: 1px solid rgba(46, 204, 113, 0.5);
+  color: #6de4a0;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
 .milestone-name { color: #e4e6eb; font-weight: 500; }
@@ -1838,6 +1858,16 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
+.milestone-card.completed {
+  border-left-color: #2ecc71 !important;
+  background: linear-gradient(90deg, rgba(46, 204, 113, 0.14) 0%, #161b33 35%);
+}
+
+.milestone-card.completed .milestone-card-name {
+  text-decoration: line-through;
+  color: #b8cbbf;
+}
+
 .milestone-card-content { flex: 1; min-width: 0; }
 
 .milestone-card-name {
@@ -1852,6 +1882,13 @@
 .milestone-description-small {
   color: #a0a3bd;
   font-size: 11px;
+}
+
+.milestone-done-text {
+  color: #6de4a0;
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 4px;
 }
 
 .milestone-card-delete {

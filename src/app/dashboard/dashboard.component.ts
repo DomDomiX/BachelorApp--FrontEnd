@@ -24,17 +24,17 @@ export class DashboardComponent implements OnInit {
   // Calendar
   currentDate = new Date();
   daysInMonth: number[] = [];
-  startOffset: number[] = []; 
+  startOffset: number[] = [];
   monthNames = ["Leden", "Únor", "Březen", "Duben", "Květen", "Červen", "Červenec", "Srpen", "Září", "Říjen", "Listopad", "Prosinec"];
   allTasksForCalendar: any[] = []
 
   // Project Info
   projectInfo = {
     name: '',
-    description: '', 
-    deadline: new Date(), 
-    technologies: [], 
-    status: 'Active' 
+    description: '',
+    deadline: new Date(),
+    technologies: [],
+    status: 'Active'
   };
 
   constructor(
@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
     private projectService: ProjectService,
     private projectSetupService: ProjectSetupService,
     private activityService: ActivityService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadAllProjects();
@@ -70,14 +70,14 @@ export class DashboardComponent implements OnInit {
   }
 
   goToProject(project: any) {
-  if (project.status === 'planning') {
-    this.router.navigate(['/projectSetup', project.id]);
-    console.log('Navigating to SETUP for project:', project.id);
-  } else {
-    this.router.navigate(['/projectDashboard', project.id]);
-    console.log('Navigating to DASHBOARD for project:', project.id);
+    if (project.status === 'planning') {
+      this.router.navigate(['/projectSetup', project.id]);
+      console.log('Navigating to SETUP for project:', project.id);
+    } else {
+      this.router.navigate(['/projectDashboard', project.id]);
+      console.log('Navigating to DASHBOARD for project:', project.id);
+    }
   }
-}
 
   loadAllTasks() {
     this.loading = true;
@@ -89,14 +89,14 @@ export class DashboardComponent implements OnInit {
         this.allTasksForCalendar = allTasks.filter((t: any) => t.status !== 'completed');
 
         this.tasks = allTasks
-        .filter((task: any) => task.status !== 'completed')
-        .sort((a: any, b: any) => {
-        if (!a.deadline) return 1;
-        if (!b.deadline) return -1;
-        
-        return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
-      })
-      .slice(0, 3);
+          .filter((task: any) => task.status !== 'completed')
+          .sort((a: any, b: any) => {
+            if (!a.deadline) return 1;
+            if (!b.deadline) return -1;
+
+            return new Date(a.deadline).getTime() - new Date(b.deadline).getTime();
+          })
+          .slice(0, 3);
 
         console.log('Loaded tasks:', this.tasks);
         this.loading = false;
@@ -108,62 +108,62 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-generateCalendar() {
-  const year = this.currentDate.getFullYear();
-  const month = this.currentDate.getMonth();
+  generateCalendar() {
+    const year = this.currentDate.getFullYear();
+    const month = this.currentDate.getMonth();
 
-  this.daysInMonth = [];
-  this.startOffset = [];
-  this.endOffset = [];
+    this.daysInMonth = [];
+    this.startOffset = [];
+    this.endOffset = [];
 
-  const numDays = new Date(year, month + 1, 0).getDate();
-  for (let i = 1; i <= numDays; i++) {
-    this.daysInMonth.push(i);
+    const numDays = new Date(year, month + 1, 0).getDate();
+    for (let i = 1; i <= numDays; i++) {
+      this.daysInMonth.push(i);
+    }
+
+    const firstDayOfWeek = new Date(year, month, 1).getDay();
+    const offsetCount = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
+
+    const prevMonthLastDay = new Date(year, month, 0).getDate();
+    for (let i = offsetCount - 1; i >= 0; i--) {
+      this.startOffset.push(prevMonthLastDay - i);
+    }
+
+    const totalSlots = 42;
+    const remainingSlots = totalSlots - (this.startOffset.length + this.daysInMonth.length);
+    for (let i = 1; i <= remainingSlots; i++) {
+      this.endOffset.push(i);
+    }
   }
-
-  const firstDayOfWeek = new Date(year, month, 1).getDay();
-  const offsetCount = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
-  
-  const prevMonthLastDay = new Date(year, month, 0).getDate();
-  for (let i = offsetCount - 1; i >= 0; i--) {
-    this.startOffset.push(prevMonthLastDay - i);
-  }
-
-  const totalSlots = 42; 
-  const remainingSlots = totalSlots - (this.startOffset.length + this.daysInMonth.length);
-  for (let i = 1; i <= remainingSlots; i++) {
-    this.endOffset.push(i);
-  }
-}
 
   hasDeadline(day: number): boolean {
     return this.allTasksForCalendar.some(task => {
       if (!task.deadline) return false;
       const d = new Date(task.deadline);
-      return d.getDate() === day && 
-            d.getMonth() === this.currentDate.getMonth() && 
-            d.getFullYear() === this.currentDate.getFullYear();
+      return d.getDate() === day &&
+        d.getMonth() === this.currentDate.getMonth() &&
+        d.getFullYear() === this.currentDate.getFullYear();
     });
   }
 
   isToday(day: number): boolean {
     const now = new Date();
-    return day === now.getDate() && 
-          this.currentDate.getMonth() === now.getMonth() && 
-          this.currentDate.getFullYear() === now.getFullYear();
+    return day === now.getDate() &&
+      this.currentDate.getMonth() === now.getMonth() &&
+      this.currentDate.getFullYear() === now.getFullYear();
   }
 
-getTasksThisWeek(): number {
-  const now = new Date();
-  const nextWeek = new Date();
-  nextWeek.setDate(now.getDate() + 7);
+  getTasksThisWeek(): number {
+    const now = new Date();
+    const nextWeek = new Date();
+    nextWeek.setDate(now.getDate() + 7);
 
-  return this.allTasksForCalendar.filter(task => {
-    if (!task.deadline) return false;
-    const d = new Date(task.deadline);
-    return d >= now && d <= nextWeek;
-  }).length;
-}
+    return this.allTasksForCalendar.filter(task => {
+      if (!task.deadline) return false;
+      const d = new Date(task.deadline);
+      return d >= now && d <= nextWeek;
+    }).length;
+  }
 
   changeMonth(delta: number) {
     const newMonth = this.currentDate.getMonth() + delta;

@@ -521,6 +521,19 @@ export class ProjectDashboardComponent implements OnInit {
     return this.tasks.filter(t => t.status === status);
   }
 
+  getMilestoneTasks(milestoneId: number | string): any[] {
+    return this.tasks.filter(task => {
+      const taskMilestoneId = task.milestoneid ?? task.milestoneId;
+      return String(taskMilestoneId) === String(milestoneId);
+    });
+  }
+
+  isMilestoneCompleted(milestoneId: number | string): boolean {
+    const milestoneTasks = this.getMilestoneTasks(milestoneId);
+    if (milestoneTasks.length === 0) return false;
+    return milestoneTasks.every(task => task.status === 'completed');
+  }
+
   // Add new task
   addTask() {
     if (!this.newTaskTitle.trim()) {
@@ -716,7 +729,10 @@ export class ProjectDashboardComponent implements OnInit {
   getMilestonesByGoal(goal: string): any[] { return []; }
   setMilestoneFilter(id: string) { this.selectedMilestoneFilter = id; }
   getTasksByGoal(goal: string): any[] { return []; }
-  getMilestoneName(id: string): string { return ''; }
+  getMilestoneName(id: string): string {
+    const milestone = this.milestones.find(m => String(m.id) === String(id));
+    return milestone?.name || '';
+  }
   onCellDrop(goalId: string, phase: number, event: any) {}
   onDragOver(event: any) { event.preventDefault(); }
   getMilestonesByGoalAndPhase(goalId: string, phase: number): any[] { return []; }

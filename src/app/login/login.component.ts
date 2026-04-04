@@ -1,9 +1,9 @@
-import {Component} from '@angular/core';
-import {TuiButton} from '@taiga-ui/core';
-import {FormsModule} from '@angular/forms';
-import {TuiIcon, TuiTextfield} from '@taiga-ui/core';
-import {TuiPassword} from '@taiga-ui/kit';
-import {AuthService} from '../services/auth.service';
+import { Component } from '@angular/core';
+import { TuiButton } from '@taiga-ui/core';
+import { FormsModule } from '@angular/forms';
+import { TuiIcon, TuiTextfield } from '@taiga-ui/core';
+import { TuiPassword } from '@taiga-ui/kit';
+import { AuthService } from '../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -25,7 +25,7 @@ export class LoginComponent {
 
   constructor(public router: Router, private route: ActivatedRoute, private authService: AuthService) { }
 
-   register() {
+  register() {
     if (this.username.trim() === '' || this.email.trim() === '' || this.password.trim() === '') {
       alert('Please fill in all fields');
       return;
@@ -45,7 +45,7 @@ export class LoginComponent {
       error: (err) => {
         console.error("Chyba při registraci:", err);
         const serverMsg = err?.error?.error || err?.error?.message || err?.message || 'Unknown error';
-          alert(serverMsg);
+        alert(serverMsg);
       }
     });
   }
@@ -61,7 +61,7 @@ export class LoginComponent {
           localStorage.setItem("accessToken", res.accessToken);
           this.loggedIn = true;
           this.router.navigate(['/dashboard']).then(() => {
-            window.location.reload(); 
+            window.location.reload();
           });
         },
         error: (err) => {
@@ -70,6 +70,6 @@ export class LoginComponent {
           alert(serverMsg);
         }
       })
-    } 
+    }
   }
 }

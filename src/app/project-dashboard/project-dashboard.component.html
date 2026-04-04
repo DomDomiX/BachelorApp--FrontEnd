@@ -410,9 +410,12 @@
               } @else {
               <div class="milestones-list">
                 @for (milestone of getSectionMilestones(section.id); track milestone.id) {
-                <div class="milestone-item">
+                <div class="milestone-item" [class.completed]="isMilestoneCompleted(milestone.id)">
                   <div class="milestone-info">
                     <span class="milestone-name">{{ milestone.name }}</span>
+                    @if (isMilestoneCompleted(milestone.id)) {
+                    <span class="milestone-done-badge">Hotovo</span>
+                    }
                     <span class="milestone-phase">{{ phaseLabels[milestone.phase] }}</span>
                     @if (milestone.description) {
                     <span class="milestone-description">{{ milestone.description }}</span>
@@ -457,9 +460,12 @@
                 <div class="grid-cell phase-cell">
                   <!-- Milestones in this cell -->
                   @for (milestone of getMilestonesBySectionAndPhase(section.id, phase); track milestone.id) {
-                    <div class="milestone-card" [style.border-left-color]="section.color">
+                    <div class="milestone-card" [class.completed]="isMilestoneCompleted(milestone.id)" [style.border-left-color]="section.color">
                       <div class="milestone-card-content">
                         <div class="milestone-card-name">{{ milestone.name }}</div>
+                        @if (isMilestoneCompleted(milestone.id)) {
+                        <div class="milestone-done-text">✓ Hotovo</div>
+                        }
                         @if (milestone.description) {
                         <div class="milestone-card-info">
                           <span class="milestone-description-small">{{ milestone.description }}</span>
