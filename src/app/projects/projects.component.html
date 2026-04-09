@@ -24,6 +24,12 @@
         </button>
         <button 
           class="filter-btn" 
+          [class.active]="selectedFilter === 'planning'"
+          (click)="setFilter('planning')">
+          Plánování
+        </button>
+        <button 
+          class="filter-btn" 
           [class.active]="selectedFilter === 'active'"
           (click)="setFilter('active')">
           Aktivní
