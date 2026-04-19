@@ -354,11 +354,11 @@
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 20px;
   }
-  
+
   .projects-container {
     padding: 16px;
   }
-  
+
   .projects-header,
   .filters-section {
     padding: 20px;
@@ -369,35 +369,35 @@
   .projects-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .header-content {
     flex-direction: column;
     align-items: stretch;
     text-align: center;
   }
-  
+
   .header-actions {
     justify-content: center;
   }
-  
+
   .filters-content {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .filter-buttons {
     justify-content: center;
   }
-  
+
   .project-meta {
     flex-direction: column;
     gap: 8px;
   }
-  
+
   .project-actions {
     flex-direction: column;
   }
-  
+
   .project-actions button {
     min-width: auto;
   }
@@ -407,22 +407,22 @@
   .projects-container {
     padding: 12px;
   }
-  
+
   .projects-header,
   .filters-section,
   .project-card {
     padding: 16px;
   }
-  
+
   .header-info h1 {
     font-size: 1.75rem;
   }
-  
+
   .search-input {
     padding: 10px 14px 10px 40px;
     font-size: 0.95rem;
   }
-  
+
   .tech-tag {
     font-size: 0.75rem;
     padding: 3px 8px;
@@ -519,6 +519,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -529,6 +530,7 @@
     opacity: 0;
     transform: scale(0.9) translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -542,19 +544,19 @@
     max-height: 95vh;
     margin: 10px;
   }
-  
+
   .modal-header {
     padding: 20px 20px 12px 20px;
   }
-  
+
   .project-form {
     padding: 20px;
   }
-  
+
   .form-actions {
     flex-direction: column-reverse;
   }
-  
+
   .form-actions button {
     width: 100%;
   }
@@ -760,12 +762,12 @@ button[tuiButton][data-appearance="secondary"]:hover {
     padding: 10px;
     gap: 8px;
   }
-  
+
   .tech-chip {
     padding: 6px 12px;
     font-size: 0.85rem;
   }
-  
+
   .form-input,
   .form-textarea,
   .form-select {
@@ -862,4 +864,10 @@ button[tuiButton][data-appearance="secondary"]:hover {
   justify-content: flex-end;
   margin-top: 24px;
 }
-
+/* Extra small screens */
+@media (max-width: 360px) {
+  .projects-container { padding: 8px; }
+  .header-info h1 { font-size: 1.5rem; }
+  .project-card { padding: 14px; }
+  .search-bar { max-width: 100%; }
+}

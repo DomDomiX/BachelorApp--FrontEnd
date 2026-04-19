@@ -544,12 +544,12 @@
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .input-inline,
   .select-inline {
     min-width: 100%;
   }
-  
+
   .form-row-inline {
     flex-direction: column;
   }
@@ -757,6 +757,7 @@
     opacity: 0;
     transform: translate(-50%, -45%);
   }
+
   to {
     opacity: 1;
     transform: translate(-50%, -50%);
@@ -928,16 +929,81 @@
   .section-label {
     width: 150px;
   }
-  
+
   .section-header-cell {
     width: 150px;
   }
-  
+
   .phase-header {
     font-size: 11px;
   }
-  
+
   .milestone-card-name {
     font-size: 12px;
   }
+}
+/* === RESPONSIVE - PROJECT SETUP === */
+@media (max-width: 768px) {
+  .setup-container { padding: 12px; }
+  .setup-header { padding: 16px; }
+  .header-content h1 { font-size: 1.6rem; }
+  .header-actions { flex-wrap: wrap; gap: 8px; }
+  .project-info-content { grid-template-columns: 1fr; }
+  .info-row { grid-template-columns: 1fr; }
+  .roadmap-section { padding: 16px; }
+  .section-label { width: 120px; }
+  .section-header-cell { width: 120px; }
+  .phase-header { font-size: 10px; padding: 4px; }
+  .milestone-card-name { font-size: 11px; }
+  .milestone-card-delete { opacity: 1; }
+  
+  /* Omezit roadmapu na zobrazení jedné fáze najednou pomocí Scroll Snapu */
+  .roadmap-grid {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 12px;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 120px; /* offset pro sticky sekci */
+  }
+  .grid-header, .grid-row {
+    min-width: auto;
+    width: max-content;
+  }
+  /* Zafixovat levý sloupec při rolování */
+  .section-label, .section-header-cell {
+    position: sticky;
+    left: 0;
+    z-index: 10;
+    background-color: #161b33;
+  }
+  
+  /* Každá fáze bude zabírat zbytek šířky displeje (100vw - 120px sekce - paddingy) */
+  .phase-header, .phase-cell {
+    flex: 0 0 calc(100vw - 120px - 48px);
+    min-width: auto;
+    scroll-snap-align: start;
+  }
+
+  /* Umístění tlačítek nad název úkolu/milníku v roadmapě */
+  .milestone-card {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+  .milestone-card-content {
+    width: 100%;
+  }
+  .milestone-card-delete {
+    align-self: flex-end;
+    margin-bottom: 8px; /* Odsazení tlačítka od texu */
+  }
+}
+
+@media (max-width: 480px) {
+  .setup-container { padding: 8px; }
+  .setup-header { padding: 12px; }
+  .header-content h1 { font-size: 1.35rem; }
+  .btn-primary, .btn-outline { padding: 8px 16px; font-size: 0.9rem; }
+  .section-header-main { padding: 12px 14px; }
+  .section-info h3 { font-size: 1rem; }
+  .empty-state-large { padding: 40px 20px; }
 }

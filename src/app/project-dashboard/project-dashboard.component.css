@@ -16,12 +16,14 @@
 
 /* Align the outer "Project Settings" header with the inner form content */
 .settings-content .section .section-header {
-  padding-left: 48px; /* matches .settings-form left padding */
+  padding-left: 48px;
+  /* matches .settings-form left padding */
 }
+
 /* Project Settings Styles */
 .settings-form {
   background: #161b33;
-  
+
   border-radius: 4px;
   padding: 32px 48px;
   width: 100%;
@@ -92,17 +94,20 @@
   margin-top: 10px;
   margin-bottom: 32px;
 }
+
 .danger-zone-title {
   color: #e74c3c;
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 15px;
 }
+
 .danger-actions {
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
+
 .danger-action {
   display: flex;
   align-items: center;
@@ -112,11 +117,13 @@
   border-radius: 4px;
   padding: 16px 12px;
 }
+
 .danger-desc {
   color: #a0a3bd;
   font-size: 0.95rem;
   margin-top: 2px;
 }
+
 .btn-archive {
   background: #f39c12;
   color: #fff;
@@ -128,9 +135,11 @@
   cursor: pointer;
   transition: background 0.2s;
 }
+
 .btn-archive:hover {
   background: #e67e22;
 }
+
 .btn-delete {
   background: #e74c3c;
   color: #fff;
@@ -153,11 +162,13 @@
   text-align: center;
   box-sizing: border-box;
 }
+
 .settings-actions {
   display: flex;
   justify-content: flex-end;
   margin-top: 24px;
 }
+
 .btn-save {
   background: #4a9eff;
   color: #fff;
@@ -169,9 +180,11 @@
   cursor: pointer;
   transition: background 0.2s;
 }
+
 .btn-save:hover {
   background: #2176bd;
 }
+
 .project-dashboard-container {
   padding: 20px;
   max-width: 1400px;
@@ -431,6 +444,7 @@
   align-items: center !important;
   justify-content: center !important;
 }
+
 .settings-form .danger-zone .danger-action .btn-delete:hover {
   background: #e74c3c !important;
   border-color: #e74c3c !important;
@@ -713,7 +727,7 @@
   .dashboard-content {
     grid-template-columns: 1fr;
   }
-  
+
   .overview-section {
     grid-column: 1;
   }
@@ -723,21 +737,21 @@
   .project-dashboard-container {
     padding: 16px;
   }
-  
+
   .header-content {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .nav-tabs {
     width: 100%;
   }
-  
+
   .tab {
     flex: 1;
     text-align: center;
   }
-  
+
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -826,56 +840,65 @@
 
 .category-card {
   background: #161b33;
-        border: 1px solid #1e2541;
-        border-radius: 6px;
-        margin-bottom: 12px;
-        padding: 16px; /* added padding for internal spacing */
-        box-sizing: border-box;
-        transition: transform 220ms cubic-bezier(.2,.8,.2,1), box-shadow 220ms cubic-bezier(.2,.8,.2,1), border-color 180ms ease;
-        will-change: transform, box-shadow;
-      }
+  border: 1px solid #1e2541;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  padding: 16px;
+  /* added padding for internal spacing */
+  box-sizing: border-box;
+  transition: transform 220ms cubic-bezier(.2, .8, .2, 1), box-shadow 220ms cubic-bezier(.2, .8, .2, 1), border-color 180ms ease;
+  will-change: transform, box-shadow;
+}
 
-      .category-card-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
+.category-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-      .category-icon {
-        font-size: 1.6rem;
-        margin-right: 8px;
-      }
+.category-icon {
+  font-size: 1.6rem;
+  margin-right: 8px;
+}
 
-      .task-count-badge {
-        margin-left: auto; /* push the badge to the far right, keeping icon on the left */
-      }
-      .section-form-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-      }
-      .icon-color-row {
-        display: flex;
-        gap: 12px;
-        align-items: flex-end; /* align selects and button on the same baseline */
-        margin-top: 20px; /* move the icon/color row slightly lower */
-      }
-      .section-form-card .btn-primary {
-        height: 38px;
-        padding: 0 16px;
-        margin-left: auto; /* push button to the right */
-        align-self: center;
-      }
-      .select-block {
-        background: #0a0e27;
-        border: 1px solid #1e2541;
-        color: #e4e6eb;
-        border-radius: 4px;
-        padding: 8px 12px;
-        font-size: 1rem;
-        height: 38px;
-        outline: none;
-      }
+.task-count-badge {
+  margin-left: auto;
+  /* push the badge to the far right, keeping icon on the left */
+}
+
+.section-form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.icon-color-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  /* align selects and button on the same baseline */
+  margin-top: 20px;
+  /* move the icon/color row slightly lower */
+}
+
+.section-form-card .btn-primary {
+  height: 38px;
+  padding: 0 16px;
+  margin-left: auto;
+  /* push button to the right */
+  align-self: center;
+}
+
+.select-block {
+  background: #0a0e27;
+  border: 1px solid #1e2541;
+  color: #e4e6eb;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  height: 38px;
+  outline: none;
+}
 
 .category-card.testing::before {
   background: #f39c12;
@@ -893,7 +916,7 @@
 /* Selected category visual highlight */
 .category-card.selected {
   border-color: var(--section-color, #4a9eff);
-  box-shadow: 0 6px 30px rgba(0,0,0,0.45), 0 0 12px 3px rgba(0,0,0,0.12), 0 0 10px 2px rgba(74,158,255,0.08);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.45), 0 0 12px 3px rgba(0, 0, 0, 0.12), 0 0 10px 2px rgba(74, 158, 255, 0.08);
   transform: translateY(-6px);
 }
 
@@ -942,15 +965,18 @@
 }
 
 .category-icon {
-  font-size: 3rem; /* slightly larger icon */
+  font-size: 3rem;
+  /* slightly larger icon */
   line-height: 1;
-  margin-right: 12px; /* ensure spacing between icon and title */
+  margin-right: 12px;
+  /* ensure spacing between icon and title */
 }
 
 .category-card h2 {
   margin: 0;
   color: #e4e6eb;
-  font-size: 1.4rem; /* slightly larger section title */
+  font-size: 1.4rem;
+  /* slightly larger section title */
   font-weight: 600;
 }
 
@@ -1047,18 +1073,23 @@
 
 /* Make the Create button match the adjacent field height and vertically center */
 .add-task-form .form-controls .btn-primary {
-  height: 38px; /* match select/input height */
+  height: 38px;
+  /* match select/input height */
   padding: 0 16px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 160ms cubic-bezier(.2,.8,.2,1), box-shadow 160ms ease;
+  transition: transform 160ms cubic-bezier(.2, .8, .2, 1), box-shadow 160ms ease;
 }
+
 .add-task-form .form-controls .btn-primary {
-  transform: translateY(-3px); /* move button slightly down visually */
+  transform: translateY(-3px);
+  /* move button slightly down visually */
 }
+
 .add-task-form .form-controls .btn-primary:hover {
-  transform: translateY(0px); /* raise to baseline on hover */
+  transform: translateY(0px);
+  /* raise to baseline on hover */
 }
 
 .btn-toggle-add {
@@ -1080,6 +1111,7 @@
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1336,23 +1368,33 @@
   transition: all 0.18s ease;
 }
 
-.status-option:hover { transform: translateY(-2px); }
+.status-option:hover {
+  transform: translateY(-2px);
+}
 
-.status-option[title="Pending"] { color: #e74c3c; }
-.status-option[title="In progress"] { color: #f39c12; }
-.status-option[title="Done"] { color: #2ecc71; }
+.status-option[title="Pending"] {
+  color: #e74c3c;
+}
+
+.status-option[title="In progress"] {
+  color: #f39c12;
+}
+
+.status-option[title="Done"] {
+  color: #2ecc71;
+}
 
 .status-option.active {
-  background: linear-gradient(135deg, rgba(74,158,255,0.06), rgba(74,158,255,0.02));
-  border-color: rgba(74,158,255,0.24);
+  background: linear-gradient(135deg, rgba(74, 158, 255, 0.06), rgba(74, 158, 255, 0.02));
+  border-color: rgba(74, 158, 255, 0.24);
   color: white;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
 }
 
 /* Completed task visual */
 .todo-task-card.completed {
   opacity: 0.7;
-  background: linear-gradient(90deg, rgba(46,204,113,0.04), rgba(10,14,39,0));
+  background: linear-gradient(90deg, rgba(46, 204, 113, 0.04), rgba(10, 14, 39, 0));
 }
 
 .todo-task-card.completed .task-content h3,
@@ -1362,11 +1404,14 @@
 }
 
 .todo-task-card.completed .task-status {
-  box-shadow: 0 0 8px rgba(46,204,113,0.3);
+  box-shadow: 0 0 8px rgba(46, 204, 113, 0.3);
 }
 
 /* Dropdown status selector */
-.status-select-wrap { display: inline-block; }
+.status-select-wrap {
+  display: inline-block;
+}
+
 .status-select {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -1384,7 +1429,7 @@
 .status-select:focus {
   outline: none;
   border-color: #4a9eff;
-  box-shadow: 0 6px 18px rgba(74,158,255,0.12);
+  box-shadow: 0 6px 18px rgba(74, 158, 255, 0.12);
 }
 
 .status-select option {
@@ -1443,12 +1488,14 @@
   border: 2px solid #4a9eff;
   border-radius: 4px;
   /* match empty state vertical spacing so form appears at same coordinates */
-  padding: 36px 20px; /* balanced vertical spacing */
+  padding: 36px 20px;
+  /* balanced vertical spacing */
   margin: 40px 0;
   min-height: 160px;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* vertically center the form content */
+  justify-content: center;
+  /* vertically center the form content */
 }
 
 .section-form-card h3 {
@@ -1497,7 +1544,9 @@
   box-sizing: border-box;
 }
 
-.textarea-block { resize: vertical; }
+.textarea-block {
+  resize: vertical;
+}
 
 .input-block:focus,
 .select-block:focus,
@@ -1518,7 +1567,9 @@
   white-space: nowrap;
 }
 
-.btn-primary:hover { background: #3d8de6; }
+.btn-primary:hover {
+  background: #3d8de6;
+}
 
 .empty-state-large {
   background: #161b33;
@@ -1560,7 +1611,9 @@
   transition: all 0.3s ease;
 }
 
-.section-card.expanded { border-color: #4a9eff; }
+.section-card.expanded {
+  border-color: #4a9eff;
+}
 
 .section-header-main {
   display: flex;
@@ -1571,7 +1624,9 @@
   transition: all 0.3s ease;
 }
 
-.section-header-main:hover { background: #1a1f38; }
+.section-header-main:hover {
+  background: #1a1f38;
+}
 
 .section-info {
   display: flex;
@@ -1579,7 +1634,9 @@
   gap: 12px;
 }
 
-.section-icon { font-size: 1.5rem; }
+.section-icon {
+  font-size: 1.5rem;
+}
 
 .section-info h3 {
   margin: 0;
@@ -1631,7 +1688,9 @@
   border-top: 1px solid #1e2541;
 }
 
-.subsection { margin-top: 16px; }
+.subsection {
+  margin-top: 16px;
+}
 
 .subsection-header {
   display: flex;
@@ -1705,7 +1764,9 @@
   transition: all 0.3s ease;
 }
 
-.btn-add-inline:hover { background: #3d8de6; }
+.btn-add-inline:hover {
+  background: #3d8de6;
+}
 
 .milestones-list {
   display: flex;
@@ -1725,7 +1786,9 @@
   transition: all 0.3s ease;
 }
 
-.milestone-item:hover { background: #161b33; }
+.milestone-item:hover {
+  background: #161b33;
+}
 
 .milestone-item.completed {
   border-left-color: #2ecc71;
@@ -1754,7 +1817,10 @@
   font-weight: 600;
 }
 
-.milestone-name { color: #e4e6eb; font-weight: 500; }
+.milestone-name {
+  color: #e4e6eb;
+  font-weight: 500;
+}
 
 .milestone-phase {
   padding: 2px 8px;
@@ -1764,7 +1830,10 @@
   font-size: 0.8rem;
 }
 
-.milestone-description { color: #a0a3bd; font-size: 0.85rem; }
+.milestone-description {
+  color: #a0a3bd;
+  font-size: 0.85rem;
+}
 
 .delete-btn-mini {
   background: transparent;
@@ -1778,7 +1847,9 @@
   opacity: 0.6;
 }
 
-.delete-btn-mini:hover { opacity: 1; }
+.delete-btn-mini:hover {
+  opacity: 1;
+}
 
 .empty-mini {
   text-align: center;
@@ -1797,7 +1868,9 @@
   padding: 24px;
 }
 
-.roadmap-section-header { margin-bottom: 24px; }
+.roadmap-section-header {
+  margin-bottom: 24px;
+}
 
 .roadmap-section-header h2 {
   margin: 0;
@@ -1831,7 +1904,9 @@
   border-left: 4px solid;
 }
 
-.section-icon-small { font-size: 1.2rem; }
+.section-icon-small {
+  font-size: 1.2rem;
+}
 
 .section-name-small {
   font-size: 11px;
@@ -1868,7 +1943,10 @@
   color: #b8cbbf;
 }
 
-.milestone-card-content { flex: 1; min-width: 0; }
+.milestone-card-content {
+  flex: 1;
+  min-width: 0;
+}
 
 .milestone-card-name {
   color: #e4e6eb;
@@ -1909,7 +1987,9 @@
   flex-shrink: 0;
 }
 
-.milestone-card:hover .milestone-card-delete { opacity: 1; }
+.milestone-card:hover .milestone-card-delete {
+  opacity: 1;
+}
 
 .milestone-card-delete:hover {
   color: #ff0000;
@@ -1924,7 +2004,7 @@
   background: #161b33;
   border: 1px solid #4a9eff;
   border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
   z-index: 1000;
   overflow: hidden;
 }
@@ -1955,7 +2035,9 @@
   transition: color 0.2s;
 }
 
-.close-btn:hover { color: #e4e6eb; }
+.close-btn:hover {
+  color: #e4e6eb;
+}
 
 .floating-form-body {
   padding: 18px;
@@ -2116,9 +2198,12 @@
 }
 
 @keyframes taskPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 15px rgba(243, 156, 18, 0.4);
   }
+
   50% {
     box-shadow: 0 0 25px rgba(243, 156, 18, 0.7);
   }
@@ -2212,6 +2297,7 @@
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -2277,6 +2363,7 @@
     opacity: 0;
     transform: translateY(-5px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -2357,6 +2444,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -2379,6 +2467,7 @@
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -2624,8 +2713,10 @@
   display: flex;
   gap: 16px;
   font-size: 12px;
-  margin-top: 0; /* layout unaffected */
-  transform: translateY(8px); /* visual shift without increasing container height */
+  margin-top: 0;
+  /* layout unaffected */
+  transform: translateY(8px);
+  /* visual shift without increasing container height */
 }
 
 .task-status-badge {
@@ -2675,4 +2766,82 @@
 .modal-btn:hover {
   background: #1e2541;
   border-color: #4a9eff;
+}
+/* === RESPONSIVE - PROJEKT DASHBOARD === */
+@media (max-width: 768px) {
+  .project-dashboard-container { padding: 12px; }
+  .dashboard-header { padding: 16px; }
+  .header-content h1 { font-size: 1.6rem; }
+  .settings-form { padding: 20px 16px; }
+  .settings-content .section-header { padding-left: 16px; }
+  .danger-action { flex-direction: column; align-items: flex-start; gap: 12px; }\n  .form-group-inline { flex-direction: column; gap: 12px; }
+  .category-cards-grid { grid-template-columns: 1fr; }
+  .todo-stats { grid-template-columns: repeat(2, 1fr); }
+  .add-task-form .form-row { flex-direction: column; }
+  .modal-footer { flex-direction: column-reverse; }
+  .modal-btn { width: 100%; }
+
+  /* Horizontal scroll + scroll snap pro Roadmapu na mobilu */
+  .roadmap-grid {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 12px;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 120px;
+  }
+  .grid-header, .grid-row {
+    min-width: auto;
+    width: max-content;
+  }
+  .section-label, .section-header-cell {
+    position: sticky;
+    left: 0;
+    z-index: 10;
+    background-color: #161b33;
+  }
+  .phase-header, .phase-cell {
+    flex: 0 0 calc(100vw - 120px - 48px);
+    min-width: auto;
+    scroll-snap-align: start;
+  }
+  .milestone-card {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+  .milestone-card-content {
+    width: 100%;
+  }
+  .milestone-card-delete {
+    align-self: flex-end;
+    margin-bottom: 8px;
+  }
+
+  /* Umístění tlačítek nad názvem úkolů ("ToDo" tab) */
+  .todo-task-card {
+    flex-wrap: wrap;
+  }
+  .task-status {
+    order: 1;
+  }
+  .task-actions {
+    position: static;
+    order: 2;
+    margin-left: auto; /* posunout doprava */
+  }
+  .todo-task-card .task-content {
+    order: 3;
+    padding-right: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-dashboard-container { padding: 8px; }
+  .dashboard-header { padding: 12px; }
+  .header-content h1 { font-size: 1.35rem; }
+  .tab { padding: 8px 12px; font-size: 0.9rem; }
+  .todo-stats { grid-template-columns: 1fr; }
+  .stat-value { font-size: 1.6rem; }
+  .progress-circle { width: 140px; height: 140px; }
+  .progress-value { font-size: 2rem; }
 }

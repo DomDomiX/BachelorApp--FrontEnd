@@ -32,7 +32,7 @@
 }
 
 .day.other-month {
-  color: #4a4d6d; 
+  color: #4a4d6d;
   opacity: 0.5;
   cursor: default;
 }
@@ -45,10 +45,11 @@
   background: #0a0e27;
   padding: 20px;
   border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
-.weekdays-grid, .days-grid {
+.weekdays-grid,
+.days-grid {
   display: grid;
   color: #ffffff;
   grid-template-columns: repeat(7, 1fr);
@@ -69,7 +70,9 @@
   cursor: pointer;
 }
 
-.day:hover { background: #161b33; }
+.day:hover {
+  background: #161b33;
+}
 
 .today {
   background: #4a9eff;
@@ -139,7 +142,7 @@
 }
 
 .nav-btn:focus-visible {
-  outline: 2px solid rgba(74,158,255,0.35);
+  outline: 2px solid rgba(74, 158, 255, 0.35);
   outline-offset: 2px;
 }
 
@@ -147,13 +150,15 @@
   transform: translateY(1px) scale(0.98);
 }
 
-.nav-btn[disabled], .nav-btn.disabled {
+.nav-btn[disabled],
+.nav-btn.disabled {
   opacity: 0.45;
   pointer-events: none;
   filter: grayscale(0.2);
 }
 
-.nav-btn.prev::before, .nav-btn.next::after {
+.nav-btn.prev::before,
+.nav-btn.next::after {
   font-weight: 700;
 }
 
@@ -165,7 +170,7 @@
 }
 
 .calendar-nav h2 {
-  min-width: 220px; 
+  min-width: 220px;
   text-align: center;
   margin: 0;
 }
@@ -173,7 +178,8 @@
 .calendar-footer-stats {
   margin-top: 20px;
   padding-top: 15px;
-  border-top: 1px solid #1e2548; /* Oddělovač ladící k tvému designu */
+  border-top: 1px solid #1e2548;
+  /* Oddělovač ladící k tvému designu */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -573,21 +579,18 @@
 @media (max-width: 1024px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
+    grid-template-rows: auto;
   }
-  
-  .projects-section {
-    grid-column: 1;
-    grid-row: auto;
-  }
-  
-  .stats-section {
-    grid-column: 1;
-  }
-  
+
+  .calendar-section,
+  .projects-section,
+  .deadlines-section,
+  .stats-section,
   .activity-section {
-    grid-column: 1;
+    grid-column: 1 !important;
+    grid-row: auto !important;
   }
-  
+
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -597,14 +600,24 @@
   .dashboard-container {
     padding: 12px;
   }
-  
+
   .header-content {
     flex-direction: column;
     gap: 16px;
     text-align: center;
   }
-  
+
   .stats-grid {
     grid-template-columns: 1fr;
   }
+}
+@media (max-width: 480px) {
+  .dashboard-container { padding: 8px; }
+  .dashboard-header { padding: 14px; }
+  .header-content h1 { font-size: 1.35rem; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .stat-number { font-size: 2rem; }
+  .section-header h2 { font-size: 1.1rem; }
+  .month-label { min-width: 130px; font-size: 0.9rem; }
+  .day { padding: 10px 0; font-size: 0.85rem; }
 }

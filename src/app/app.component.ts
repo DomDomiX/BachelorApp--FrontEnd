@@ -13,10 +13,10 @@ export class AppComponent implements OnInit {
   title = 'BachelorApp--FrontEnd';
   loggedIn: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   ngOnInit() {
-    
+
   }
 
   get isUserLoggedIn(): boolean {
